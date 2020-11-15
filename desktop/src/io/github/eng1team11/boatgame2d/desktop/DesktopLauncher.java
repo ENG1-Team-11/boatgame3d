@@ -1,8 +1,8 @@
-package io.github.eng1team11.boatgame3d.desktop;
+package io.github.eng1team11.boatgame2d.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import io.github.eng1team11.boatgame3d.BoatGame;
+import io.github.eng1team11.boatgame2d.BoatGame;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

@@ -1,4 +1,4 @@
-package io.github.eng1team11.boatgame3d;
+package io.github.eng1team11.boatgame2d;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
