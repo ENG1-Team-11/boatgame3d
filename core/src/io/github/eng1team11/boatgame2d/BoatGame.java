@@ -4,10 +4,19 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import com.badlogic.gdx.utils.Timer;
+import io.github.eng1team11.boatgame2d.ecs.ComponentManager;
+import io.github.eng1team11.boatgame2d.ecs.EntityManager;
+import io.github.eng1team11.boatgame2d.ecs.SystemManager;
+
 public class BoatGame extends Game {
 
 	private SpriteBatch _spriteBatch;
 	private BitmapFont _font;
+
+	public EntityManager _entityManager;
+	public ComponentManager _componentManager;
+	public SystemManager _systemManager;
 
 	/**
 	 * Called when the {@link Application} is first created.
@@ -24,6 +33,7 @@ public class BoatGame extends Game {
 
 	}
 
+	// Render is essentially treated as the update loop
 	@Override
 	public void render() {
 		// Call render in the superclass (makes sure the screen gets rendered)

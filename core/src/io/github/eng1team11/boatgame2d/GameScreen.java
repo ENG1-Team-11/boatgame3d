@@ -3,6 +3,9 @@ package io.github.eng1team11.boatgame2d;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import io.github.eng1team11.boatgame2d.ecs.entity.PlayerBoat;
+import io.github.eng1team11.boatgame2d.ecs.system.*;
+import io.github.eng1team11.boatgame2d.ecs.component.*;
 
 public class GameScreen implements Screen {
 
@@ -12,12 +15,28 @@ public class GameScreen implements Screen {
         _game = boatGame;
     }
 
+    void CreatePlayer() {
+        int boat = _game._entityManager.CreateEntity();
+//        boat._playerInput = _game._componentManager.AddComponent(PlayerInput.class);
+    }
+
     /**
      * Called when this screen becomes the current screen for a {@link Game}.
      */
     @Override
     public void show() {
+        // Create all systems required for this game state
+        _game._systemManager.AddSystem(new AIControl());
+        _game._systemManager.AddSystem(new Collision());
+        _game._systemManager.AddSystem(new InLane());
+        _game._systemManager.AddSystem(new Movement());
+        _game._systemManager.AddSystem(new PlayerControl());
+        _game._systemManager.AddSystem(new Render(_game.GetSpriteBatch()));
+        _game._systemManager.AddSystem(new Stamina());
+        _game._systemManager.AddSystem(new Upgrade());
 
+        // Create the player
+        CreatePlayer();
     }
 
     /**
@@ -27,6 +46,9 @@ public class GameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+
+        _game._systemManager.Update(delta);
+
         // Set the screen clear colour to black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         // Clear the colour buffer and the depth buffer

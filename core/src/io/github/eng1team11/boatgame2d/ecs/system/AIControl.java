@@ -1,11 +1,6 @@
 package io.github.eng1team11.boatgame2d.ecs.system;
 
-import io.github.eng1team11.boatgame2d.ecs.component.AI;
-
-import java.util.ArrayList;
-
 public class AIControl implements ISystem {
-    ArrayList<AI> _aiList;
 
     /**
      * Called during the input phase of the game engine loop
@@ -14,7 +9,7 @@ public class AIControl implements ISystem {
      */
     @Override
     public void Input(float delta) {
-
+        // No steps performed during input phase, AI takes no human input
     }
 
     /**
