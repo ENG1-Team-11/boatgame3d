@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Render implements ISystem {
 
-    private ArrayList<Sprite> _renderables;
+    private ArrayList<Sprite> _renderables = new ArrayList<Sprite>();
     private SpriteBatch _spriteBatch;
 
     /**

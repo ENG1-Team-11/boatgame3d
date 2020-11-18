@@ -11,8 +11,8 @@ public class Vector2 extends Component {
      *
      * @param id the ID of the a component
      */
-    public Vector2(int id, int type) {
-        super(id, type);
+    public Vector2(int id) {
+        super(id);
     }
 
     /**

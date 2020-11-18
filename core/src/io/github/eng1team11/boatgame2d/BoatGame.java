@@ -5,18 +5,30 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.badlogic.gdx.utils.Timer;
-import io.github.eng1team11.boatgame2d.ecs.ComponentManager;
-import io.github.eng1team11.boatgame2d.ecs.EntityManager;
-import io.github.eng1team11.boatgame2d.ecs.SystemManager;
+import io.github.eng1team11.boatgame2d.ecs.*;
+import io.github.eng1team11.boatgame2d.ecs.component.*;
 
 public class BoatGame extends Game {
 
 	private SpriteBatch _spriteBatch;
 	private BitmapFont _font;
 
-	public EntityManager _entityManager;
-	public ComponentManager _componentManager;
-	public SystemManager _systemManager;
+	public EntityManager _entityManager = new EntityManager();
+	public ComponentManager _componentManager = new ComponentManager();
+	public SystemManager _systemManager = new SystemManager();
+
+	void RegisterECSComponents() {
+		_componentManager.RegisterComponentTypeID(AI.class);
+		_componentManager.RegisterComponentTypeID(Collider.class);
+		_componentManager.RegisterComponentTypeID(Currency.class);
+		_componentManager.RegisterComponentTypeID(Durability.class);
+		_componentManager.RegisterComponentTypeID(PlayerInput.class);
+		_componentManager.RegisterComponentTypeID(Sprite.class);
+		_componentManager.RegisterComponentTypeID(Stamina.class);
+		_componentManager.RegisterComponentTypeID(Type.class);
+		_componentManager.RegisterComponentTypeID(Velocity.class);
+		_componentManager.RegisterComponentTypeID(Position.class);
+	}
 
 	/**
 	 * Called when the {@link Application} is first created.
@@ -28,8 +40,11 @@ public class BoatGame extends Game {
 		// Load the font (defaults to Arial)
 		_font = new BitmapFont();
 
+		// Register all classes to the ECS (probably should make a helper for this)
+		RegisterECSComponents();
 		// When the game instance is created, go to the main menu screen
-		this.setScreen(new MenuScreen(this));
+//		this.setScreen(new TestScreen(this));
+		this.setScreen(new TestScreen(this));
 
 	}
 

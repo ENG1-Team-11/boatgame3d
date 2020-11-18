@@ -10,7 +10,7 @@ public class AI extends Component {
      *
      * @param id the ID of the a component
      */
-    public AI(int id, int type) {
-        super(id, type);
+    public AI(int id) {
+        super(id);
     }
 }

@@ -9,7 +9,7 @@ public class Type extends Component{
      *
      * @param id the ID of the a component
      */
-    public Type(int id, int type) {
-        super(id, type);
+    public Type(int id) {
+        super(id);
     }
 }

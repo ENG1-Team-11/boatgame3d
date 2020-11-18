@@ -6,7 +6,7 @@ public class Collider extends Component  {
      *
      * @param id the ID of the a component
      */
-    public Collider(int id, int type) {
-        super(id, type);
+    public Collider(int id) {
+        super(id);
     }
 }

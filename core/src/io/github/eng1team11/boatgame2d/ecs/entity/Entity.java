@@ -2,7 +2,9 @@ package io.github.eng1team11.boatgame2d.ecs.entity;
 
 public class Entity implements IEntity {
 
+    // The ID of the entity
     final int _id;
+    // Whether or not to update the entity
     boolean _active;
 
     /**

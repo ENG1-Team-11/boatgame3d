@@ -12,7 +12,7 @@ public class Durability extends Component  {
      *
      * @param id the ID of the a component
      */
-    public Durability(int id, int type) {
-        super(id, type);
+    public Durability(int id) {
+        super(id);
     }
 }

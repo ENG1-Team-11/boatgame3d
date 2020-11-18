@@ -2,58 +2,100 @@ package io.github.eng1team11.boatgame2d.ecs;
 
 import io.github.eng1team11.boatgame2d.ecs.component.Component;
 import io.github.eng1team11.boatgame2d.ecs.component.IComponent;
+import io.github.eng1team11.boatgame2d.ecs.entity.IEntity;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ComponentManager {
 
-    // Easily convert between components<->ids
-    HashMap<Integer, Class> _componentTypes;
-    HashMap<Class, Integer> _typesComponent;
+    // 1:1 mapping of class to id, id to class
+    HashMap<Class, Integer> _componentTypes = new HashMap<Class, Integer>();
+    HashMap<Integer, Class> _typesComponent = new HashMap<Integer, Class>();
 
-    HashMap<Integer, IComponent> _components;
+    HashMap<Integer, ArrayList<IComponent>> _components = new HashMap<Integer, ArrayList<IComponent>>();
 
-    public int GetTypeID(Class type) {
-        if (_typesComponent.containsKey(type)) {
-            return _typesComponent.get(type);
+    /**
+     * Register a component type to the component manager
+     * @param component A component of the type to be registered
+     * @return The component type ID as an integer
+     */
+    public int RegisterComponentTypeID(Component component) {
+        if (!_componentTypes.containsKey(component.getClass())) {
+            int id = _componentTypes.size();
+            _componentTypes.put(component.getClass(), id);
+            _typesComponent.put(id, component.getClass());
         }
-        else {
-            int index = _componentTypes.size();
-            _componentTypes.put(index, type);
-            _typesComponent.put(type, index);
-            return index;
+        return _componentTypes.get(component.getClass());
+    }
+
+    /**
+     * Register a component type to the component manager
+     * @param component The class which should be registered (use `Component.class`)
+     * @return The component type ID as an integer
+     */
+    public int RegisterComponentTypeID(Class component) {
+        if (!_componentTypes.containsKey(component)) {
+            int id = _componentTypes.size();
+            _componentTypes.put(component, id);
+            _typesComponent.put(id, component);
+            _components.put(id, new ArrayList<IComponent>());
         }
+        return _componentTypes.get(component);
     }
 
-    IComponent CreateComponent(int id, int type) {
-//        Class comp = _componentTypes.get(type);
-//        Constructor<Component> ctor = comp.newInstance();
-//        IComponent component = (IComponent) ctor.newInstance(id, type);
-//        return component;
-        return new Component(0, 0);
+    /**
+     * Get the component type ID of a component
+     * @param component A component of the type to be looked up
+     * @return The component type ID as an integer
+     */
+    public int GetComponentTypeID(Component component) {
+        return _componentTypes.get(component.getClass());
     }
 
-    public int AddComponent(int type) {
-        int id = _components.size();
-        IComponent component = CreateComponent(id, type);
-        _components.put(id, component);
-        return id;
+    /**
+     * Get the component class which corresponds to a specific type ID
+     * @param id The ID to be looked up
+     * @return The component type as a Java Class object
+     */
+    public Class GetIDComponentType(int id) {
+        return _typesComponent.get(id);
     }
 
-    public int AddComponent(Class type) {
-        int iType = GetTypeID(type);
-        int id = _components.size();
-        IComponent component = CreateComponent(id, iType);
-        _components.put(id, component);
-        return id;
+    /**
+     * Add a component to the component lists
+     * @param component The component to be added
+     */
+    public void AddComponent(Component component) {
+        int cType = GetComponentTypeID(component);
+        _components.get(cType).add(component);
     }
 
-    public void DeleteComponent(int id) {
+    /**
+     * Delete a component from an entity
+     * @param type The type of component
+     * @param entity The entity ID
+     */
+    public void DeleteComponent(int type, int entity) {
+        _components.get(type).remove(entity);
+    }
+
+    /**
+     * Delete all components of one type
+     * @param id the component type ID to delete
+     */
+    public void DeleteComponentsOfType(int id) {
         _components.remove(id);
     }
 
-    IComponent GetComponent(int id) {
+    /**
+     * Get all components of a specific type
+     * @param id The component type ID
+     * @return An ArrayList containing all components of a specific type
+     */
+    public ArrayList<IComponent> GetComponentsOfType(int id) {
         return _components.get(id);
     }
 

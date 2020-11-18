@@ -1,15 +1,12 @@
 package io.github.eng1team11.boatgame2d.ecs.component;
 
-public class Currency extends Component  {
-    // Amount of currency
-    int amount = 0;
-
+public class Velocity extends Vector2 {
     /**
      * Default ctor for a component
      *
      * @param id the ID of the a component
      */
-    public Currency(int id) {
+    public Velocity(int id) {
         super(id);
     }
 }

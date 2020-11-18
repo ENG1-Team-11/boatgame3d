@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class PlayerControl implements ISystem {
 
     // Should only be one, but we implement this as a list
-    ArrayList<PlayerInput> _playerInputs;
+    ArrayList<PlayerInput> _playerInputs = new ArrayList<PlayerInput>();
 
     /**
      * Default ctor for PlayerControl

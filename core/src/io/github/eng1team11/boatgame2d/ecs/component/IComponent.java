@@ -8,10 +8,4 @@ public interface IComponent {
      */
     public int GetID();
 
-    /**
-     * Get the type of the component
-     * @return the type of the component as an integer
-     */
-    public int GetType();
-
 }

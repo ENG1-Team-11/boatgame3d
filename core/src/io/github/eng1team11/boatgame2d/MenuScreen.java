@@ -1,6 +1,8 @@
 package io.github.eng1team11.boatgame2d;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -46,6 +48,11 @@ public class MenuScreen implements Screen {
         _game.GetSpriteBatch().begin();
         // Draw the text, "BoatGame3D" (note that 0,0 is the centre of the screen for some reason..?)
         _game.GetFont().draw(_game.GetSpriteBatch(), "BoatGame3D", 0, 0);
+
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            _game.setScreen(new GameScreen(_game));
+        }
+
         // Finish adding things to the sprite batch
         _game.GetSpriteBatch().end();
     }

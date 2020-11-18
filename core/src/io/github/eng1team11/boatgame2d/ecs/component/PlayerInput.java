@@ -10,8 +10,8 @@ public class PlayerInput extends Component  {
      *
      * @param id the ID of the a component
      */
-    public PlayerInput(int id, int type) {
-        super(id, type);
+    public PlayerInput(int id) {
+        super(id);
     }
 
     /**

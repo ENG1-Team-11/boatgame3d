@@ -3,9 +3,7 @@ package io.github.eng1team11.boatgame2d;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import io.github.eng1team11.boatgame2d.ecs.entity.PlayerBoat;
 import io.github.eng1team11.boatgame2d.ecs.system.*;
-import io.github.eng1team11.boatgame2d.ecs.component.*;
 
 public class GameScreen implements Screen {
 
@@ -48,6 +46,8 @@ public class GameScreen implements Screen {
     public void render(float delta) {
 
         _game._systemManager.Update(delta);
+
+
 
         // Set the screen clear colour to black
         Gdx.gl.glClearColor(0, 0, 0, 1);
