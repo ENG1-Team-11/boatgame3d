@@ -1,12 +1,18 @@
 package io.github.eng1team11.boatgame2d.ecs;
 
+import io.github.eng1team11.boatgame2d.ecs.component.IComponent;
 import io.github.eng1team11.boatgame2d.ecs.system.ISystem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SystemManager {
 
     HashMap<Integer, ISystem> _systems = new HashMap<Integer, ISystem>();
+
+    public void RegisterComponentsToSystem(HashMap<Integer, IComponent> components, int system) {
+        _systems.get(system).RegisterComponents(components);
+    }
 
     /**
      * Update all systems in the systems list

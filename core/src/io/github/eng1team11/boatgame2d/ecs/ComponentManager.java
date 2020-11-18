@@ -15,7 +15,7 @@ public class ComponentManager {
     HashMap<Class, Integer> _componentTypes = new HashMap<Class, Integer>();
     HashMap<Integer, Class> _typesComponent = new HashMap<Integer, Class>();
 
-    HashMap<Integer, ArrayList<IComponent>> _components = new HashMap<Integer, ArrayList<IComponent>>();
+    HashMap<Integer, HashMap<Integer, IComponent>> _components = new HashMap<Integer, HashMap<Integer, IComponent>>();
 
     /**
      * Register a component type to the component manager
@@ -41,7 +41,7 @@ public class ComponentManager {
             int id = _componentTypes.size();
             _componentTypes.put(component, id);
             _typesComponent.put(id, component);
-            _components.put(id, new ArrayList<IComponent>());
+            _components.put(id, new HashMap<Integer, IComponent>());
         }
         return _componentTypes.get(component);
     }
@@ -68,9 +68,14 @@ public class ComponentManager {
      * Add a component to the component lists
      * @param component The component to be added
      */
-    public void AddComponent(Component component) {
+    public void AddComponent(IEntity entity, Component component) {
         int cType = GetComponentTypeID(component);
-        _components.get(cType).add(component);
+        _components.get(cType).put(entity.GetID(), component);
+    }
+
+    public void AddComponent(int entity, Component component) {
+        int cType = GetComponentTypeID(component);
+        _components.get(cType).put(entity, component);
     }
 
     /**
@@ -95,7 +100,12 @@ public class ComponentManager {
      * @param id The component type ID
      * @return An ArrayList containing all components of a specific type
      */
-    public ArrayList<IComponent> GetComponentsOfType(int id) {
+    public HashMap<Integer, IComponent> GetComponentsOfType(int id) {
+        return _components.get(id);
+    }
+
+    public HashMap<Integer, IComponent> GetComponentsOfType(Class type) {
+        int id = _componentTypes.get(type);
         return _components.get(id);
     }
 

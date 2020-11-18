@@ -35,6 +35,22 @@ public class Vector2 extends Component {
     }
 
     /**
+     * Set the x component
+     * @param x The value to set the x component to
+     */
+    public void SetX(float x) {
+        _x = x;
+    }
+
+    /**
+     * Set the y component
+     * @param y The value to set the y component to
+     */
+    public void SetY(float y) {
+        _y = y;
+    }
+
+    /**
      * Add a vector to the existing vector
      * @param x The X component of the vector to add
      * @param y The Y component of the vector to add
@@ -67,5 +83,21 @@ public class Vector2 extends Component {
      */
     public float[] Get() {
         return new float[] {_x, _y};
+    }
+
+    /**
+     * Get the X component of the vector
+     * @return The x component of the vector as a float
+     */
+    public float GetX() {
+        return _x;
+    }
+
+    /**
+     * Get the Y component of the vector
+     * @return The y component of the vector as a float
+     */
+    public float GetY() {
+        return _y;
     }
 }

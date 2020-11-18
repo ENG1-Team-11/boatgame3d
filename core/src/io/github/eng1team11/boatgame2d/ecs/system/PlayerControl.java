@@ -2,30 +2,18 @@ package io.github.eng1team11.boatgame2d.ecs.system;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import io.github.eng1team11.boatgame2d.ecs.component.IComponent;
 import io.github.eng1team11.boatgame2d.ecs.component.PlayerInput;
 
 import java.util.ArrayList;
 
-public class PlayerControl implements ISystem {
-
-    // Should only be one, but we implement this as a list
-    ArrayList<PlayerInput> _playerInputs = new ArrayList<PlayerInput>();
+public class PlayerControl extends System {
 
     /**
      * Default ctor for PlayerControl
      */
     public PlayerControl() {
 
-    }
-
-    /**
-     * Create a new PlayerControl and return its ID
-     * @return The ID of the newly created PlayerControl as an int
-     */
-    public int CreatePlayerInput() {
-        int index = _playerInputs.size();
-//        _playerInputs.add(new PlayerInput(index, ));
-        return index;
     }
 
     /**
@@ -55,7 +43,8 @@ public class PlayerControl implements ISystem {
         }
 
         // Iterate over all player inputs attached to the system and update them
-        for (PlayerInput pi : _playerInputs) {
+        for (IComponent comp : _affectedComponents.get(0).values()) {
+            PlayerInput pi  = (PlayerInput) comp;
             pi.SetLeft(left);
             pi.SetRight(right);
         }

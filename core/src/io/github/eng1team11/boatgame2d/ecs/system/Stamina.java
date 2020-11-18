@@ -1,6 +1,6 @@
 package io.github.eng1team11.boatgame2d.ecs.system;
 
-public class Stamina implements ISystem {
+public class Stamina extends System {
     /**
      * Called during the input phase of the game engine loop
      *

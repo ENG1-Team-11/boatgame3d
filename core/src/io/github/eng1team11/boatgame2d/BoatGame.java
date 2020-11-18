@@ -21,6 +21,7 @@ public class BoatGame extends Game {
 		_componentManager.RegisterComponentTypeID(AI.class);
 		_componentManager.RegisterComponentTypeID(Collider.class);
 		_componentManager.RegisterComponentTypeID(Currency.class);
+		_componentManager.RegisterComponentTypeID(Controller.class);
 		_componentManager.RegisterComponentTypeID(Durability.class);
 		_componentManager.RegisterComponentTypeID(PlayerInput.class);
 		_componentManager.RegisterComponentTypeID(Sprite.class);

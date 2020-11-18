@@ -18,5 +18,6 @@ public class Sprite extends Component {
         Texture t = new Texture(Gdx.files.internal(texturePath));
         _base.setTexture(t);
         _base.setPosition(0.0f, 0.0f);
+        _base.setSize(100, 100);
     }
 }

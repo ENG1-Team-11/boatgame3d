@@ -1,6 +1,6 @@
 package io.github.eng1team11.boatgame2d.ecs.system;
 
-public class Upgrade implements ISystem {
+public class Upgrade extends System {
     /**
      * Called during the input phase of the game engine loop
      *
