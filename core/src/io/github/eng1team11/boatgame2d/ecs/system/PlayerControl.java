@@ -25,6 +25,8 @@ public class PlayerControl extends System {
         // Temporary variables to assign left/right values to
         boolean left = false;
         boolean right = false;
+        boolean forwards = false;
+        boolean backwards = false;
 
         // Check if any key is pressed
         if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
@@ -33,12 +35,20 @@ public class PlayerControl extends System {
         if (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             right = true;
         }
+        if (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            forwards = true;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            backwards = true;
+        }
 
         // Iterate over all player inputs attached to the system and update them
         for (IComponent comp : _affectedComponents.get(0).values()) {
             PlayerInputComponent pi  = (PlayerInputComponent) comp;
             pi.SetLeft(left);
             pi.SetRight(right);
+            pi.SetForwards(forwards);
+            pi.SetBackwards(backwards);
         }
     }
 

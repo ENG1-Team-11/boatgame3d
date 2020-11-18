@@ -65,6 +65,12 @@ public class Movement extends System {
             if (controller.GetRight()) {
                 velocity.Add(1.0f, 0.0f);
             }
+            if (controller.GetForwards()) {
+                velocity.Add(0.0f, 1.0f);
+            }
+            if (controller.GetBackwards()) {
+                velocity.Add(0.0f, -1.0f);
+            }
 
             // If we're not moving, apply drag
             if (!(controller.GetLeft() | controller.GetRight())) {

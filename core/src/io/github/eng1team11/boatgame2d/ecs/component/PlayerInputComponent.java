@@ -1,8 +1,6 @@
 package io.github.eng1team11.boatgame2d.ecs.component;
 
 public class PlayerInputComponent extends ControllerComponent {
-    boolean _leftKey = false;
-    boolean _rightKey = false;
     float _mouse = 0.0f;
 
     /**
