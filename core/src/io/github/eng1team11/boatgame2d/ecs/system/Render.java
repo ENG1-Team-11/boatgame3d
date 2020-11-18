@@ -1,16 +1,13 @@
 package io.github.eng1team11.boatgame2d.ecs.system;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.eng1team11.boatgame2d.ecs.component.IComponent;
-import io.github.eng1team11.boatgame2d.ecs.component.Position;
-import io.github.eng1team11.boatgame2d.ecs.component.Sprite;
+import io.github.eng1team11.boatgame2d.ecs.component.PositionComponent;
+import io.github.eng1team11.boatgame2d.ecs.component.SpriteComponent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Render extends System {
@@ -51,8 +48,8 @@ public class Render extends System {
         int componentCount = _affectedComponents.get(0).size();
         for (Map.Entry<Integer, IComponent> kv : _affectedComponents.get(1).entrySet()) {
             int id = kv.getKey();
-            Position position = (Position) _affectedComponents.get(0).get(id);
-            Sprite sprite = (Sprite) kv.getValue();
+            PositionComponent position = (PositionComponent) _affectedComponents.get(0).get(id);
+            SpriteComponent sprite = (SpriteComponent) kv.getValue();
             if (position == null) continue;
             sprite._base.setPosition(position.GetX(), position.GetY());
         }
@@ -72,14 +69,14 @@ public class Render extends System {
 
         // Set the clear colour then clear the screen
         Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT | GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Start the sprite batch so we can draw
         _spriteBatch.begin();
         // Iterate with a range-based loop
         for (IComponent comp : _affectedComponents.get(1).values()) {
             // Cast comp to a sprite
-            Sprite sprite = (Sprite) comp;
+            SpriteComponent sprite = (SpriteComponent) comp;
             // Draw the sprite to the batch
             sprite._base.draw(_spriteBatch);
         }

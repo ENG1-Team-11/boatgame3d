@@ -1,15 +1,12 @@
 package io.github.eng1team11.boatgame2d.ecs.component;
 
-public class Type extends Component{
-    // This might work better as an enum?
-    String type = "";
-
+public class ColliderComponent extends Component  {
     /**
      * Default ctor for a component
      *
      * @param id the ID of the a component
      */
-    public Type(int id) {
+    public ColliderComponent(int id) {
         super(id);
     }
 }

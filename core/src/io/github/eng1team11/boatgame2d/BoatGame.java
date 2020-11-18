@@ -4,7 +4,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import com.badlogic.gdx.utils.Timer;
 import io.github.eng1team11.boatgame2d.ecs.*;
 import io.github.eng1team11.boatgame2d.ecs.component.*;
 
@@ -18,17 +17,17 @@ public class BoatGame extends Game {
 	public SystemManager _systemManager = new SystemManager();
 
 	void RegisterECSComponents() {
-		_componentManager.RegisterComponentTypeID(AI.class);
-		_componentManager.RegisterComponentTypeID(Collider.class);
-		_componentManager.RegisterComponentTypeID(Currency.class);
-		_componentManager.RegisterComponentTypeID(Controller.class);
-		_componentManager.RegisterComponentTypeID(Durability.class);
-		_componentManager.RegisterComponentTypeID(PlayerInput.class);
-		_componentManager.RegisterComponentTypeID(Sprite.class);
-		_componentManager.RegisterComponentTypeID(Stamina.class);
-		_componentManager.RegisterComponentTypeID(Type.class);
-		_componentManager.RegisterComponentTypeID(Velocity.class);
-		_componentManager.RegisterComponentTypeID(Position.class);
+		_componentManager.RegisterComponentTypeID(AIComponent.class);
+		_componentManager.RegisterComponentTypeID(ColliderComponent.class);
+		_componentManager.RegisterComponentTypeID(CurrencyComponent.class);
+		_componentManager.RegisterComponentTypeID(ControllerComponent.class);
+		_componentManager.RegisterComponentTypeID(DurabilityComponent.class);
+		_componentManager.RegisterComponentTypeID(PlayerInputComponent.class);
+		_componentManager.RegisterComponentTypeID(SpriteComponent.class);
+		_componentManager.RegisterComponentTypeID(StaminaComponent.class);
+		_componentManager.RegisterComponentTypeID(TypeComponent.class);
+		_componentManager.RegisterComponentTypeID(VelocityComponent.class);
+		_componentManager.RegisterComponentTypeID(PositionComponent.class);
 	}
 
 	/**

@@ -1,6 +1,6 @@
 package io.github.eng1team11.boatgame2d.ecs.component;
 
-public class PlayerInput extends Controller  {
+public class PlayerInputComponent extends ControllerComponent {
     boolean _leftKey = false;
     boolean _rightKey = false;
     float _mouse = 0.0f;
@@ -10,7 +10,7 @@ public class PlayerInput extends Controller  {
      *
      * @param id the ID of the a component
      */
-    public PlayerInput(int id) {
+    public PlayerInputComponent(int id) {
         super(id);
     }
 
