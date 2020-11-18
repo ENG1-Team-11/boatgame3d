@@ -68,7 +68,6 @@ public class Movement extends System {
 
             // If we're not moving, apply drag
             if (!(controller.GetLeft() | controller.GetRight())) {
-                float[] xy = velocity.Get();
                 velocity.SetX(Lerp(velocity.GetX(), 0.0f, _drag));
                 velocity.SetY(Lerp(velocity.GetY(), 0.0f, _drag));
             }

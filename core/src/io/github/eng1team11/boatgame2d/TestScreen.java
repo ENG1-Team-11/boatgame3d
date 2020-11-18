@@ -2,11 +2,9 @@ package io.github.eng1team11.boatgame2d;
 
 import com.badlogic.gdx.Screen;
 import io.github.eng1team11.boatgame2d.ecs.component.*;
-import io.github.eng1team11.boatgame2d.ecs.system.AIControl;
-import io.github.eng1team11.boatgame2d.ecs.system.Movement;
-import io.github.eng1team11.boatgame2d.ecs.system.PlayerControl;
-import io.github.eng1team11.boatgame2d.ecs.system.Render;
-import io.github.eng1team11.boatgame2d.ecs.system.Stamina;
+import io.github.eng1team11.boatgame2d.ecs.system.*;
+
+import javax.swing.text.Position;
 
 public class TestScreen implements Screen {
 
@@ -31,6 +29,13 @@ public class TestScreen implements Screen {
         _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(StaminaComponent.class), stamina);
         _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(VelocityComponent.class), stamina);
 
+        int collision = _game._systemManager.AddSystem(new Collision());
+        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(ColliderComponent.class), collision);
+        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(DurabilityComponent.class), collision);
+        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(VelocityComponent.class), collision);
+        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(SpriteComponent.class), collision);
+        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(PositionComponent.class), collision);
+
         int movement = _game._systemManager.AddSystem(new Movement());
         _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(PositionComponent.class), movement);
         _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(VelocityComponent.class), movement);
@@ -51,10 +56,16 @@ public class TestScreen implements Screen {
         _game._componentManager.AddComponent(player, (ControllerComponent) new PlayerInputComponent(player));
         _game._componentManager.AddComponent(player, new CurrencyComponent(player));
         _game._componentManager.AddComponent(player, new VelocityComponent(player));
-        _game._componentManager.AddComponent(player, new PositionComponent(player));
-        _game._componentManager.AddComponent(player, new SpriteComponent(player, "badlogic.jpg"));
+        _game._componentManager.AddComponent(player,
+                new PositionComponent(player, 75, 0)
+        );
+        _game._componentManager.AddComponent(player,
+                new SpriteComponent(player, "badlogic.jpg", 100, 100)
+        );
         _game._componentManager.AddComponent(player, new DurabilityComponent(player));
-        _game._componentManager.AddComponent(player, new ColliderComponent(player));
+        _game._componentManager.AddComponent(player,
+                new ColliderComponent(player, 100, 100)
+        );
         _game._componentManager.AddComponent(player, new StaminaComponent(player));
     }
 
@@ -65,10 +76,16 @@ public class TestScreen implements Screen {
         int ai = _game._entityManager.CreateEntity();
         _game._componentManager.AddComponent(ai, (ControllerComponent) new AIComponent(ai));
         _game._componentManager.AddComponent(ai, new VelocityComponent(ai));
-        _game._componentManager.AddComponent(ai, new PositionComponent(ai));
-        _game._componentManager.AddComponent(ai, new SpriteComponent(ai, "badlogic.jpg"));
+        _game._componentManager.AddComponent(ai,
+                new PositionComponent(ai, -75, 0)
+        );
+        _game._componentManager.AddComponent(ai,
+                new SpriteComponent(ai, "badlogic.jpg", 100, 100)
+        );
         _game._componentManager.AddComponent(ai, new DurabilityComponent(ai));
-        _game._componentManager.AddComponent(ai, new ColliderComponent(ai));
+        _game._componentManager.AddComponent(ai,
+                new ColliderComponent(ai, 100, 100)
+        );
         //_game._componentManager.AddComponent(ai, new StaminaComponent(ai));
     }
 

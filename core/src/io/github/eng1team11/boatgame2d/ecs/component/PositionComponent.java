@@ -6,7 +6,9 @@ public class PositionComponent extends Vector2 {
      *
      * @param id the ID of the a component
      */
-    public PositionComponent(int id) {
+    public PositionComponent(int id, float x, float y) {
         super(id);
+        SetX(x);
+        SetY(y);
     }
 }
