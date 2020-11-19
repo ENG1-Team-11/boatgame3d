@@ -22,19 +22,41 @@ public class Collision extends System {
         float deltaY = pB.GetY() - pA.GetY();
 
         // A is clearly above, no collision
-        if (deltaY < -cA.GetHeight()) return CollisionData.None;
-
+        if (pA.GetY() - cA.GetHeight() > pB.GetY()) {
+            return CollisionData.None;
+        }
         // A is clearly to the left, no collision
-        if (deltaX > cA.GetWidth()) return CollisionData.None;
-
+        if (pA.GetX() + cA.GetWidth() < pB.GetX()) {
+            return CollisionData.None;
+        }
         // A is clearly below, no collision
-        if (deltaY > cB.GetHeight()) return CollisionData.None;
-
+        if (pA.GetY() < pB.GetY() - cB.GetHeight()) {
+            return CollisionData.None;
+        }
         // A is clearly to the right, no collision
-        if (deltaX < -cB.GetWidth()) return CollisionData.None;
+        if (pA.GetX() > pB.GetX() + cB.GetWidth()) {
+            return CollisionData.None;
+        }
 
-        // By deduction, must be a collision
-        return new CollisionData(true, (deltaX > 0.0f), (deltaY > 0.0f));
+        // By deduction, must be a collision so create a new collision data struct
+        CollisionData cd = new CollisionData();
+        cd.collision = true;
+
+        // Figure out where we collided
+        // Did we collide on the left?
+        if ((pA.GetX() < pB.GetX() + cB.GetWidth()) && (pA.GetX() + cA.GetWidth() * 0.1f > pB.GetX() + cB.GetWidth())) {
+            cd.lr = CollisionData.HorizontalType.Right;
+        }
+        else if ((pA.GetX() + cA.GetWidth() > pB.GetX()) && (pA.GetX() + cA.GetWidth() < pB.GetX() + cB.GetWidth() * 0.1f)) {
+            cd.lr = CollisionData.HorizontalType.Left;
+        }
+        if ((pA.GetY() - cA.GetHeight() < pB.GetY()) && (pA.GetY() - cA.GetHeight() > pB.GetY() - cB.GetHeight() * 0.1f)) {
+            cd.tb = CollisionData.VerticalType.Top;
+        }
+        else if ((pA.GetY() > pB.GetY() - cB.GetWidth()) && (pA.GetY() < pB.GetY() - cB.GetHeight() * 0.9f)) {
+                cd.tb = CollisionData.VerticalType.Bottom;
+        }
+        return cd;
     }
 
     /**
@@ -46,34 +68,39 @@ public class Collision extends System {
     public void Update(float delta) {
         for (Map.Entry<Integer, IComponent> kv : _affectedComponents.get(0).entrySet()) {
             int id = kv.getKey();
-            ColliderComponent collider = (ColliderComponent) kv.getValue();
-            DurabilityComponent durability = (DurabilityComponent) _affectedComponents.get(1).get(id);
-            VelocityComponent velocity = (VelocityComponent) _affectedComponents.get(2).get(id);
-            SpriteComponent sprite = (SpriteComponent) _affectedComponents.get(3).get(id);
-            PositionComponent position = (PositionComponent) _affectedComponents.get(4).get(id);
+            ColliderComponent colliderA = (ColliderComponent) kv.getValue();
+            DurabilityComponent durabilityA = (DurabilityComponent) _affectedComponents.get(1).get(id);
+            VelocityComponent velocityA = (VelocityComponent) _affectedComponents.get(2).get(id);
+            SpriteComponent spriteA = (SpriteComponent) _affectedComponents.get(3).get(id);
+            PositionComponent positionA = (PositionComponent) _affectedComponents.get(4).get(id);
 
             for (Map.Entry<Integer, IComponent> other : _affectedComponents.get(0).entrySet()) {
                 int oId = other.getKey();
                 if (id >= oId) continue;
-                ColliderComponent oCollider = (ColliderComponent) other.getValue();
-                VelocityComponent oVelocity = (VelocityComponent) _affectedComponents.get(2).get(oId);
-                PositionComponent oPosition = (PositionComponent) _affectedComponents.get(4).get(oId);
+                ColliderComponent ColliderB = (ColliderComponent) other.getValue();
+                VelocityComponent VelocityB = (VelocityComponent) _affectedComponents.get(2).get(oId);
+                PositionComponent PositionB = (PositionComponent) _affectedComponents.get(4).get(oId);
 
                 // If there is a collision, do something...
-                CollisionData collision = AABB(collider, oCollider, position, oPosition);
+                CollisionData collision = AABB(colliderA, ColliderB, positionA, PositionB);
                 if (collision != CollisionData.None) {
-                    // Calculate direction to bump boats off in
-                    float bumpX = (collision.lr)?-5.0f:5.0f;
-                    float bumpY = (collision.tb)?5.0f:-5.0f;
+
+                    // Calculate momentum by adding velocities [p=mv] (assume similar weight)
+                    float momentumX = (velocityA.GetX() + VelocityB.GetX()) / 2;
+                    float momentumY = (velocityA.GetY() + VelocityB.GetY()) / 2;
+
+                    // Calculate the transfer of energy
+                    float bumpXA = momentumX * 0.5f;
+                    float bumpXB = momentumX;
+                    float bumpYA = momentumY * 0.5f;
+                    float bumpYB = momentumY;
 
                     // Modify Boat A
-                    velocity.Set(bumpX, bumpY);
-                    position.Add(bumpX, bumpY);
-                    // durability.Add(-1.0f);
+                    velocityA.Set(bumpXA, -bumpYA);
+                    durabilityA.AddDurability(-1);
 
                     // Move Boat B
-                    oVelocity.Set(-bumpX, -bumpY);
-                    oPosition.Add(-bumpX, -bumpY);
+                    VelocityB.Set(bumpXB, -bumpYB);
                 }
             }
 

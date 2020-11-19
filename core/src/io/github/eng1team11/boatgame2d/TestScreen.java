@@ -51,13 +51,13 @@ public class TestScreen implements Screen {
     /**
      * Create a new player entity
      */
-    void CreatePlayer() {
+    void CreatePlayer(float x, float y) {
         int player = _game._entityManager.CreateEntity();
         _game._componentManager.AddComponent(player, (ControllerComponent) new PlayerInputComponent(player));
         _game._componentManager.AddComponent(player, new CurrencyComponent(player));
         _game._componentManager.AddComponent(player, new VelocityComponent(player));
         _game._componentManager.AddComponent(player,
-                new PositionComponent(player, 75, 0)
+                new PositionComponent(player, x, y)
         );
         _game._componentManager.AddComponent(player,
                 new SpriteComponent(player, "badlogic.jpg", 100, 100)
@@ -72,12 +72,12 @@ public class TestScreen implements Screen {
     /**
      * Create a new AI entity
      */
-    void CreateAI() {
+    void CreateAI(float x, float y) {
         int ai = _game._entityManager.CreateEntity();
         _game._componentManager.AddComponent(ai, (ControllerComponent) new AIComponent(ai));
         _game._componentManager.AddComponent(ai, new VelocityComponent(ai));
         _game._componentManager.AddComponent(ai,
-                new PositionComponent(ai, -75, 0)
+                new PositionComponent(ai, x, 0)
         );
         _game._componentManager.AddComponent(ai,
                 new SpriteComponent(ai, "badlogic.jpg", 100, 100)
@@ -95,8 +95,8 @@ public class TestScreen implements Screen {
     @Override
     public void show() {
         CreateSystems();
-        CreatePlayer();
-        CreateAI();
+        CreatePlayer(150, 0);
+        CreateAI(0, 0);
     }
 
     /**

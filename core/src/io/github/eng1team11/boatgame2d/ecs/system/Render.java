@@ -68,7 +68,7 @@ public class Render extends System {
         _spriteBatch.setProjectionMatrix(_camera.projection);
 
         // Set the clear colour then clear the screen
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Start the sprite batch so we can draw
