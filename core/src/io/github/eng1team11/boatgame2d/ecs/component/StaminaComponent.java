@@ -82,4 +82,6 @@ public class StaminaComponent extends Component {
         _decayModifier += m;
     }
 
+    public void SetDecayModifier(float m) { _decayModifier = m; }
+
 }

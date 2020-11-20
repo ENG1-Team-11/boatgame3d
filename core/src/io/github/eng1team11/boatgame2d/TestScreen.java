@@ -29,6 +29,12 @@ public class TestScreen implements Screen {
         _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(StaminaComponent.class), stamina);
         _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(VelocityComponent.class), stamina);
 
+        int upgrade = _game._systemManager.AddSystem(new Upgrade());
+        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(UpgradeComponent.class), upgrade);
+        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(StaminaComponent.class), upgrade);
+        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(DurabilityComponent.class), upgrade);
+        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(VelocityComponent.class), upgrade);
+
         int collision = _game._systemManager.AddSystem(new Collision());
         _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(ColliderComponent.class), collision);
         _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(DurabilityComponent.class), collision);
@@ -36,11 +42,16 @@ public class TestScreen implements Screen {
         _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(SpriteComponent.class), collision);
         _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(PositionComponent.class), collision);
 
+        int durability = _game._systemManager.AddSystem(new Durability());
+        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(DurabilityComponent.class), durability);
+        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(VelocityComponent.class), durability);
+
         int movement = _game._systemManager.AddSystem(new Movement());
         _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(PositionComponent.class), movement);
         _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(VelocityComponent.class), movement);
         _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(PlayerInputComponent.class), movement);
         _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(AIComponent.class), movement);
+        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(DurabilityComponent.class), movement);
 
         int render = _game._systemManager.AddSystem(new Render(_game.GetSpriteBatch()));
         _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(PositionComponent.class), render);
@@ -53,9 +64,10 @@ public class TestScreen implements Screen {
      */
     void CreatePlayer(float x, float y) {
         int player = _game._entityManager.CreateEntity();
-        _game._componentManager.AddComponent(player, (ControllerComponent) new PlayerInputComponent(player));
+        _game._componentManager.AddComponent(player, new PlayerInputComponent(player));
         _game._componentManager.AddComponent(player, new CurrencyComponent(player));
         _game._componentManager.AddComponent(player, new VelocityComponent(player));
+        _game._componentManager.AddComponent(player, new UpgradeComponent(player));
         _game._componentManager.AddComponent(player,
                 new PositionComponent(player, x, y)
         );
@@ -74,7 +86,7 @@ public class TestScreen implements Screen {
      */
     void CreateAI(float x, float y) {
         int ai = _game._entityManager.CreateEntity();
-        _game._componentManager.AddComponent(ai, (ControllerComponent) new AIComponent(ai));
+        _game._componentManager.AddComponent(ai, new AIComponent(ai));
         _game._componentManager.AddComponent(ai, new VelocityComponent(ai));
         _game._componentManager.AddComponent(ai,
                 new PositionComponent(ai, x, 0)

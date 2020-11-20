@@ -77,30 +77,34 @@ public class Collision extends System {
             for (Map.Entry<Integer, IComponent> other : _affectedComponents.get(0).entrySet()) {
                 int oId = other.getKey();
                 if (id >= oId) continue;
-                ColliderComponent ColliderB = (ColliderComponent) other.getValue();
-                VelocityComponent VelocityB = (VelocityComponent) _affectedComponents.get(2).get(oId);
-                PositionComponent PositionB = (PositionComponent) _affectedComponents.get(4).get(oId);
+                ColliderComponent colliderB = (ColliderComponent) other.getValue();
+                DurabilityComponent durabilityB = (DurabilityComponent) _affectedComponents.get(1).get(oId);
+                VelocityComponent velocityB = (VelocityComponent) _affectedComponents.get(2).get(oId);
+                PositionComponent positionB = (PositionComponent) _affectedComponents.get(4).get(oId);
 
                 // If there is a collision, do something...
-                CollisionData collision = AABB(colliderA, ColliderB, positionA, PositionB);
+                CollisionData collision = AABB(colliderA, colliderB, positionA, positionB);
                 if (collision != CollisionData.None) {
 
                     // Calculate momentum by adding velocities [p=mv] (assume similar weight)
-                    float momentumX = (velocityA.GetX() + VelocityB.GetX()) / 2;
-                    float momentumY = (velocityA.GetY() + VelocityB.GetY()) / 2;
+                    float momentumX = (velocityA.GetX() + velocityB.GetX()) / 2;
+                    float momentumY = (velocityA.GetY() + velocityB.GetY()) / 2;
 
                     // Calculate the transfer of energy
                     float bumpXA = momentumX * 0.5f;
                     float bumpXB = momentumX;
-                    float bumpYA = momentumY * 0.5f;
-                    float bumpYB = momentumY;
+                    float bumpYA = -momentumY * 0.5f;
+                    float bumpYB = -momentumY;
 
                     // Modify Boat A
                     velocityA.Set(bumpXA, -bumpYA);
-                    durabilityA.AddDurability(-1);
+                    durabilityA.SetShouldReduce(true);
 
                     // Move Boat B
-                    VelocityB.Set(bumpXB, -bumpYB);
+                    velocityB.Set(bumpXB, -bumpYB);
+                    durabilityB.SetShouldReduce(true);
+
+                    java.lang.System.out.println(durabilityA.GetDurability());
                 }
             }
 

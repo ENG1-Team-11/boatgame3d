@@ -1,13 +1,13 @@
 package io.github.eng1team11.boatgame2d.ecs.system;
 
+import io.github.eng1team11.boatgame2d.ecs.component.DurabilityComponent;
 import io.github.eng1team11.boatgame2d.ecs.component.IComponent;
-import io.github.eng1team11.boatgame2d.ecs.component.StaminaComponent;
 import io.github.eng1team11.boatgame2d.ecs.component.VelocityComponent;
 
-import java.util.HashMap;
 import java.util.Map;
 
-public class Stamina extends System {
+public class Durability extends System {
+
     /**
      * Called during the input phase of the game engine loop
      *
@@ -15,7 +15,7 @@ public class Stamina extends System {
      */
     @Override
     public void Input(float delta) {
-
+        super.Input(delta);
     }
 
     /**
@@ -25,16 +25,23 @@ public class Stamina extends System {
      */
     @Override
     public void Update(float delta) {
-        for (Map.Entry<Integer, IComponent> kv : _affectedComponents.get(0).entrySet()) {
-            int id = kv.getKey();
-            StaminaComponent stamina = (StaminaComponent) kv.getValue();
+        delta = 0.1f;
+        super.Update(delta);
+        for (Map.Entry<Integer, IComponent> comp : _affectedComponents.get(0).entrySet()) {
+            int id = comp.getKey();
+            DurabilityComponent durability = (DurabilityComponent) comp.getValue();
             VelocityComponent velocity = (VelocityComponent) _affectedComponents.get(1).get(id);
 
-            stamina.DecayStamina(delta);
+            durability.DecayGracePeriod(delta);
 
-            if (velocity == null) continue;
-
-            velocity.SetStaModifier(stamina.GetRemainingStamina());
+            if (durability.ShouldReduce()) {
+                if (durability.GetGracePeriod() < 0.0f) {
+                    durability.AddDurability(-1);
+                    durability.SetGracePeriod(1.0f);
+                    durability.SetShouldReduce(false);
+                    velocity.SetDurModifier(durability.GetRemainingDurability());
+                }
+            }
         }
     }
 
@@ -45,6 +52,6 @@ public class Stamina extends System {
      */
     @Override
     public void Render(float delta) {
-
+        super.Render(delta);
     }
 }

@@ -12,9 +12,9 @@ public class BoatGame extends Game {
 	private SpriteBatch _spriteBatch;
 	private BitmapFont _font;
 
-	public EntityManager _entityManager = new EntityManager();
-	public ComponentManager _componentManager = new ComponentManager();
-	public SystemManager _systemManager = new SystemManager();
+	public EntityManager _entityManager;
+	public ComponentManager _componentManager;
+	public SystemManager _systemManager;
 
 	void RegisterECSComponents() {
 		_componentManager.RegisterComponentTypeID(AIComponent.class);
@@ -28,6 +28,7 @@ public class BoatGame extends Game {
 		_componentManager.RegisterComponentTypeID(TypeComponent.class);
 		_componentManager.RegisterComponentTypeID(VelocityComponent.class);
 		_componentManager.RegisterComponentTypeID(PositionComponent.class);
+		_componentManager.RegisterComponentTypeID(UpgradeComponent.class);
 	}
 
 	/**
@@ -40,10 +41,12 @@ public class BoatGame extends Game {
 		// Load the font (defaults to Arial)
 		_font = new BitmapFont();
 
-		// Register all classes to the ECS (probably should make a helper for this)
+		_entityManager = new EntityManager();
+		_componentManager = new ComponentManager();
+		_systemManager = new SystemManager();
 		RegisterECSComponents();
+
 		// When the game instance is created, go to the main menu screen
-//		this.setScreen(new TestScreen(this));
 		this.setScreen(new TestScreen(this));
 
 	}

@@ -1,9 +1,6 @@
 package io.github.eng1team11.boatgame2d.ecs.system;
 
-import io.github.eng1team11.boatgame2d.ecs.component.ControllerComponent;
-import io.github.eng1team11.boatgame2d.ecs.component.IComponent;
-import io.github.eng1team11.boatgame2d.ecs.component.PositionComponent;
-import io.github.eng1team11.boatgame2d.ecs.component.VelocityComponent;
+import io.github.eng1team11.boatgame2d.ecs.component.*;
 
 import java.util.Map;
 
@@ -51,6 +48,8 @@ public class Movement extends System {
             int id = kv.getKey();
             PositionComponent position = (PositionComponent) kv.getValue();
             VelocityComponent velocity = (VelocityComponent) _affectedComponents.get(1).get(id);
+            DurabilityComponent durability = (DurabilityComponent) _affectedComponents.get(4).get(id);
+
             ControllerComponent controller = (ControllerComponent) _affectedComponents.get(2).get(id);
             // If it's not a PlayerInput, try looking for an AI instead
             if (controller == null) {
@@ -78,6 +77,7 @@ public class Movement extends System {
                 velocity.SetY(Lerp(velocity.GetY(), 0.0f, _drag));
             }
 
+            // Add velocity to position, accounting for the durability
             position.Add(velocity.GetXModified() * delta, velocity.GetYModified() * delta);
         }
     }
