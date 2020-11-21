@@ -1,7 +1,10 @@
 package io.github.eng1team11.boatgame2d.ecs.component;
 
-public class VelocityComponent extends Vector2 {
+import io.github.eng1team11.boatgame2d.util.Vector2;
 
+public class VelocityComponent extends Vector2Component {
+
+    float _maxVelocity = 50.0f;
     float _baseVelocity = 10.0f;
     float _velocityModifier = 1.0f;
     float _durModifier = 1.0f;
@@ -17,13 +20,26 @@ public class VelocityComponent extends Vector2 {
     }
 
     /**
-     * Get the X and Y component of the vector
+     * Add a vector to the existing vector
      *
-     * @return The x,y components of the vector as an array [x,y]
+     * @param x The X component of the vector to add
+     * @param y The Y component of the vector to add
      */
     @Override
-    public float[] Get() {
-        return new float[]{GetX(), GetY()};
+    public void Add(float x, float y) {
+        _x = Math.max(-_maxVelocity, Math.min(x + _x, _maxVelocity));
+        _y = Math.max(-_maxVelocity, Math.min(y + _y, _maxVelocity));
+    }
+
+    /**
+     * Add a vector to the existing vector
+     *
+     * @param other The other vector to add
+     */
+    @Override
+    public void Add(Vector2 other) {
+        _x = Math.max(-_maxVelocity, Math.min(other._x + _x, _maxVelocity));
+        _y = Math.max(-_maxVelocity, Math.min(other._y + _y, _maxVelocity));
     }
 
     /**
@@ -33,26 +49,6 @@ public class VelocityComponent extends Vector2 {
      */
     public float[] GetModified() {
         return new float[]{GetXModified(), GetXModified()};
-    }
-
-    /**
-     * Get the X component of the vector
-     *
-     * @return The x component of the vector as a float
-     */
-    @Override
-    public float GetX() {
-        return super.GetX();
-    }
-
-    /**
-     * Get the Y component of the vector
-     *
-     * @return The y component of the vector as a float
-     */
-    @Override
-    public float GetY() {
-        return super.GetY();
     }
 
     /**

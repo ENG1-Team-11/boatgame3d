@@ -48,27 +48,28 @@ public class Movement extends System {
             int id = kv.getKey();
             PositionComponent position = (PositionComponent) kv.getValue();
             VelocityComponent velocity = (VelocityComponent) _affectedComponents.get(1).get(id);
-            DurabilityComponent durability = (DurabilityComponent) _affectedComponents.get(4).get(id);
+            AccelerationComponent acceleration = (AccelerationComponent) _affectedComponents.get(2).get(id);
 
-            ControllerComponent controller = (ControllerComponent) _affectedComponents.get(2).get(id);
+
+            ControllerComponent controller = (ControllerComponent) _affectedComponents.get(3).get(id);
             // If it's not a PlayerInput, try looking for an AI instead
             if (controller == null) {
-                controller = (ControllerComponent) _affectedComponents.get(3).get(id);
+                controller = (ControllerComponent) _affectedComponents.get(4).get(id);
             }
 
             if (velocity == null || controller == null) continue;
 
             if (controller.GetLeft()) {
-                velocity.Add(-1.0f, 0.0f);
+                velocity.Add(-acceleration.GetAccelerationModified(), 0.0f);
             }
             if (controller.GetRight()) {
-                velocity.Add(1.0f, 0.0f);
+                velocity.Add(acceleration.GetAccelerationModified(), 0.0f);
             }
             if (controller.GetForwards()) {
-                velocity.Add(0.0f, 1.0f);
+                velocity.Add(0.0f, acceleration.GetAccelerationModified());
             }
             if (controller.GetBackwards()) {
-                velocity.Add(0.0f, -1.0f);
+                velocity.Add(0.0f, -acceleration.GetAccelerationModified());
             }
 
             // If we're not moving, apply drag

@@ -38,4 +38,11 @@ public class EntityManager {
         }
     }
 
+
+    public static int CreatePlayer(EntityManager em, ComponentManager cm, float posX, float posY, String sprite) {
+        int id = em.CreateEntity();
+
+        return id;
+    }
+
 }

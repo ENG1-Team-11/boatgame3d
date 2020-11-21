@@ -29,6 +29,7 @@ public class BoatGame extends Game {
 		_componentManager.RegisterComponentTypeID(VelocityComponent.class);
 		_componentManager.RegisterComponentTypeID(PositionComponent.class);
 		_componentManager.RegisterComponentTypeID(UpgradeComponent.class);
+		_componentManager.RegisterComponentTypeID(AccelerationComponent.class);
 	}
 
 	/**

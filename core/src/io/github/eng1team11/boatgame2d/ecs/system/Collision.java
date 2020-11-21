@@ -16,6 +16,14 @@ public class Collision extends System {
 
     }
 
+    /**
+     * Check whether two colliders are intersecting, and return where if they are
+     * @param cA The collider of object A
+     * @param cB The collider of object B
+     * @param pA The position of object A
+     * @param pB The position of object B
+     * @return A CollisionData struct describing the collision
+     */
     CollisionData AABB(ColliderComponent cA, ColliderComponent cB, PositionComponent pA, PositionComponent pB) {
         // Get the position of B relative to A
         float deltaX = pB.GetX() - pA.GetX();
@@ -74,6 +82,8 @@ public class Collision extends System {
             SpriteComponent spriteA = (SpriteComponent) _affectedComponents.get(3).get(id);
             PositionComponent positionA = (PositionComponent) _affectedComponents.get(4).get(id);
 
+            if (durabilityA == null || velocityA == null || velocityA == null || spriteA == null || positionA == null) continue;
+
             for (Map.Entry<Integer, IComponent> other : _affectedComponents.get(0).entrySet()) {
                 int oId = other.getKey();
                 if (id >= oId) continue;
@@ -81,6 +91,8 @@ public class Collision extends System {
                 DurabilityComponent durabilityB = (DurabilityComponent) _affectedComponents.get(1).get(oId);
                 VelocityComponent velocityB = (VelocityComponent) _affectedComponents.get(2).get(oId);
                 PositionComponent positionB = (PositionComponent) _affectedComponents.get(4).get(oId);
+
+                if (colliderB == null || durabilityB == null || velocityB == null || positionB == null) continue;
 
                 // If there is a collision, do something...
                 CollisionData collision = AABB(colliderA, colliderB, positionA, positionB);
@@ -103,8 +115,6 @@ public class Collision extends System {
                     // Move Boat B
                     velocityB.Set(bumpXB, -bumpYB);
                     durabilityB.SetShouldReduce(true);
-
-                    java.lang.System.out.println(durabilityA.GetDurability());
                 }
             }
 

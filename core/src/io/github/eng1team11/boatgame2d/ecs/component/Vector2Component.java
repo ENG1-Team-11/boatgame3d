@@ -1,6 +1,8 @@
 package io.github.eng1team11.boatgame2d.ecs.component;
 
-public class Vector2 extends Component {
+import io.github.eng1team11.boatgame2d.util.Vector2;
+
+public class Vector2Component extends Component {
     // X component - default to zero
     float _x = 0;
     // Y component - default to zero
@@ -11,7 +13,7 @@ public class Vector2 extends Component {
      *
      * @param id the ID of the a component
      */
-    public Vector2(int id) {
+    public Vector2Component(int id) {
         super(id);
     }
 
@@ -29,7 +31,7 @@ public class Vector2 extends Component {
      * Set the values of the vector to that of another vector
      * @param other The other vector to take the values of
      */
-    public void Set(Vector2 other) {
+    public void Set(Vector2Component other) {
         _x = other._x;
         _y = other._y;
     }
@@ -65,6 +67,15 @@ public class Vector2 extends Component {
      * @param other The other vector to add
      */
     public void Add(Vector2 other) {
+        _x += other._x;
+        _y += other._y;
+    }
+
+    /**
+     * Add a vector to the existing vector
+     * @param other The other vector to add
+     */
+    public void Add(Vector2Component other) {
         _x += other._x;
         _y += other._y;
     }

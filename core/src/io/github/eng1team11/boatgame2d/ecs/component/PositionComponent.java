@@ -1,6 +1,8 @@
 package io.github.eng1team11.boatgame2d.ecs.component;
 
-public class PositionComponent extends Vector2 {
+import io.github.eng1team11.boatgame2d.util.Vector2;
+
+public class PositionComponent extends Vector2Component {
     /**
      * Default ctor for a component
      *
@@ -11,4 +13,5 @@ public class PositionComponent extends Vector2 {
         SetX(x);
         SetY(y);
     }
+
 }

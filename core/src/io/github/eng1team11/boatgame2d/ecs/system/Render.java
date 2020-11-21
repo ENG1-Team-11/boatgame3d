@@ -71,8 +71,6 @@ public class Render extends System {
         Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Start the sprite batch so we can draw
-        _spriteBatch.begin();
         // Iterate with a range-based loop
         for (IComponent comp : _affectedComponents.get(1).values()) {
             // Cast comp to a sprite
@@ -80,7 +78,5 @@ public class Render extends System {
             // Draw the sprite to the batch
             sprite._base.draw(_spriteBatch);
         }
-        // End the sprite batch (stop drawing)
-        _spriteBatch.end();
     }
 }

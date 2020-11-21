@@ -13,11 +13,25 @@ public class SpriteComponent extends Component {
      * Default ctor for a component
      *
      * @param id the ID of the a component
+     * @param height The height of the sprite
+     * @param width The width of the sprite
+     * @param texturePath The path of the texture to load
      */
     public SpriteComponent(int id, String texturePath, int width, int height) {
         super(id);
         Texture t = new Texture(Gdx.files.internal(texturePath));
         _base.setTexture(t);
+        _base.setSize(width, height);
+    }
+
+    /**
+     * Ctor for sprite component
+     * @param id The ID of the component
+     * @param tx The texture to assign to the sprite
+     */
+    public SpriteComponent(int id, Texture tx, int width, int height) {
+        super(id);
+        _base.setTexture(tx);
         _base.setSize(width, height);
     }
 }
