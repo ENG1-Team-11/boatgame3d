@@ -10,7 +10,7 @@ public class ControllerComponent extends Component {
     /**
      * Default ctor for a component
      *
-     * @param id the ID of the a component
+     * @param id The ID of the component
      */
     public ControllerComponent(int id) {
         super(id);
@@ -19,7 +19,7 @@ public class ControllerComponent extends Component {
     /**
      * Get the value of the left input state
      *
-     * @return the left input state as a boolean
+     * @return The left input state as a boolean
      */
     public boolean getLeft() {
         return _left;
@@ -37,7 +37,7 @@ public class ControllerComponent extends Component {
     /**
      * Get the value of the right input state
      *
-     * @return the right input state as a boolean
+     * @return The right input state as a boolean
      */
     public boolean getRight() {
         return _right;
@@ -53,36 +53,36 @@ public class ControllerComponent extends Component {
     }
 
     /**
-     * Get the value of the left input state
+     * Get the value of the forwards input state
      *
-     * @return the left input state as a boolean
+     * @return The forwards input state as a boolean
      */
     public boolean getForwards() {
         return _forwards;
     }
 
     /**
-     * Set the left input state
+     * Set the forwards input state
      *
-     * @param v Whether the left key is pressed
+     * @param v Whether the forwards key is pressed
      */
     public void setForwards(boolean v) {
         _forwards = v;
     }
 
     /**
-     * Get the value of the right input state
+     * Get the value of the backwards input state
      *
-     * @return the right input state as a boolean
+     * @return The backwards input state as a boolean
      */
     public boolean getBackwards() {
         return _backwards;
     }
 
     /**
-     * Set the right input state
+     * Set the backwards input state
      *
-     * @param v Whether the right key is pressed
+     * @param v Whether the backwards key is pressed
      */
     public void setBackwards(boolean v) {
         _backwards = v;

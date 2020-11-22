@@ -8,7 +8,7 @@ public class ClickableComponent extends Component {
     /**
      * Default ctor for a component
      *
-     * @param id the ID of the a component
+     * @param id The ID of the component
      */
     public ClickableComponent(int id) {
         super(id);

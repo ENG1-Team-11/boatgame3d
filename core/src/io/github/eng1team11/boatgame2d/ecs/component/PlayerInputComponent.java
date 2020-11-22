@@ -6,7 +6,7 @@ public class PlayerInputComponent extends ControllerComponent {
     /**
      * Default ctor for a component
      *
-     * @param id the ID of the a component
+     * @param id The ID of the component
      */
     public PlayerInputComponent(int id) {
         super(id);
@@ -15,7 +15,7 @@ public class PlayerInputComponent extends ControllerComponent {
     /**
      * Get the value of the mouse input
      *
-     * @return the mouse input as a float
+     * @return The mouse input as a float
      */
     public float getMouse() {
         return _mouse;

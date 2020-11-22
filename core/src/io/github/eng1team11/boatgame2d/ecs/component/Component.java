@@ -7,7 +7,7 @@ public class Component implements IComponent {
     /**
      * Default ctor for a component
      *
-     * @param id the ID of the a component
+     * @param id The ID of the component
      */
     public Component(int id) {
         _id = id;
@@ -16,7 +16,7 @@ public class Component implements IComponent {
     /**
      * Get the ID of the component
      *
-     * @return the ID of the component as an integer
+     * @return The ID of the component as an integer
      */
     @Override
     final public int getID() {

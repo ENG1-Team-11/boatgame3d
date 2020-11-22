@@ -12,11 +12,13 @@ public class ButtonSprite extends SpriteObject {
     State _state;
 
     /**
-     * Default c'tor for a UI object
+     * Default c'tor for a sprite-based button
      *
      * @param position The position of the UI element (top-left corner)
-     * @param size     The size of the UI element
      * @param parent   The parent object of the UI element
+     * @param size     The size of the UI element
+     * @param sprite   The sprite the button should use
+     * @param callback The callback that should be invoked when the button is clicked on
      */
     public ButtonSprite(Vector2 position, UIObject parent, Vector2 size, Sprite sprite, Runnable callback) {
         super(position, parent, size, sprite);

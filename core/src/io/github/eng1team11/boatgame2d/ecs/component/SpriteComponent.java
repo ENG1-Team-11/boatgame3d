@@ -12,7 +12,7 @@ public class SpriteComponent extends Component {
     /**
      * Default ctor for a component
      *
-     * @param id          the ID of the a component
+     * @param id          The ID of the component
      * @param height      The height of the sprite
      * @param width       The width of the sprite
      * @param texturePath The path of the texture to load
@@ -29,6 +29,8 @@ public class SpriteComponent extends Component {
      *
      * @param id The ID of the component
      * @param tx The texture to assign to the sprite
+     * @param width The width of the sprite
+     * @param height The height of the sprite
      */
     public SpriteComponent(int id, Texture tx, int width, int height) {
         super(id);

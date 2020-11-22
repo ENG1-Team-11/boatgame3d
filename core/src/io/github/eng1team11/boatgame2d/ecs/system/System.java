@@ -43,7 +43,7 @@ public class System implements ISystem {
     /**
      * Add components of a specific type for the system to manage
      *
-     * @param components An ArrayList of all the components the system will manage
+     * @param components An `ArrayList` of all the components the system will manage
      */
     @Override
     public void registerComponents(HashMap<Integer, IComponent> components) {

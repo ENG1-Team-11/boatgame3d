@@ -1,5 +1,7 @@
 package io.github.eng1team11.boatgame2d;
 
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
@@ -126,8 +128,8 @@ public class TestScreen implements Screen {
     }
 
     /**
-     * @param width
-     * @param height
+     * @param width The width of the screen
+     * @param height The height of the screen
      * @see ApplicationListener#resize(int, int)
      */
     @Override

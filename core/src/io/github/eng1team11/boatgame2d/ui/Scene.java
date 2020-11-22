@@ -7,7 +7,9 @@ public class Scene {
 
     Canvas _currentCanvas;
 
-
+    /**
+     * Default c'tor for a scene
+     */
     public Scene() {
         _currentCanvas = new Canvas();
     }

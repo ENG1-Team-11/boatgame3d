@@ -13,7 +13,7 @@ public class VelocityComponent extends Vector2Component {
     /**
      * Default ctor for a component
      *
-     * @param id the ID of the a component
+     * @param id The ID of the component
      */
     public VelocityComponent(int id) {
         super(id);
@@ -45,7 +45,7 @@ public class VelocityComponent extends Vector2Component {
     /**
      * Get the X and Y component of the vector, multiplied by the velocity modifier
      *
-     * @return The x,y components of the vector as an array [x,y]
+     * @return The x,y components of the vector as an array of floats [x,y]
      */
     public float[] getModified() {
         return new float[]{getXModified(), getXModified()};
@@ -82,7 +82,7 @@ public class VelocityComponent extends Vector2Component {
     /**
      * Add to the velocity modifier
      *
-     * @param v The value to add to the velocity modifier (should probably be <1.0f)
+     * @param v The value to add to the velocity modifier (should probably be less than 1.0f)
      */
     public void addToModifier(float v) {
         _velocityModifier += v;

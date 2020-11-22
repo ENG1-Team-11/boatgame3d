@@ -6,13 +6,14 @@ import io.github.eng1team11.boatgame2d.ecs.entity.IEntity;
 
 import java.util.HashMap;
 
+@SuppressWarnings("rawtypes")   // Suppress warnings about using `Class` directly (Need to find a way to not use `Class`)
 public class ComponentManager {
 
     // 1:1 mapping of class to id, id to class
-    HashMap<Class, Integer> _componentTypes = new HashMap<Class, Integer>();
-    HashMap<Integer, Class> _typesComponent = new HashMap<Integer, Class>();
+    HashMap<Class, Integer> _componentTypes = new HashMap<>();
+    HashMap<Integer, Class> _typesComponent = new HashMap<>();
 
-    HashMap<Integer, HashMap<Integer, IComponent>> _components = new HashMap<Integer, HashMap<Integer, IComponent>>();
+    HashMap<Integer, HashMap<Integer, IComponent>> _components = new HashMap<>();
 
     /**
      * Register a component type to the component manager
@@ -59,7 +60,7 @@ public class ComponentManager {
      * Get the component class which corresponds to a specific type ID
      *
      * @param id The ID to be looked up
-     * @return The component type as a Java Class object
+     * @return The component type as a Java `Class` object
      */
     public Class getIDComponentType(int id) {
         return _typesComponent.get(id);
@@ -100,7 +101,7 @@ public class ComponentManager {
     /**
      * Delete all components of one type
      *
-     * @param id the component type ID to delete
+     * @param id The component type ID to delete
      */
     public void deleteComponentsOfType(int id) {
         _components.remove(id);
@@ -110,7 +111,7 @@ public class ComponentManager {
      * Get all components of a specific type
      *
      * @param id The component type ID
-     * @return An ArrayList containing all components of a specific type
+     * @return An `ArrayList` containing all components of a specific type
      */
     public HashMap<Integer, IComponent> getComponentsOfType(int id) {
         return _components.get(id);
@@ -120,8 +121,9 @@ public class ComponentManager {
      * Get all components of a specific type
      *
      * @param type The component type (`Component.class`)
-     * @return An ArrayList containing all components of a specific type
+     * @return An `ArrayList` containing all components of a specific type
      */
+
     public HashMap<Integer, IComponent> getComponentsOfType(Class type) {
         int id = _componentTypes.get(type);
         return _components.get(id);

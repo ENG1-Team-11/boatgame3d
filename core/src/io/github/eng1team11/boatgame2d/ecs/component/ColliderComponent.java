@@ -10,7 +10,9 @@ public class ColliderComponent extends Component {
     /**
      * Default ctor for a component
      *
-     * @param id the ID of the a component
+     * @param id The ID of the component
+     * @param width The width of the collider
+     * @param height The height of the collider
      */
     public ColliderComponent(int id, float width, float height) {
         super(id);

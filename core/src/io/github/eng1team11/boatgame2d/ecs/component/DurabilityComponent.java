@@ -16,7 +16,7 @@ public class DurabilityComponent extends Component {
     /**
      * Default ctor for a component
      *
-     * @param id the ID of the a component
+     * @param id The ID of the component
      */
     public DurabilityComponent(int id) {
         super(id);
@@ -72,7 +72,7 @@ public class DurabilityComponent extends Component {
      * @return The durability as a fraction of the max durability as a float
      */
     public float getRemainingDurability() {
-        return (float) _value / (float) _maxValue;
+        return _value / _maxValue;
     }
 
     /**

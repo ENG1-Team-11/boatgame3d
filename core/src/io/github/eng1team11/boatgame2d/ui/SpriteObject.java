@@ -10,12 +10,12 @@ public class SpriteObject extends UIObject {
     Sprite _sprite;
 
     /**
-     * Default c'tor for a UI object
+     * Default c'tor for a Sprite Object
      *
      * @param position The position of the UI element (top-left corner)
      * @param parent   The parent object of the UI element
      * @param size     The size of the UI object
-     * @param sprite
+     * @param sprite   The sprite the object represents
      */
     SpriteObject(Vector2 position, UIObject parent, Vector2 size, Sprite sprite) {
         super(position, parent);
@@ -24,7 +24,7 @@ public class SpriteObject extends UIObject {
     }
 
     /**
-     * Should be overridden to implement custom behaviours
+     * Set the position of the sprite
      *
      * @param mouseX The x position of the mouse
      * @param mouseY The y position of the mouse
@@ -32,11 +32,12 @@ public class SpriteObject extends UIObject {
      */
     @Override
     public void update(float mouseX, float mouseY, boolean click) {
+        super.update(mouseX, mouseY, click);
         _sprite.setPosition(_absolutePosition._x, _absolutePosition._y);
     }
 
     /**
-     * Draw the object
+     * Draw the sprite
      *
      * @param spriteBatch The Sprite Batch to draw the object to
      */

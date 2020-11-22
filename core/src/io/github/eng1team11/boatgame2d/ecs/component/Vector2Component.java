@@ -10,7 +10,7 @@ public class Vector2Component extends Component {
     /**
      * Default ctor for a component
      *
-     * @param id the ID of the a component
+     * @param id The ID of the component
      */
     public Vector2Component(int id) {
         super(id);

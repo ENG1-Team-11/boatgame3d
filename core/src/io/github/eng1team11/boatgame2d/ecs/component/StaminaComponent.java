@@ -10,7 +10,7 @@ public class StaminaComponent extends Component {
     /**
      * Default ctor for a component
      *
-     * @param id the ID of the a component
+     * @param id The ID of the component
      */
     public StaminaComponent(int id) {
         super(id);

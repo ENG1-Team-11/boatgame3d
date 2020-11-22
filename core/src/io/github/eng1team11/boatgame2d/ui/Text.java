@@ -10,7 +10,7 @@ public class Text extends UIObject {
     BitmapFont _font;
 
     /**
-     * Default c'tor for a UI object
+     * Default c'tor for a Text object
      *
      * @param position The position of the UI element (top-left corner)
      * @param parent   The parent object of the UI element

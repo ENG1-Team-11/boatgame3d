@@ -18,7 +18,7 @@ public class Render extends System {
     /**
      * Default ctor for the Render system
      *
-     * @param spriteBatch The Engine's sprite batch
+     * @param spriteBatch The engine's sprite batch
      */
     public Render(SpriteBatch spriteBatch) {
         _spriteBatch = spriteBatch;
