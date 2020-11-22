@@ -2,7 +2,7 @@ sourceCompatibility = 1.7
 sourceSets.main.java.srcDirs = [ "src/" ]
 sourceSets.main.resources.srcDirs = ["../core/assets"]
 
-project.ext.mainClassName = "io.github.eng1team11.boatgame3d.desktop.DesktopLauncher"
+project.ext.mainClassName = "io.github.eng1team11.boatgame2d.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../core/assets")
 
 task run(dependsOn: classes, type: JavaExec) {
