@@ -3,7 +3,7 @@ package io.github.eng1team11.boatgame2d.ecs.component;
 /**
  * Represents a basic box collider component
  */
-public class ColliderComponent extends Component  {
+public class ColliderComponent extends Component {
 
     final float _width, _height;
 
@@ -18,11 +18,21 @@ public class ColliderComponent extends Component  {
         _height = height;
     }
 
-    public float GetWidth() {
+    /**
+     * Get the width of the collider
+     *
+     * @return The width of the collider as a float
+     */
+    public float getWidth() {
         return _width;
     }
 
-    public float GetHeight() {
+    /**
+     * Get the height of the collider
+     *
+     * @return The height of the collider as a float
+     */
+    public float getHeight() {
         return _height;
     }
 }

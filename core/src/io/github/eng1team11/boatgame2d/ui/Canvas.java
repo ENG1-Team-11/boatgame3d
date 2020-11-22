@@ -15,8 +15,8 @@ public class Canvas extends UIObject {
      * @param spriteBatch The Sprite Batch to draw the object to
      */
     @Override
-    public void Draw(SpriteBatch spriteBatch) {
-        super.Draw(spriteBatch);
+    public void draw(SpriteBatch spriteBatch) {
+        super.draw(spriteBatch);
     }
 
     /**
@@ -27,7 +27,7 @@ public class Canvas extends UIObject {
      * @param click  Whether or not the mouse has been clicked
      */
     @Override
-    public void Update(float mouseX, float mouseY, boolean click) {
-        super.Update(mouseX, mouseY, click);
+    public void update(float mouseX, float mouseY, boolean click) {
+        super.update(mouseX, mouseY, click);
     }
 }

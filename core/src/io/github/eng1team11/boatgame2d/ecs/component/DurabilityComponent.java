@@ -20,30 +20,22 @@ public class DurabilityComponent extends Component {
      */
     public DurabilityComponent(int id) {
         super(id);
-        SetDurabilityToMax();
+        setDurabilityToMax();
     }
 
     /**
      * Set the durability to the max value
      */
-    public void SetDurabilityToMax() {
+    public void setDurabilityToMax() {
         _value = _maxValue;
     }
 
     /**
-     * Set the durability value
-     *
-     * @param durability The value to set the durability to
-     */
-    public void SetDurability(float durability) {
-        _value = Math.max(0, Math.min(_maxValue, durability));
-    }
-
-    /**
      * Set the maximum durability
+     *
      * @param durability The value to set the maximum durability to
      */
-    public void SetMaxDurability(float durability) {
+    public void setMaxDurability(float durability) {
         _maxValue = durability;
     }
 
@@ -52,8 +44,8 @@ public class DurabilityComponent extends Component {
      *
      * @param durability The value to add to durability
      */
-    public void AddDurability(float durability) {
-        SetDurability(_value + (durability / _durabilityModifier));
+    public void addDurability(float durability) {
+        setDurability(_value + (durability / _durabilityModifier));
     }
 
     /**
@@ -61,8 +53,17 @@ public class DurabilityComponent extends Component {
      *
      * @return The durability as an integer
      */
-    public float GetDurability() {
+    public float getDurability() {
         return _value;
+    }
+
+    /**
+     * Set the durability value
+     *
+     * @param durability The value to set the durability to
+     */
+    public void setDurability(float durability) {
+        _value = Math.max(0, Math.min(_maxValue, durability));
     }
 
     /**
@@ -70,55 +71,70 @@ public class DurabilityComponent extends Component {
      *
      * @return The durability as a fraction of the max durability as a float
      */
-    public float GetRemainingDurability() {
+    public float getRemainingDurability() {
         return (float) _value / (float) _maxValue;
     }
 
     /**
      * Get the durability grace period (the time before the boat can be next hit)
+     *
      * @return The time before the boat can next be hit in seconds as a float
      */
-    public float GetGracePeriod() {
+    public float getGracePeriod() {
         return _gracePeriod;
     }
 
     /**
-     * Reduce the grace period by delta
-     * @param delta The time since the last frame
-     */
-    public void DecayGracePeriod(float delta) {
-        _gracePeriod -= delta;
-    }
-
-    /**
      * Set the grace period
+     *
      * @param t The value to set the grace period to
      */
-    public void SetGracePeriod(float t) {
+    public void setGracePeriod(float t) {
         _gracePeriod = t;
     }
 
     /**
+     * Reduce the grace period by delta
+     *
+     * @param delta The time since the last frame
+     */
+    public void decayGracePeriod(float delta) {
+        _gracePeriod -= delta;
+    }
+
+    /**
      * Set the durability to be reduced
+     *
      * @param r Whether or not durability needs to be reduced
      */
-    public void SetShouldReduce(boolean r) {
+    public void setShouldReduce(boolean r) {
         _shouldReduce = r;
     }
 
     /**
      * Get whether the durability needs to be reduced
+     *
      * @return Whether or not the durability should be reduced as a boolean
      */
-    public boolean ShouldReduce() {
+    public boolean shouldReduce() {
         return _shouldReduce;
     }
 
-    public void SetDurModifier(float m) {
-        _durabilityModifier = m;
+    /**
+     * Get the durability modifier
+     *
+     * @return The durability modifier as a float
+     */
+    public float getDurModifier() {
+        return _durabilityModifier;
     }
 
-    public float GetDurModifier() {
-        return _durabilityModifier;
+    /**
+     * Set the durability modifier
+     *
+     * @param m The value to set the durability modifier to
+     */
+    public void setDurModifier(float m) {
+        _durabilityModifier = m;
     }
 }

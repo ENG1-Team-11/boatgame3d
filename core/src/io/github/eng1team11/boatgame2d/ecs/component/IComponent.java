@@ -4,8 +4,9 @@ public interface IComponent {
 
     /**
      * Get the ID of the component
+     *
      * @return the ID of the component as an integer
      */
-    public int GetID();
+    public int getID();
 
 }

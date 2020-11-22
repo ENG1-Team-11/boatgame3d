@@ -2,13 +2,12 @@ package io.github.eng1team11.boatgame2d.ecs.entity;
 
 public class Entity implements IEntity {
 
-    // The ID of the entity
-    final int _id;
-    // Whether or not to update the entity
-    boolean _active;
+    final int _id;      // The ID of the entity
+    boolean _active;    // Whether or not to update the entity
 
     /**
      * Default ctor of the Entity
+     *
      * @param id The ID to assign to the entity
      */
     public Entity(int id) {
@@ -22,7 +21,7 @@ public class Entity implements IEntity {
      * @return The ID of the entity as an int
      */
     @Override
-    public int GetID() {
+    public int getID() {
         return _id;
     }
 
@@ -32,7 +31,7 @@ public class Entity implements IEntity {
      * @return The active state of the entity as a boolean
      */
     @Override
-    public boolean GetActive() {
+    public boolean getActive() {
         return _active;
     }
 
@@ -42,7 +41,7 @@ public class Entity implements IEntity {
      * @param state The boolean state to set the entity to
      */
     @Override
-    public void SetActive(boolean state) {
+    public void setActive(boolean state) {
         _active = state;
     }
 }

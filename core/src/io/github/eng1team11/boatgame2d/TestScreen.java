@@ -17,7 +17,11 @@ public class TestScreen implements Screen {
 
     Scene _scene;
 
-
+    /**
+     * Default ctor for the test screen
+     *
+     * @param game BoatGame instance
+     */
     public TestScreen(BoatGame game) {
         _game = game;
     }
@@ -25,45 +29,45 @@ public class TestScreen implements Screen {
     /**
      * Create all systems required for this game screen
      */
-    void CreateSystems() {
-        int aiControl = _game._systemManager.AddSystem(new AIControl());
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(AIComponent.class), aiControl);
+    void createSystems() {
+        int aiControl = _game._systemManager.addSystem(new AIControl());
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(AIComponent.class), aiControl);
 
-        int playerControl = _game._systemManager.AddSystem(new PlayerControl());
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(PlayerInputComponent.class), playerControl);
+        int playerControl = _game._systemManager.addSystem(new PlayerControl());
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(PlayerInputComponent.class), playerControl);
 
-        int stamina = _game._systemManager.AddSystem(new Stamina());
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(StaminaComponent.class), stamina);
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(VelocityComponent.class), stamina);
+        int stamina = _game._systemManager.addSystem(new Stamina());
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(StaminaComponent.class), stamina);
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(VelocityComponent.class), stamina);
 
-        int upgrade = _game._systemManager.AddSystem(new Upgrade());
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(UpgradeComponent.class), upgrade);
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(StaminaComponent.class), upgrade);
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(DurabilityComponent.class), upgrade);
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(VelocityComponent.class), upgrade);
+        int upgrade = _game._systemManager.addSystem(new Upgrade());
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(UpgradeComponent.class), upgrade);
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(StaminaComponent.class), upgrade);
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(DurabilityComponent.class), upgrade);
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(VelocityComponent.class), upgrade);
 
-        int collision = _game._systemManager.AddSystem(new Collision());
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(ColliderComponent.class), collision);
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(DurabilityComponent.class), collision);
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(VelocityComponent.class), collision);
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(SpriteComponent.class), collision);
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(PositionComponent.class), collision);
+        int collision = _game._systemManager.addSystem(new Collision());
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(ColliderComponent.class), collision);
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(DurabilityComponent.class), collision);
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(VelocityComponent.class), collision);
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(SpriteComponent.class), collision);
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(PositionComponent.class), collision);
 
-        int durability = _game._systemManager.AddSystem(new Durability());
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(DurabilityComponent.class), durability);
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(VelocityComponent.class), durability);
+        int durability = _game._systemManager.addSystem(new Durability());
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(DurabilityComponent.class), durability);
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(VelocityComponent.class), durability);
 
-        int movement = _game._systemManager.AddSystem(new Movement());
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(PositionComponent.class), movement);
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(VelocityComponent.class), movement);
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(AccelerationComponent.class), movement);
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(PlayerInputComponent.class), movement);
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(AIComponent.class), movement);
+        int movement = _game._systemManager.addSystem(new Movement());
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(PositionComponent.class), movement);
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(VelocityComponent.class), movement);
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(AccelerationComponent.class), movement);
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(PlayerInputComponent.class), movement);
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(AIComponent.class), movement);
 
-        int render = _game._systemManager.AddSystem(new Render(_game.GetSpriteBatch()));
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(PositionComponent.class), render);
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(SpriteComponent.class), render);
-        _game._systemManager.RegisterComponentsToSystem(_game._componentManager.GetComponentsOfType(TypeComponent.class), render);
+        int render = _game._systemManager.addSystem(new Render(_game.GetSpriteBatch()));
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(PositionComponent.class), render);
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(SpriteComponent.class), render);
+        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(TypeComponent.class), render);
     }
 
     /**
@@ -72,10 +76,10 @@ public class TestScreen implements Screen {
     @Override
     public void show() {
         _scene = new Scene();
-        _scene.GetCanvas().AttachObject(
+        _scene.getCanvas().attachObject(
                 new ButtonSprite(
                         new Vector2(),
-                        _scene.GetCanvas(),
+                        _scene.getCanvas(),
                         new Vector2(400, 150),
                         new Sprite(
                                 new Texture(Gdx.files.internal("placeholder.png")),
@@ -86,8 +90,8 @@ public class TestScreen implements Screen {
                 )
         );
 
-        CreateSystems();
-        EntityFactory.Get().CreatePlayer(
+        createSystems();
+        EntityFactory.get().createPlayerEntity(
                 _game._componentManager,
                 _game._entityManager,
                 75,
@@ -96,7 +100,7 @@ public class TestScreen implements Screen {
                 100,
                 new Texture(Gdx.files.internal("badlogic.jpg"))
         );
-        EntityFactory.Get().CreateAI(
+        EntityFactory.get().createAIEntity(
                 _game._componentManager,
                 _game._entityManager,
                 -75,
@@ -115,9 +119,9 @@ public class TestScreen implements Screen {
     @Override
     public void render(float delta) {
         _game.GetSpriteBatch().begin();
-        _game._systemManager.Update(delta);
-        _scene.Update(delta);
-        _scene.Draw(delta, _game.GetSpriteBatch());
+        _game._systemManager.update(delta);
+        _scene.update(delta);
+        _scene.draw(delta, _game.GetSpriteBatch());
         _game.GetSpriteBatch().end();
     }
 

@@ -18,65 +18,73 @@ public class ControllerComponent extends Component {
 
     /**
      * Get the value of the left input state
+     *
      * @return the left input state as a boolean
      */
-    public boolean GetLeft() {
+    public boolean getLeft() {
         return _left;
     }
 
     /**
-     * Get the value of the right input state
-     * @return the right input state as a boolean
-     */
-    public boolean GetRight() {
-        return _right;
-    }
-
-    /**
      * Set the left input state
+     *
      * @param v Whether the left key is pressed
      */
-    public void SetLeft(boolean v) {
+    public void setLeft(boolean v) {
         _left = v;
     }
 
     /**
+     * Get the value of the right input state
+     *
+     * @return the right input state as a boolean
+     */
+    public boolean getRight() {
+        return _right;
+    }
+
+    /**
      * Set the right input state
+     *
      * @param v Whether the right key is pressed
      */
-    public void SetRight(boolean v) {
+    public void setRight(boolean v) {
         _right = v;
     }
 
     /**
      * Get the value of the left input state
+     *
      * @return the left input state as a boolean
      */
-    public boolean GetForwards() {
+    public boolean getForwards() {
         return _forwards;
     }
 
     /**
-     * Get the value of the right input state
-     * @return the right input state as a boolean
-     */
-    public boolean GetBackwards() {
-        return _backwards;
-    }
-
-    /**
      * Set the left input state
+     *
      * @param v Whether the left key is pressed
      */
-    public void SetForwards(boolean v) {
+    public void setForwards(boolean v) {
         _forwards = v;
     }
 
     /**
+     * Get the value of the right input state
+     *
+     * @return the right input state as a boolean
+     */
+    public boolean getBackwards() {
+        return _backwards;
+    }
+
+    /**
      * Set the right input state
+     *
      * @param v Whether the right key is pressed
      */
-    public void SetBackwards(boolean v) {
+    public void setBackwards(boolean v) {
         _backwards = v;
     }
 }

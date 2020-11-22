@@ -11,7 +11,7 @@ public class Upgrade extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Input(float delta) {
+    public void input(float delta) {
 
     }
 
@@ -21,17 +21,20 @@ public class Upgrade extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Update(float delta) {
+    public void update(float delta) {
+        // Iterate over all relevant components
         for (Map.Entry<Integer, IComponent> comp : _affectedComponents.get(0).entrySet()) {
             int id = comp.getKey();
+            // Get any other required components
             UpgradeComponent upgrade = (UpgradeComponent) comp.getValue();
             StaminaComponent sta = (StaminaComponent) _affectedComponents.get(1).get(id);
             DurabilityComponent dur = (DurabilityComponent) _affectedComponents.get(2).get(id);
             VelocityComponent vel = (VelocityComponent) _affectedComponents.get(3).get(id);
 
-            sta.SetDecayModifier(upgrade.GetStaMod());
-            dur.SetDurModifier(upgrade.GetDurMod());
-            vel.SetModifier(upgrade.GetVelMod());
+            // Set the modifiers
+            sta.setDecayModifier(upgrade.getStaMod());
+            dur.setDurModifier(upgrade.getDurMod());
+            vel.setModifier(upgrade.getVelMod());
         }
     }
 
@@ -41,7 +44,7 @@ public class Upgrade extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Render(float delta) {
+    public void render(float delta) {
 
     }
 }

@@ -10,21 +10,22 @@ public class Movement extends System {
     final float _drag = 0.05f;
 
     /**
+     * Default c'tor
+     */
+    public Movement() {
+
+    }
+
+    /**
      * Linear interpolate between two values
+     *
      * @param a The value to interpolate from
      * @param b The value to interpolate to
      * @param t The amount to interpolate by each step
      * @return The partially interpolated value
      */
     float Lerp(float a, float b, float t) {
-        return a + (b-a) * t;
-    }
-
-    /**
-     * Default c'tor
-     */
-    public Movement() {
-
+        return a + (b - a) * t;
     }
 
     /**
@@ -33,7 +34,7 @@ public class Movement extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Input(float delta) {
+    public void input(float delta) {
 
     }
 
@@ -43,43 +44,47 @@ public class Movement extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Update(float delta) {
+    public void update(float delta) {
+        // Iterate over all relevant components
         for (Map.Entry<Integer, IComponent> kv : _affectedComponents.get(0).entrySet()) {
             int id = kv.getKey();
+            // Get the other components of the entity
             PositionComponent position = (PositionComponent) kv.getValue();
             VelocityComponent velocity = (VelocityComponent) _affectedComponents.get(1).get(id);
             AccelerationComponent acceleration = (AccelerationComponent) _affectedComponents.get(2).get(id);
 
-
+            // Try to get the PlayerInput and cast to a generic controller
             ControllerComponent controller = (ControllerComponent) _affectedComponents.get(3).get(id);
             // If it's not a PlayerInput, try looking for an AI instead
             if (controller == null) {
                 controller = (ControllerComponent) _affectedComponents.get(4).get(id);
             }
 
-            if (velocity == null || controller == null) continue;
+            // If we're missing any components, skip this object
+            if (velocity == null || controller == null || acceleration == null || position == null) continue;
 
-            if (controller.GetLeft()) {
-                velocity.Add(-acceleration.GetAccelerationModified(), 0.0f);
+            // Add velocity to the entity based on what input it's given
+            if (controller.getLeft()) {
+                velocity.add(-acceleration.getAccelerationModified(), 0.0f);
             }
-            if (controller.GetRight()) {
-                velocity.Add(acceleration.GetAccelerationModified(), 0.0f);
+            if (controller.getRight()) {
+                velocity.add(acceleration.getAccelerationModified(), 0.0f);
             }
-            if (controller.GetForwards()) {
-                velocity.Add(0.0f, acceleration.GetAccelerationModified());
+            if (controller.getForwards()) {
+                velocity.add(0.0f, acceleration.getAccelerationModified());
             }
-            if (controller.GetBackwards()) {
-                velocity.Add(0.0f, -acceleration.GetAccelerationModified());
+            if (controller.getBackwards()) {
+                velocity.add(0.0f, -acceleration.getAccelerationModified());
             }
 
             // If we're not moving, apply drag
-            if (!(controller.GetLeft() | controller.GetRight())) {
-                velocity.SetX(Lerp(velocity.GetX(), 0.0f, _drag));
-                velocity.SetY(Lerp(velocity.GetY(), 0.0f, _drag));
+            if (!(controller.getLeft() | controller.getRight())) {
+                velocity.setX(Lerp(velocity.getX(), 0.0f, _drag));
+                velocity.setY(Lerp(velocity.getY(), 0.0f, _drag));
             }
 
             // Add velocity to position, accounting for the durability
-            position.Add(velocity.GetXModified() * delta, velocity.GetYModified() * delta);
+            position.add(velocity.getXModified() * delta, velocity.getYModified() * delta);
         }
     }
 
@@ -89,7 +94,7 @@ public class Movement extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Render(float delta) {
+    public void render(float delta) {
 
     }
 

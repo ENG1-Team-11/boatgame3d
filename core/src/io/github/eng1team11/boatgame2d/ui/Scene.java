@@ -13,33 +13,46 @@ public class Scene {
     }
 
     /**
+     * Get the current working canvas
+     *
+     * @return The current canvas object
+     */
+    public Canvas getCanvas() {
+        return _currentCanvas;
+    }
+
+    /**
      * Set the current working canvas
+     *
      * @param canvas The canvas to draw
      */
-    public void SetCanvas(Canvas canvas) {
+    public void setCanvas(Canvas canvas) {
         _currentCanvas = canvas;
     }
 
     /**
-     * Get the current working canvas
-     * @return The current canvas object
+     * Update all objects in the current scene
+     *
+     * @param delta The time since the last frame in seconds
      */
-    public Canvas GetCanvas() {
-        return _currentCanvas;
-    }
-
-    public void Update(float delta) {
+    public void update(float delta) {
         if (_currentCanvas == null) return;
 
         float mouseX = Gdx.input.getX();
         float mouseY = Gdx.input.getX();
         boolean click = Gdx.input.isButtonJustPressed(0);
-        _currentCanvas.Update(mouseX, mouseY, click);
+        _currentCanvas.update(mouseX, mouseY, click);
     }
 
-    public void Draw(float delta, SpriteBatch batch) {
+    /**
+     * Draw all objects in the current scene
+     *
+     * @param delta The time since the last frame in seconds
+     * @param batch The sprite batch to draw to
+     */
+    public void draw(float delta, SpriteBatch batch) {
         if (_currentCanvas == null) return;
-        _currentCanvas.Draw(batch);
+        _currentCanvas.draw(batch);
     }
 
 }

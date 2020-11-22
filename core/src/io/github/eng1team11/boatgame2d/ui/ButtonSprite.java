@@ -9,7 +9,6 @@ public class ButtonSprite extends SpriteObject {
     Runnable _hoverCB;
     Runnable _pressCB;
 
-    ;
     State _state;
 
     /**
@@ -33,18 +32,18 @@ public class ButtonSprite extends SpriteObject {
      * @param click  Whether or not the mouse has been clicked
      */
     @Override
-    public void Update(float mouseX, float mouseY, boolean click) {
-        super.Update(mouseX, mouseY, click);
+    public void update(float mouseX, float mouseY, boolean click) {
+        super.update(mouseX, mouseY, click);
         if (mouseX > _position._x && mouseX < _position._x + _size._x) {
             if (mouseY < _position._y && mouseY > _position._y - _size._y) {
                 if (click) {
-                    OnPress();
+                    onPress();
                     return;
                 } else if (_state == State.Press) {
-                    OnRelease();
+                    onRelease();
                     return;
                 } else {
-                    OnHover();
+                    onHover();
                     return;
                 }
             }
@@ -54,32 +53,35 @@ public class ButtonSprite extends SpriteObject {
 
     /**
      * Set the callback to be run when the button is released
+     *
      * @param fn A runnable object to call
      */
-    public void SetReleaseCallback(Runnable fn) {
+    public void setReleaseCallback(Runnable fn) {
         _releaseCB = fn;
     }
 
     /**
      * Set the callback to be run when the button is pressed
+     *
      * @param fn A runnable object to call
      */
-    public void SetPressCallback(Runnable fn) {
+    public void setPressCallback(Runnable fn) {
         _pressCB = fn;
     }
 
     /**
      * Set the callback to be run when the button is hovered over
+     *
      * @param fn A runnable object to call
      */
-    public void SetHoverCallback(Runnable fn) {
+    public void setHoverCallback(Runnable fn) {
         _hoverCB = fn;
     }
 
     /**
      * Hover callback
      */
-    public void OnHover() {
+    public void onHover() {
         _state = State.Hover;
         if (_hoverCB != null)
             _hoverCB.run();
@@ -88,7 +90,7 @@ public class ButtonSprite extends SpriteObject {
     /**
      * Press callback
      */
-    public void OnPress() {
+    public void onPress() {
         _state = State.Press;
         if (_pressCB != null)
             _pressCB.run();
@@ -97,7 +99,7 @@ public class ButtonSprite extends SpriteObject {
     /**
      * Release callback
      */
-    public void OnRelease() {
+    public void onRelease() {
         _state = State.None;
         if (_releaseCB != null)
             _releaseCB.run();

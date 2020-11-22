@@ -13,18 +13,20 @@ public class PlayerInputComponent extends ControllerComponent {
     }
 
     /**
-     * Set the mouse input
-     * @param v The value of the mouse input..?
+     * Get the value of the mouse input
+     *
+     * @return the mouse input as a float
      */
-    public void SetMouse(float v) {
-        _mouse = v;
+    public float getMouse() {
+        return _mouse;
     }
 
     /**
-     * Get the value of the mouse input
-     * @return the mouse input as a float
+     * Set the mouse input
+     *
+     * @param v The value of the mouse input..?
      */
-    public float GetMouse() {
-        return _mouse;
+    public void setMouse(float v) {
+        _mouse = v;
     }
 }

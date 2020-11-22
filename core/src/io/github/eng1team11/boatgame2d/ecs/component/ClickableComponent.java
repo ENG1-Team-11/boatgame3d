@@ -14,7 +14,10 @@ public class ClickableComponent extends Component {
         super(id);
     }
 
-    public void RunFunction() {
+    /**
+     * Run the function attached to the clickable component
+     */
+    public void runFunction() {
         _function.run();
     }
 }

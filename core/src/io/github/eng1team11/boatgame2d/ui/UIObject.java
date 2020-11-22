@@ -22,8 +22,8 @@ public class UIObject {
     UIObject(Vector2 position, UIObject parent) {
         _position = position;
         _absolutePosition = new Vector2();
-        _absolutePosition = GetPositionAbsolute(_absolutePosition);
-        SetParent(parent);
+        _absolutePosition = getPositionAbsolute(_absolutePosition);
+        setParent(parent);
     }
 
     /**
@@ -33,32 +33,33 @@ public class UIObject {
      * @param mouseY The y position of the mouse
      * @param click  Whether or not the mouse has been clicked
      */
-    public void Update(float mouseX, float mouseY, boolean click) {
+    public void update(float mouseX, float mouseY, boolean click) {
         for (UIObject child : _children) {
-            child.Update(mouseX, mouseY, click);
+            child.update(mouseX, mouseY, click);
         }
     }
 
     /**
      * Draw the object.  Make sure to run `super.Draw(spriteBatch)` first on derived objects
+     *
      * @param spriteBatch The Sprite Batch to draw the object to
      */
-    public void Draw(SpriteBatch spriteBatch) {
+    public void draw(SpriteBatch spriteBatch) {
         for (UIObject child : _children) {
-            child.Draw(spriteBatch);
+            child.draw(spriteBatch);
         }
     }
 
-    public void AttachObject(UIObject object) {
+    public void attachObject(UIObject object) {
         _children.add(object);
         object._parent = this;
     }
 
-    public void SetParent(UIObject object) {
+    public void setParent(UIObject object) {
         if (object != null) {
             _parent = object;
-            _absolutePosition.Zero();
-            GetPositionAbsolute(_absolutePosition);
+            _absolutePosition.zero();
+            getPositionAbsolute(_absolutePosition);
         }
         _absolutePosition = _position;
     }
@@ -69,9 +70,9 @@ public class UIObject {
      * @param pos The current position
      * @return The position + the current position, as a Vector2
      */
-    private Vector2 GetPositionAbsolute(Vector2 pos) {
-        if (_parent != null) _parent.GetPositionAbsolute(pos);
-        pos.Add(_position);
+    private Vector2 getPositionAbsolute(Vector2 pos) {
+        if (_parent != null) _parent.getPositionAbsolute(pos);
+        pos.add(_position);
         return pos;
     }
 
@@ -80,7 +81,7 @@ public class UIObject {
      *
      * @return The absolute position of the UI element, as a Vector2
      */
-    public Vector2 GetPositionAbsolute() {
+    public Vector2 getPositionAbsolute() {
         return _absolutePosition;
     }
 
@@ -89,7 +90,7 @@ public class UIObject {
      *
      * @return The position of the UI element relative to its parent, as a Vector2
      */
-    public Vector2 GetPosition() {
+    public Vector2 getPosition() {
         return _position;
     }
 

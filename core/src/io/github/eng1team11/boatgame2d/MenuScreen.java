@@ -12,6 +12,11 @@ public class MenuScreen implements Screen {
     private final BoatGame _game;
     private OrthographicCamera _guiCamera;
 
+    /**
+     * Default ctor for the menu screen
+     *
+     * @param boatGame The boat game this is attached to
+     */
     public MenuScreen(final BoatGame boatGame) {
         _game = boatGame;
 

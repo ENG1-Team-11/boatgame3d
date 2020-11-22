@@ -1,7 +1,6 @@
 package io.github.eng1team11.boatgame2d.ui;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.eng1team11.boatgame2d.util.Vector2;
 
 public class Image extends SpriteObject {
@@ -25,9 +24,9 @@ public class Image extends SpriteObject {
      * @param click  Whether or not the mouse has been clicked
      */
     @Override
-    public void Update(float mouseX, float mouseY, boolean click) {
-        super.Update(mouseX, mouseY, click);
+    public void update(float mouseX, float mouseY, boolean click) {
+        super.update(mouseX, mouseY, click);
         // Do nothing, *it's an image*
     }
-    
+
 }

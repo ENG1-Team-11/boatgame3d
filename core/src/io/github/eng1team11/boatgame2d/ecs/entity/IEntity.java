@@ -4,19 +4,22 @@ public interface IEntity {
 
     /**
      * Get the ID of the entity
+     *
      * @return The ID of the entity as an int
      */
-    public int GetID();
+    public int getID();
 
     /**
      * Get the active state of the entity
+     *
      * @return The active state of the entity as a boolean
      */
-    public boolean GetActive();
+    public boolean getActive();
 
     /**
      * Se the active state of the entity
+     *
      * @param state The boolean state to set the entity to
      */
-    public void SetActive(boolean state);
+    public void setActive(boolean state);
 }

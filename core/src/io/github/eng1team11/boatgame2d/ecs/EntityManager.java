@@ -11,9 +11,10 @@ public class EntityManager {
 
     /**
      * Create a new entity
+     *
      * @return The ID of the new entity
      */
-    public int CreateEntity() {
+    public int createEntity() {
         int index = _entities.size();
         _entities.put(index, new Entity(index));
         return index;
@@ -21,28 +22,23 @@ public class EntityManager {
 
     /**
      * Get an Entity
+     *
      * @param id The ID of the entity
      * @return An IEntity object representing the entity
      */
-    public IEntity GetEntity(int id) {
+    public IEntity getEntity(int id) {
         return _entities.get(id);
     }
 
     /**
      * Delete an entity
+     *
      * @param id The ID of the entity to delete
      */
-    public void DeleteEntity(int id) {
+    public void deleteEntity(int id) {
         if (_entities.get(id) != null) {
             _entities.remove(id);
         }
-    }
-
-
-    public static int CreatePlayer(EntityManager em, ComponentManager cm, float posX, float posY, String sprite) {
-        int id = em.CreateEntity();
-
-        return id;
     }
 
 }

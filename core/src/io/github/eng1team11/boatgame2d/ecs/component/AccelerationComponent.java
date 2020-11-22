@@ -14,19 +14,39 @@ public class AccelerationComponent extends Component {
         super(id);
     }
 
-    public void SetModifier(float m) {
-        _accelerationModifier = m;
-    }
-
-    public float GetModifier() {
+    /**
+     * Get the acceleration modifier
+     *
+     * @return The acceleration modifier as a float
+     */
+    public float getModifier() {
         return _accelerationModifier;
     }
 
-    public float GetAcceleration() {
+    /**
+     * Set the acceleration modifier
+     *
+     * @param m The value to set the acceleration modifier to
+     */
+    public void setModifier(float m) {
+        _accelerationModifier = m;
+    }
+
+    /**
+     * Get the base acceleration
+     *
+     * @return The base acceleration, unaffected by any modifiers, as a float
+     */
+    public float getAcceleration() {
         return _acceleration;
     }
 
-    public float GetAccelerationModified() {
+    /**
+     * Get the modified acceleration
+     *
+     * @return The acceleration, modified by the acceleration modifier, as a float
+     */
+    public float getAccelerationModified() {
         return _accelerationModifier * _acceleration;
     }
 }

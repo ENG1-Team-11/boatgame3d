@@ -14,8 +14,8 @@ public class Durability extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Input(float delta) {
-        super.Input(delta);
+    public void input(float delta) {
+        super.input(delta);
     }
 
     /**
@@ -24,22 +24,28 @@ public class Durability extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Update(float delta) {
-        delta = 0.1f;
-        super.Update(delta);
+    public void update(float delta) {
+        super.update(delta);
+        // Iterate over all entities
         for (Map.Entry<Integer, IComponent> comp : _affectedComponents.get(0).entrySet()) {
             int id = comp.getKey();
+            // Get the components of the entity
             DurabilityComponent durability = (DurabilityComponent) comp.getValue();
             VelocityComponent velocity = (VelocityComponent) _affectedComponents.get(1).get(id);
 
-            durability.DecayGracePeriod(delta);
+            // If the entity is missing a component, skip it
+            if (velocity == null) continue;
 
-            if (durability.ShouldReduce()) {
-                if (durability.GetGracePeriod() < 0.0f) {
-                    durability.AddDurability(-1);
-                    durability.SetGracePeriod(1.0f);
-                    durability.SetShouldReduce(false);
-                    velocity.SetDurModifier(durability.GetRemainingDurability());
+            // Decay the damage grace period of the entity
+            durability.decayGracePeriod(delta);
+
+            // If the durability should be reduced it, set the durability to durability - 1
+            if (durability.shouldReduce()) {
+                if (durability.getGracePeriod() < 0.0f) {
+                    durability.addDurability(-1);
+                    durability.setGracePeriod(1.0f);
+                    durability.setShouldReduce(false);
+                    velocity.setDurModifier(durability.getRemainingDurability());
                 }
             }
         }
@@ -51,7 +57,7 @@ public class Durability extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Render(float delta) {
-        super.Render(delta);
+    public void render(float delta) {
+        super.render(delta);
     }
 }

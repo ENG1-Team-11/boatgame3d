@@ -34,7 +34,7 @@ public class Render extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Input(float delta) {
+    public void input(float delta) {
 
     }
 
@@ -44,14 +44,14 @@ public class Render extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Update(float delta) {
+    public void update(float delta) {
         int componentCount = _affectedComponents.get(0).size();
         for (Map.Entry<Integer, IComponent> kv : _affectedComponents.get(1).entrySet()) {
             int id = kv.getKey();
             PositionComponent position = (PositionComponent) _affectedComponents.get(0).get(id);
             SpriteComponent sprite = (SpriteComponent) kv.getValue();
             if (position == null) continue;
-            sprite._base.setPosition(position.GetX(), position.GetY());
+            sprite._base.setPosition(position.getX(), position.getY());
         }
     }
 
@@ -61,7 +61,7 @@ public class Render extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Render(float delta) {
+    public void render(float delta) {
         // Update the camera
         _camera.update();
         // Use the camera's projection matrix to update the batch

@@ -8,7 +8,7 @@ public class AIControl extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Input(float delta) {
+    public void input(float delta) {
         // No steps performed during input phase, AI takes no human input
     }
 
@@ -18,7 +18,7 @@ public class AIControl extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Update(float delta) {
+    public void update(float delta) {
 
     }
 
@@ -28,7 +28,7 @@ public class AIControl extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Render(float delta) {
+    public void render(float delta) {
 
     }
 }

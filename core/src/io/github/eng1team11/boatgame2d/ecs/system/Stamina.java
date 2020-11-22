@@ -4,7 +4,6 @@ import io.github.eng1team11.boatgame2d.ecs.component.IComponent;
 import io.github.eng1team11.boatgame2d.ecs.component.StaminaComponent;
 import io.github.eng1team11.boatgame2d.ecs.component.VelocityComponent;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Stamina extends System {
@@ -14,7 +13,7 @@ public class Stamina extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Input(float delta) {
+    public void input(float delta) {
 
     }
 
@@ -24,17 +23,22 @@ public class Stamina extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Update(float delta) {
+    public void update(float delta) {
+        // Iterate over all relevant components
         for (Map.Entry<Integer, IComponent> kv : _affectedComponents.get(0).entrySet()) {
             int id = kv.getKey();
+            // Get any other required components
             StaminaComponent stamina = (StaminaComponent) kv.getValue();
             VelocityComponent velocity = (VelocityComponent) _affectedComponents.get(1).get(id);
 
-            stamina.DecayStamina(delta);
+            // Decay the stamina
+            stamina.decayStamina(delta);
 
+            // If we don't have a velocity component, skip this
             if (velocity == null) continue;
 
-            velocity.SetStaModifier(stamina.GetRemainingStamina());
+            // Set the stamina modifier of velocity to the remaining stamina
+            velocity.setStaModifier(stamina.getRemainingStamina());
         }
     }
 
@@ -44,7 +48,7 @@ public class Stamina extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Render(float delta) {
+    public void render(float delta) {
 
     }
 }

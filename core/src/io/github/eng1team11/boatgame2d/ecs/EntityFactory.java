@@ -2,51 +2,123 @@ package io.github.eng1team11.boatgame2d.ecs;
 
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import io.github.eng1team11.boatgame2d.ecs.component.*;
 
 public class EntityFactory {
 
-    public static EntityFactory ef = new EntityFactory();
+    public static EntityFactory ef = new EntityFactory();   // Static object
 
-    private EntityFactory() {};
+    /**
+     * Private c'tor
+     */
+    private EntityFactory() {
+    }
 
-    public static EntityFactory Get() { return ef; }
+    ;
 
-    public int CreateDrawableObject(ComponentManager cm, EntityManager em, float x, float y, int width, int height, Texture texture) {
-        int object = em.CreateEntity();
-        cm.AddComponent(object, new SpriteComponent(object, texture, width, height));
-        cm.AddComponent(object, new PositionComponent(object, x, y));
+    /**
+     * Singleton getter method
+     *
+     * @return The single object
+     */
+    public static EntityFactory get() {
+        return ef;
+    }
+
+    /**
+     * Create a new drawable entity
+     *
+     * @param cm      The component manager
+     * @param em      The entity manager
+     * @param x       The x position of the object
+     * @param y       The y position of the object
+     * @param width   The width of the object
+     * @param height  The height of the object
+     * @param texture The texture to give the object
+     * @return The ID of the new entity
+     */
+    public int createDrawableEntity(ComponentManager cm, EntityManager em, float x, float y, int width, int height, Texture texture) {
+        int object = em.createEntity();
+        cm.addComponent(object, new SpriteComponent(object, texture, width, height));
+        cm.addComponent(object, new PositionComponent(object, x, y));
         return object;
     }
 
-    public int CreateBoat(ComponentManager cm, EntityManager em, float x, float y, int width, int height, Texture texture) {
-        int boat = CreateDrawableObject(cm ,em, x, y, width, height, texture);
-        cm.AddComponent(boat, new ColliderComponent(boat, width, height));
-        cm.AddComponent(boat, new UpgradeComponent(boat));
-        cm.AddComponent(boat, new AccelerationComponent(boat));
-        cm.AddComponent(boat, new DurabilityComponent(boat));
-        cm.AddComponent(boat, new StaminaComponent(boat));
-        cm.AddComponent(boat, new VelocityComponent(boat));
+    /**
+     * Create a new boat entity
+     *
+     * @param cm      The component manager
+     * @param em      The entity manager
+     * @param x       The x position of the object
+     * @param y       The y position of the object
+     * @param width   The width of the object
+     * @param height  The height of the object
+     * @param texture The texture to give the object
+     * @return The ID of the new entity
+     */
+    public int createBoatEntity(ComponentManager cm, EntityManager em, float x, float y, int width, int height, Texture texture) {
+        int boat = createDrawableEntity(cm, em, x, y, width, height, texture);
+        cm.addComponent(boat, new ColliderComponent(boat, width, height));
+        cm.addComponent(boat, new UpgradeComponent(boat));
+        cm.addComponent(boat, new AccelerationComponent(boat));
+        cm.addComponent(boat, new DurabilityComponent(boat));
+        cm.addComponent(boat, new StaminaComponent(boat));
+        cm.addComponent(boat, new VelocityComponent(boat));
         return boat;
     }
 
-    public int CreatePlayer(ComponentManager cm, EntityManager em, float x, float y, int width, int height, Texture texture) {
-        int player = CreateBoat(cm, em, x, y, width, height, texture);
-        cm.AddComponent(player, new PlayerInputComponent(player));
-        cm.AddComponent(player, new CurrencyComponent(player));
+    /**
+     * Create a new player boat entity
+     *
+     * @param cm      The component manager
+     * @param em      The entity manager
+     * @param x       The x position of the object
+     * @param y       The y position of the object
+     * @param width   The width of the object
+     * @param height  The height of the object
+     * @param texture The texture to give the object
+     * @return The ID of the new entity
+     */
+    public int createPlayerEntity(ComponentManager cm, EntityManager em, float x, float y, int width, int height, Texture texture) {
+        int player = createBoatEntity(cm, em, x, y, width, height, texture);
+        cm.addComponent(player, new PlayerInputComponent(player));
+        cm.addComponent(player, new CurrencyComponent(player));
         return player;
     }
 
-    public int CreateAI(ComponentManager cm, EntityManager em, float x, float y, int width, int height, Texture texture) {
-        int ai = CreateBoat(cm, em, x, y, width, height, texture);
-        cm.AddComponent(ai, new AIComponent(ai));
+    /**
+     * Create a new AI boat entity
+     *
+     * @param cm      The component manager
+     * @param em      The entity manager
+     * @param x       The x position of the object
+     * @param y       The y position of the object
+     * @param width   The width of the object
+     * @param height  The height of the object
+     * @param texture The texture to give the object
+     * @return The ID of the new entity
+     */
+    public int createAIEntity(ComponentManager cm, EntityManager em, float x, float y, int width, int height, Texture texture) {
+        int ai = createBoatEntity(cm, em, x, y, width, height, texture);
+        cm.addComponent(ai, new AIComponent(ai));
         return ai;
     }
 
-    public int CreateObstacle(ComponentManager cm, EntityManager em, float x, float y, int width, int height, Texture texture) {
-        int obstacle = CreateDrawableObject(cm, em, x, y, width, height, texture);
-        cm.AddComponent(obstacle, new ColliderComponent(obstacle, width, height));
+    /**
+     * Create a new obstacle entity
+     *
+     * @param cm      The component manager
+     * @param em      The entity manager
+     * @param x       The x position of the object
+     * @param y       The y position of the object
+     * @param width   The width of the object
+     * @param height  The height of the object
+     * @param texture The texture to give the object
+     * @return The ID of the new entity
+     */
+    public int createObstacleEntity(ComponentManager cm, EntityManager em, float x, float y, int width, int height, Texture texture) {
+        int obstacle = createDrawableEntity(cm, em, x, y, width, height, texture);
+        cm.addComponent(obstacle, new ColliderComponent(obstacle, width, height));
         return obstacle;
     }
 

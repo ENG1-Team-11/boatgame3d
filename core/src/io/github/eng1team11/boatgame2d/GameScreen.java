@@ -9,13 +9,13 @@ public class GameScreen implements Screen {
 
     private final BoatGame _game;
 
+    /**
+     * Default ctor for the game screen
+     *
+     * @param boatGame The BoatGame this screen is attached to
+     */
     public GameScreen(final BoatGame boatGame) {
         _game = boatGame;
-    }
-
-    void CreatePlayer() {
-        int boat = _game._entityManager.CreateEntity();
-//        boat._playerInput = _game._componentManager.AddComponent(PlayerInput.class);
     }
 
     /**
@@ -24,17 +24,14 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         // Create all systems required for this game state
-        _game._systemManager.AddSystem(new AIControl());
-        _game._systemManager.AddSystem(new Collision());
-        _game._systemManager.AddSystem(new InLane());
-        _game._systemManager.AddSystem(new Movement());
-        _game._systemManager.AddSystem(new PlayerControl());
-        _game._systemManager.AddSystem(new Render(_game.GetSpriteBatch()));
-        _game._systemManager.AddSystem(new Stamina());
-        _game._systemManager.AddSystem(new Upgrade());
-
-        // Create the player
-        CreatePlayer();
+        _game._systemManager.addSystem(new AIControl());
+        _game._systemManager.addSystem(new Collision());
+        _game._systemManager.addSystem(new InLane());
+        _game._systemManager.addSystem(new Movement());
+        _game._systemManager.addSystem(new PlayerControl());
+        _game._systemManager.addSystem(new Render(_game.GetSpriteBatch()));
+        _game._systemManager.addSystem(new Stamina());
+        _game._systemManager.addSystem(new Upgrade());
     }
 
     /**
@@ -45,8 +42,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        _game._systemManager.Update(delta);
-
+        _game._systemManager.update(delta);
 
 
         // Set the screen clear colour to black

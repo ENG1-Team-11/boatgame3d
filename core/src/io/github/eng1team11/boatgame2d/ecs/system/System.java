@@ -16,7 +16,7 @@ public class System implements ISystem {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Input(float delta) {
+    public void input(float delta) {
 
     }
 
@@ -26,7 +26,7 @@ public class System implements ISystem {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Update(float delta) {
+    public void update(float delta) {
 
     }
 
@@ -36,7 +36,7 @@ public class System implements ISystem {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Render(float delta) {
+    public void render(float delta) {
 
     }
 
@@ -46,7 +46,7 @@ public class System implements ISystem {
      * @param components An ArrayList of all the components the system will manage
      */
     @Override
-    public void RegisterComponents(HashMap<Integer, IComponent> components) {
+    public void registerComponents(HashMap<Integer, IComponent> components) {
         _affectedComponents.add(components);
     }
 }

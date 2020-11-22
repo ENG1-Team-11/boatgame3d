@@ -20,7 +20,7 @@ public class PlayerControl extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Input(float delta) {
+    public void input(float delta) {
 
         // Temporary variables to assign left/right values to
         boolean left = false;
@@ -44,11 +44,11 @@ public class PlayerControl extends System {
 
         // Iterate over all player inputs attached to the system and update them
         for (IComponent comp : _affectedComponents.get(0).values()) {
-            PlayerInputComponent pi  = (PlayerInputComponent) comp;
-            pi.SetLeft(left);
-            pi.SetRight(right);
-            pi.SetForwards(forwards);
-            pi.SetBackwards(backwards);
+            PlayerInputComponent pi = (PlayerInputComponent) comp;
+            pi.setLeft(left);
+            pi.setRight(right);
+            pi.setForwards(forwards);
+            pi.setBackwards(backwards);
         }
     }
 
@@ -58,7 +58,7 @@ public class PlayerControl extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Update(float delta) {
+    public void update(float delta) {
 
     }
 
@@ -68,7 +68,7 @@ public class PlayerControl extends System {
      * @param delta The time since the completion of the last frame in seconds
      */
     @Override
-    public void Render(float delta) {
+    public void render(float delta) {
 
     }
 }
