@@ -2,7 +2,6 @@ package io.github.eng1team11.boatgame2d;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.eng1team11.boatgame2d.ecs.ComponentManager;
 import io.github.eng1team11.boatgame2d.ecs.EntityManager;
@@ -11,11 +10,12 @@ import io.github.eng1team11.boatgame2d.ecs.component.*;
 
 public class BoatGame extends Game {
 
+    // ECS
     public EntityManager _entityManager;
     public ComponentManager _componentManager;
     public SystemManager _systemManager;
-    private SpriteBatch _spriteBatch;
-    private BitmapFont _font;
+
+    public SpriteBatch _spriteBatch;
 
     /**
      * Register all required components to the ComponentManager
@@ -43,8 +43,6 @@ public class BoatGame extends Game {
     public void create() {
         // Create a sprite batch
         _spriteBatch = new SpriteBatch();
-        // Load the font (defaults to Arial)
-        _font = new BitmapFont();
 
         _entityManager = new EntityManager();
         _componentManager = new ComponentManager();
@@ -52,7 +50,7 @@ public class BoatGame extends Game {
         registerECSComponents();
 
         // When the game instance is created, go to the main menu screen
-        this.setScreen(new TestScreen(this));
+        this.setScreen(new MenuScreen(this));
 
     }
 
@@ -69,11 +67,4 @@ public class BoatGame extends Game {
         super.dispose();
     }
 
-    public SpriteBatch GetSpriteBatch() {
-        return _spriteBatch;
-    }
-
-    public BitmapFont GetFont() {
-        return _font;
-    }
 }

@@ -4,19 +4,22 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import io.github.eng1team11.boatgame2d.ecs.EntityFactory;
 import io.github.eng1team11.boatgame2d.ecs.component.*;
 import io.github.eng1team11.boatgame2d.ecs.system.*;
 import io.github.eng1team11.boatgame2d.ui.ButtonSprite;
 import io.github.eng1team11.boatgame2d.ui.Scene;
+import io.github.eng1team11.boatgame2d.util.TextureManager;
 import io.github.eng1team11.boatgame2d.util.Vector2;
 
 public class TestScreen implements Screen {
 
     final BoatGame _game;
 
+    OrthographicCamera _camera;
     Scene _scene;
 
     /**
@@ -66,7 +69,7 @@ public class TestScreen implements Screen {
         _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(PlayerInputComponent.class), movement);
         _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(AIComponent.class), movement);
 
-        int render = _game._systemManager.addSystem(new Render(_game.GetSpriteBatch()));
+        int render = _game._systemManager.addSystem(new Render(_game._spriteBatch));
         _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(PositionComponent.class), render);
         _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(SpriteComponent.class), render);
         _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(TypeComponent.class), render);
@@ -77,39 +80,41 @@ public class TestScreen implements Screen {
      */
     @Override
     public void show() {
-        _scene = new Scene();
-        _scene.getCanvas().attachObject(
-                new ButtonSprite(
-                        new Vector2(),
-                        _scene.getCanvas(),
-                        new Vector2(400, 150),
-                        new Sprite(
-                                new Texture(Gdx.files.internal("placeholder.png")),
-                                0,
-                                0
-                        ),
-                        null
-                )
-        );
 
         createSystems();
+        TextureManager.loadTexture("placeholder.png", "placeholder");
+        TextureManager.loadTexture("badlogic.jpg", "badlogic");
+        _scene = new Scene();
+        _camera = new OrthographicCamera(1280, 720);
+        _camera.setToOrtho(true, 1280, 720);
+
+        EntityFactory.get().setComponentManager(_game._componentManager);
+        EntityFactory.get().setEntityManager(_game._entityManager);
+
+
+        _scene.addObject(
+                new ButtonSprite(
+                        Vector2.zero,
+                        new Vector2(160, 60),
+                        TextureManager.getTexture("placeholder"),
+                        null
+                ),
+                "btn_placeholder"
+        );
+
         EntityFactory.get().createPlayerEntity(
-                _game._componentManager,
-                _game._entityManager,
                 75,
                 75,
                 100,
                 100,
-                new Texture(Gdx.files.internal("badlogic.jpg"))
+                TextureManager.getTexture("badlogic")
         );
         EntityFactory.get().createAIEntity(
-                _game._componentManager,
-                _game._entityManager,
                 -75,
                 -75,
                 100,
                 100,
-                new Texture(Gdx.files.internal("badlogic.jpg"))
+                TextureManager.getTexture("badlogic")
         );
     }
 
@@ -120,21 +125,30 @@ public class TestScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        _game.GetSpriteBatch().begin();
+        // Set the clear colour then clear the screen
+        Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+
+        // Update the camera
+        _camera.update();
+        // Use the camera's projection matrix to update the batch
+        _game._spriteBatch.setProjectionMatrix(_camera.projection);
+
+        _game._spriteBatch.begin();
         _game._systemManager.update(delta);
         _scene.update(delta);
-        _scene.draw(delta, _game.GetSpriteBatch());
-        _game.GetSpriteBatch().end();
+        _scene.draw(_game._spriteBatch);
+        _game._spriteBatch.end();
     }
 
     /**
-     * @param width The width of the screen
+     * @param width  The width of the screen
      * @param height The height of the screen
      * @see ApplicationListener#resize(int, int)
      */
     @Override
     public void resize(int width, int height) {
-
+        _camera.setToOrtho(true, width, height);
     }
 
     /**

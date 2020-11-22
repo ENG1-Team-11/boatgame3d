@@ -1,5 +1,6 @@
 package io.github.eng1team11.boatgame2d.ui;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.eng1team11.boatgame2d.util.Vector2;
@@ -13,14 +14,16 @@ public class SpriteObject extends UIObject {
      * Default c'tor for a Sprite Object
      *
      * @param position The position of the UI element (top-left corner)
-     * @param parent   The parent object of the UI element
      * @param size     The size of the UI object
-     * @param sprite   The sprite the object represents
+     * @param texture  The sprite object's texture
      */
-    SpriteObject(Vector2 position, UIObject parent, Vector2 size, Sprite sprite) {
-        super(position, parent);
+    SpriteObject(Vector2 position, Vector2 size, Texture texture) {
+        super(position);
         _size = size;
-        _sprite = sprite;
+        _sprite = new Sprite();
+        _sprite.setTexture(texture);
+        _sprite.setPosition(position._x, position._y);
+        _sprite.setSize(size._x, size._y);
     }
 
     /**
@@ -31,9 +34,9 @@ public class SpriteObject extends UIObject {
      * @param click  Whether or not the mouse has been clicked
      */
     @Override
-    public void update(float mouseX, float mouseY, boolean click) {
+    public void update(int mouseX, int mouseY, boolean click) {
         super.update(mouseX, mouseY, click);
-        _sprite.setPosition(_absolutePosition._x, _absolutePosition._y);
+        _sprite.setPosition(_position._x, _position._y);
     }
 
     /**

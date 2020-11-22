@@ -2,6 +2,8 @@ package io.github.eng1team11.boatgame2d.ui;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.utils.Align;
 import io.github.eng1team11.boatgame2d.util.Vector2;
 
 public class Text extends UIObject {
@@ -13,10 +15,11 @@ public class Text extends UIObject {
      * Default c'tor for a Text object
      *
      * @param position The position of the UI element (top-left corner)
-     * @param parent   The parent object of the UI element
+     * @param text The text to show
+     * @param font The font to use
      */
-    Text(Vector2 position, UIObject parent, String text, BitmapFont font) {
-        super(position, parent);
+    public Text(Vector2 position, String text, BitmapFont font) {
+        super(position);
         _text = text;
         _font = font;
     }
@@ -29,6 +32,6 @@ public class Text extends UIObject {
     @Override
     public void draw(SpriteBatch spriteBatch) {
         super.draw(spriteBatch);
-        _font.draw(spriteBatch, _text, _absolutePosition._x, _absolutePosition._y);
+        _font.draw(spriteBatch, _text, _position._x, _position._y);
     }
 }

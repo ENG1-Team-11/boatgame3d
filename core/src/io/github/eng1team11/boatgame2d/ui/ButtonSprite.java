@@ -1,6 +1,6 @@
 package io.github.eng1team11.boatgame2d.ui;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.Texture;
 import io.github.eng1team11.boatgame2d.util.Vector2;
 
 public class ButtonSprite extends SpriteObject {
@@ -15,13 +15,12 @@ public class ButtonSprite extends SpriteObject {
      * Default c'tor for a sprite-based button
      *
      * @param position The position of the UI element (top-left corner)
-     * @param parent   The parent object of the UI element
      * @param size     The size of the UI element
-     * @param sprite   The sprite the button should use
+     * @param texture  The texture the button should use
      * @param callback The callback that should be invoked when the button is clicked on
      */
-    public ButtonSprite(Vector2 position, UIObject parent, Vector2 size, Sprite sprite, Runnable callback) {
-        super(position, parent, size, sprite);
+    public ButtonSprite(Vector2 position, Vector2 size, Texture texture, Runnable callback) {
+        super(position, size, texture);
         _releaseCB = callback;
         _state = State.None;
     }
@@ -34,10 +33,10 @@ public class ButtonSprite extends SpriteObject {
      * @param click  Whether or not the mouse has been clicked
      */
     @Override
-    public void update(float mouseX, float mouseY, boolean click) {
+    public void update(int mouseX, int mouseY, boolean click) {
         super.update(mouseX, mouseY, click);
-        if (mouseX > _position._x && mouseX < _position._x + _size._x) {
-            if (mouseY < _position._y && mouseY > _position._y - _size._y) {
+        if (mouseX > _position._x && mouseX < (_position._x + _size._x)) {
+            if (mouseY > _position._y && mouseY < (_position._y + _size._y)) {
                 if (click) {
                     onPress();
                     return;
