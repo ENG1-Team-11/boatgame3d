@@ -57,25 +57,40 @@ public class GameScreen implements Screen {
     public void show() {
         EntityFactory.get().createPlayerEntity(
                 -375,
-                Gdx.graphics.getHeight() / 4.0f,
+                Gdx.graphics.getHeight() / 3.0f,
                 334,
-                96,
+                75,
                 TextureManager.getTexture("boat")
         );
         EntityFactory.get().createAIEntity(
                 -375,
-                -75,
+                0,
                 334,
-                96,
+                75,
                 TextureManager.getTexture("boat")
         );
         EntityFactory.get().createAIEntity(
                 -375,
-                -225,
+                Gdx.graphics.getHeight() / -3.0f,
                 334,
-                96,
+                75,
                 TextureManager.getTexture("boat")
         );
+    	EntityFactory.get().createLaneEntity(
+    			Gdx.graphics.getWidth() * -1.0f, 
+    			Gdx.graphics.getHeight() / -5.25f, 
+    			Gdx.graphics.getWidth() * 2, 
+    			5, 
+    			TextureManager.getTexture("placeholder")
+    	);
+    	EntityFactory.get().createLaneEntity(
+    			Gdx.graphics.getWidth() * -1.0f, 
+    			Gdx.graphics.getHeight() / 5.25f, 
+    			Gdx.graphics.getWidth() * 2, 
+    			5, 
+    			TextureManager.getTexture("placeholder")
+    	);
+
 
         _ui = new Scene();
         _ui.addObject(new Text(new Vector2(-20.0f, 72.0f), "5", FontManager.get().getFont(72)), "text_countdown");
