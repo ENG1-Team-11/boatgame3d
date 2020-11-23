@@ -1,5 +1,6 @@
 package io.github.eng1team11.boatgame2d.ecs.system;
 
+import io.github.eng1team11.boatgame2d.ecs.EntityManager;
 import io.github.eng1team11.boatgame2d.ecs.component.DurabilityComponent;
 import io.github.eng1team11.boatgame2d.ecs.component.IComponent;
 import io.github.eng1team11.boatgame2d.ecs.component.VelocityComponent;
@@ -7,6 +8,12 @@ import io.github.eng1team11.boatgame2d.ecs.component.VelocityComponent;
 import java.util.Map;
 
 public class Durability extends System {
+
+    EntityManager _em;
+
+    public Durability(EntityManager em) {
+        _em = em;
+    }
 
     /**
      * Called during the input phase of the game engine loop
@@ -47,6 +54,10 @@ public class Durability extends System {
                     durability.setShouldReduce(false);
                     velocity.setDurModifier(durability.getRemainingDurability());
                 }
+            }
+
+            if (durability.getDurability() <= 0.0f) {
+                _em.deleteEntity(id);
             }
         }
     }

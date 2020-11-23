@@ -8,6 +8,7 @@ import java.util.HashMap;
 public class EntityManager {
 
     HashMap<Integer, IEntity> _entities = new HashMap<Integer, IEntity>();
+    int _entityCount;
 
     /**
      * Create a new entity
@@ -15,9 +16,9 @@ public class EntityManager {
      * @return The ID of the new entity
      */
     public int createEntity() {
-        int index = _entities.size();
-        _entities.put(index, new Entity(index));
-        return index;
+        ++_entityCount;
+        _entities.put(_entityCount, new Entity(_entityCount));
+        return _entityCount;
     }
 
     /**
@@ -39,6 +40,13 @@ public class EntityManager {
         if (_entities.get(id) != null) {
             _entities.remove(id);
         }
+    }
+
+    /**
+     * Delete all existing entities
+     */
+    public void clear() {
+        _entities.clear();
     }
 
 }

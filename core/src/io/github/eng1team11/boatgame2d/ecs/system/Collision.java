@@ -26,10 +26,6 @@ public class Collision extends System {
      * @return A CollisionData struct describing the collision
      */
     CollisionData checkAABB(ColliderComponent cA, ColliderComponent cB, PositionComponent pA, PositionComponent pB) {
-        // Get the position of B relative to A
-        float deltaX = pB.getX() - pA.getX();
-        float deltaY = pB.getY() - pA.getY();
-
         // A is clearly above, no collision
         if (pA.getY() - cA.getHeight() > pB.getY()) {
             return CollisionData.None;
@@ -83,10 +79,6 @@ public class Collision extends System {
             SpriteComponent spriteA = (SpriteComponent) _affectedComponents.get(3).get(id);
             PositionComponent positionA = (PositionComponent) _affectedComponents.get(4).get(id);
 
-            // If we're missing some components then skip this entity
-            if (durabilityA == null || velocityA == null || velocityA == null || spriteA == null || positionA == null)
-                continue;
-
             // Iterate over all other entities
             for (Map.Entry<Integer, IComponent> other : _affectedComponents.get(0).entrySet()) {
                 // Get the ID of the other entity
@@ -98,9 +90,6 @@ public class Collision extends System {
                 DurabilityComponent durabilityB = (DurabilityComponent) _affectedComponents.get(1).get(oId);
                 VelocityComponent velocityB = (VelocityComponent) _affectedComponents.get(2).get(oId);
                 PositionComponent positionB = (PositionComponent) _affectedComponents.get(4).get(oId);
-
-                // If this entity is missing some components, skip it
-                if (colliderB == null || durabilityB == null || velocityB == null || positionB == null) continue;
 
                 // If there is a collision, do something...
                 CollisionData collision = checkAABB(colliderA, colliderB, positionA, positionB);

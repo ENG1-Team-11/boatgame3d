@@ -5,6 +5,7 @@ import io.github.eng1team11.boatgame2d.ecs.component.IComponent;
 import io.github.eng1team11.boatgame2d.ecs.entity.IEntity;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("rawtypes")   // Suppress warnings about using `Class` directly (Need to find a way to not use `Class`)
 public class ComponentManager {
@@ -127,6 +128,15 @@ public class ComponentManager {
     public HashMap<Integer, IComponent> getComponentsOfType(Class type) {
         int id = _componentTypes.get(type);
         return _components.get(id);
+    }
+
+    /**
+     * Delete all existing components
+     */
+    public void clear() {
+        for (Map.Entry<Integer, HashMap<Integer, IComponent>> x : _components.entrySet()) {
+            x.getValue().clear();
+        }
     }
 
 }

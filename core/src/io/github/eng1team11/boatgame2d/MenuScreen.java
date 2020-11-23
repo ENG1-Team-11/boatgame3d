@@ -1,9 +1,11 @@
 package io.github.eng1team11.boatgame2d;
 
-import com.badlogic.gdx.*;
-import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import io.github.eng1team11.boatgame2d.ui.ButtonSprite;
 import io.github.eng1team11.boatgame2d.ui.Scene;
 import io.github.eng1team11.boatgame2d.ui.Text;
@@ -14,7 +16,6 @@ import io.github.eng1team11.boatgame2d.util.Vector2;
 public class MenuScreen implements Screen {
 
     final BoatGame _game;
-    OrthographicCamera _guiCamera;
     Scene _menuScene;
 
     /**
@@ -25,8 +26,8 @@ public class MenuScreen implements Screen {
     public MenuScreen(final BoatGame boatGame) {
         _game = boatGame;
 
-        _guiCamera = new OrthographicCamera();
-        _guiCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        _game._camera = new OrthographicCamera();
+        _game._camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     /**
@@ -35,13 +36,10 @@ public class MenuScreen implements Screen {
     @Override
     public void show() {
 
-        TextureManager.loadTexture("ui/button_play.png", "button_play");
-        TextureManager.loadTexture("ui/button_exit.png", "button_exit");
-
         _menuScene = new Scene();
         _menuScene.addObject(
                 new Text(
-                        new Vector2(-220.0f, 200.0f),
+                        new Vector2(-220.0f, 270.0f),
                         "Boat Game 2D",
                         FontManager.get().getFont(72)
                 ),
@@ -49,7 +47,7 @@ public class MenuScreen implements Screen {
         );
         _menuScene.addObject(
                 new ButtonSprite(
-                        new Vector2(-160.0f, -60.0f),
+                        new Vector2(-180.0f,  -40.0f),
                         new Vector2(320.0f, 120.0f),
                         TextureManager.getTexture("button_play"),
                         new Runnable() {
@@ -63,13 +61,13 @@ public class MenuScreen implements Screen {
         );
         _menuScene.addObject(
                 new ButtonSprite(
-                        new Vector2(-160.0f, -220.0f),
+                        new Vector2(-180.0f, -240.0f),
                         new Vector2(320.0f, 120.0f),
                         TextureManager.getTexture("button_exit"),
                         new Runnable() {
                             @Override
                             public void run() {
-                                _game.dispose();
+                                Gdx.app.exit();
                             }
                         }
                 ),
@@ -87,15 +85,15 @@ public class MenuScreen implements Screen {
         // Set the screen clear colour to black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         // Clear the colour buffer and the depth buffer
-        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
-
-        // Update the camera to account for input
-        _guiCamera.update();
-        // Set the projection matrix based on the ortho camera
-        _game._spriteBatch.setProjectionMatrix(_guiCamera.projection);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         // Update the menu
         _menuScene.update(delta);
+
+        // Update the camera
+        _game._camera.update();
+        // Use the camera's projection matrix to update the batch
+        _game._spriteBatch.setProjectionMatrix(_game._camera.projection);
 
         // Start adding things to the game sprite batch
         _game._spriteBatch.begin();
@@ -112,8 +110,13 @@ public class MenuScreen implements Screen {
      */
     @Override
     public void resize(int width, int height) {
-        // Scale the camera with the window size
-        _guiCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        // Scale the camera with the window size - Don't do this, it messes up the UI
+//        _game._camera.viewportWidth = width;
+//        _game._camera.viewportHeight = height;
+        // Set the camera position
+        _game._camera.position.set(_game._camera.viewportWidth / 2f, _game._camera.viewportHeight / 2f, 0);
+        // Update the camera
+        _game._camera.update();
     }
 
     /**
@@ -137,7 +140,8 @@ public class MenuScreen implements Screen {
      */
     @Override
     public void hide() {
-
+            _game._componentManager.clear();
+            _game._entityManager.clear();
     }
 
     /**

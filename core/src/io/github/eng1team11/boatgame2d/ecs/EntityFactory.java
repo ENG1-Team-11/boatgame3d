@@ -75,7 +75,7 @@ public class EntityFactory {
         _cm.addComponent(boat, new ColliderComponent(boat, width, height));
         _cm.addComponent(boat, new UpgradeComponent(boat));
         _cm.addComponent(boat, new AccelerationComponent(boat));
-        _cm.addComponent(boat, new DurabilityComponent(boat));
+        _cm.addComponent(boat, new DurabilityComponent(boat, 1000.0f));
         _cm.addComponent(boat, new StaminaComponent(boat));
         _cm.addComponent(boat, new VelocityComponent(boat));
         return boat;
@@ -127,8 +127,8 @@ public class EntityFactory {
     public int createObstacleEntity(float x, float y, int width, int height, Texture texture) {
         int obstacle = createDrawableEntity(x, y, width, height, texture);
         _cm.addComponent(obstacle, new ColliderComponent(obstacle, width, height));
-        _cm.addComponent(obstacle, new DurabilityComponent(obstacle));
-        _cm.addComponent(obstacle, new VelocityComponent(obstacle));
+        _cm.addComponent(obstacle, new DurabilityComponent(obstacle, 0.01f));
+        _cm.addComponent(obstacle, new VelocityComponent(obstacle, -10.0f, 0.0f));
         return obstacle;
     }
 

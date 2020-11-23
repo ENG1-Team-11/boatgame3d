@@ -18,9 +18,9 @@ public class DurabilityComponent extends Component {
      *
      * @param id The ID of the component
      */
-    public DurabilityComponent(int id) {
+    public DurabilityComponent(int id, float dur) {
         super(id);
-        setDurabilityToMax();
+        setDurability(dur);
     }
 
     /**

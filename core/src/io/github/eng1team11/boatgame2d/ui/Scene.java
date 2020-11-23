@@ -43,8 +43,9 @@ public class Scene {
      * @param delta The time since the last frame in seconds
      */
     public void update(float delta) {
-        int mouseX = Gdx.input.getX() - Gdx.graphics.getWidth() / 2;
-        int mouseY = -(Gdx.input.getY() - Gdx.graphics.getHeight() / 2);
+        int mouseX = Gdx.graphics.getWidth() / 2 - Gdx.input.getX();
+        int mouseY = Gdx.graphics.getHeight() / 2 - Gdx.input.getY();
+//        System.out.printf("X: %d;\tY: %d\n", mouseX, mouseY);
         boolean click = Gdx.input.isButtonJustPressed(0);
         for (Map.Entry<String, UIObject> object : _uiObjects.entrySet()) {
             object.getValue().update(mouseX, mouseY, click);

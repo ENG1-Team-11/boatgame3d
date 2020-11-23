@@ -37,13 +37,11 @@ public class Render extends System {
      */
     @Override
     public void update(float delta) {
-        int componentCount = _affectedComponents.get(0).size();
-        for (Map.Entry<Integer, IComponent> kv : _affectedComponents.get(1).entrySet()) {
+        for (Map.Entry<Integer, IComponent> kv : _affectedComponents.get(0).entrySet()) {
             int id = kv.getKey();
-            PositionComponent position = (PositionComponent) _affectedComponents.get(0).get(id);
             SpriteComponent sprite = (SpriteComponent) kv.getValue();
-            if (position == null) continue;
-            sprite._base.setPosition(position.getX(), position.getY());
+            PositionComponent position = (PositionComponent) _affectedComponents.get(1).get(id);
+            sprite.setPosition(position.getX(), position.getY());
         }
     }
 
@@ -55,11 +53,8 @@ public class Render extends System {
     @Override
     public void render(float delta) {
         // Iterate with a range-based loop
-        for (IComponent comp : _affectedComponents.get(1).values()) {
-            // Cast comp to a sprite
-            SpriteComponent sprite = (SpriteComponent) comp;
-            // Draw the sprite to the batch
-            sprite._base.draw(_spriteBatch);
+        for (IComponent comp : _affectedComponents.get(0).values()) {
+            ((SpriteComponent) comp).draw(_spriteBatch);
         }
     }
 }

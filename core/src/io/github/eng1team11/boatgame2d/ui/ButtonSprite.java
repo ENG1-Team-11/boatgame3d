@@ -35,6 +35,7 @@ public class ButtonSprite extends SpriteObject {
     @Override
     public void update(int mouseX, int mouseY, boolean click) {
         super.update(mouseX, mouseY, click);
+//        System.out.printf("X: %d;\tY: %d\n", (int) _position._x, (int) _position._y);
         if (mouseX > _position._x && mouseX < (_position._x + _size._x)) {
             if (mouseY > _position._y && mouseY < (_position._y + _size._y)) {
                 if (click) {
