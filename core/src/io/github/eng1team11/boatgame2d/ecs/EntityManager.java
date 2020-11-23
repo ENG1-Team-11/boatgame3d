@@ -7,8 +7,15 @@ import java.util.HashMap;
 
 public class EntityManager {
 
-    HashMap<Integer, IEntity> _entities = new HashMap<Integer, IEntity>();
+    HashMap<Integer, IEntity> _entities = new HashMap<>();
     int _entityCount;
+
+    ComponentManager _cm;
+
+    public EntityManager(ComponentManager cm) {
+        _cm = cm;
+    }
+
 
     /**
      * Create a new entity
@@ -40,6 +47,7 @@ public class EntityManager {
         if (_entities.get(id) != null) {
             _entities.remove(id);
         }
+        _cm.deleteComponentsOfId(id);
     }
 
     /**

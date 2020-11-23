@@ -5,6 +5,7 @@ import io.github.eng1team11.boatgame2d.ecs.component.DurabilityComponent;
 import io.github.eng1team11.boatgame2d.ecs.component.IComponent;
 import io.github.eng1team11.boatgame2d.ecs.component.VelocityComponent;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Durability extends System {
@@ -32,6 +33,7 @@ public class Durability extends System {
      */
     @Override
     public void update(float delta) {
+        ArrayList<Integer> entitiesToDelete = new ArrayList<>();
         super.update(delta);
         // Iterate over all entities
         for (Map.Entry<Integer, IComponent> comp : _affectedComponents.get(0).entrySet()) {
@@ -57,8 +59,11 @@ public class Durability extends System {
             }
 
             if (durability.getDurability() <= 0.0f) {
-                _em.deleteEntity(id);
+                entitiesToDelete.add(id);
             }
+        }
+        for (Integer i : entitiesToDelete) {
+            _em.deleteEntity(i);
         }
     }
 

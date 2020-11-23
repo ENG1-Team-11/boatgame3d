@@ -7,21 +7,40 @@ import java.util.HashMap;
 
 public class SystemManager {
 
-    HashMap<Integer, ISystem> _systems = new HashMap<Integer, ISystem>();
+    HashMap<Integer, ISystem> _systems = new HashMap<>();
 
     public void registerComponentsToSystem(HashMap<Integer, IComponent> components, int system) {
         _systems.get(system).registerComponents(components);
     }
 
+
     /**
-     * Update all systems in the systems list
+     * Make all systems run their input functions
+     * @param delta The time since the last frame
+     */
+    public void input(float delta) {
+        for (ISystem sys : _systems.values()) {
+            sys.input(delta);
+        }
+    }
+
+    /**
+     * Make all systems rin their update functions
      *
      * @param delta The time since the last frame
      */
     public void update(float delta) {
         for (ISystem sys : _systems.values()) {
-            sys.input(delta);
             sys.update(delta);
+        }
+    }
+
+    /**
+     * Make all systems run their render functions
+     * @param delta The time since the last frame
+     */
+    public void render(float delta) {
+        for (ISystem sys : _systems.values()) {
             sys.render(delta);
         }
     }

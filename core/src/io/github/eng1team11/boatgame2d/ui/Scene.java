@@ -63,4 +63,8 @@ public class Scene {
         }
     }
 
+    public UIObject getObject(String identifier) {
+        return _uiObjects.get(identifier);
+    }
+
 }

@@ -25,42 +25,26 @@ public class Collision extends System {
      * @param pB The position of object B
      * @return A CollisionData struct describing the collision
      */
-    CollisionData checkAABB(ColliderComponent cA, ColliderComponent cB, PositionComponent pA, PositionComponent pB) {
+    boolean checkAABB(ColliderComponent cA, ColliderComponent cB, PositionComponent pA, PositionComponent pB) {
         // A is clearly above, no collision
         if (pA.getY() - cA.getHeight() > pB.getY()) {
-            return CollisionData.None;
+            return false;
         }
         // A is clearly to the left, no collision
         if (pA.getX() + cA.getWidth() < pB.getX()) {
-            return CollisionData.None;
+            return false;
         }
         // A is clearly below, no collision
         if (pA.getY() < pB.getY() - cB.getHeight()) {
-            return CollisionData.None;
+            return false;
         }
         // A is clearly to the right, no collision
         if (pA.getX() > pB.getX() + cB.getWidth()) {
-            return CollisionData.None;
+            return false;
         }
 
-        // By deduction, must be a collision so create a new collision data struct
-        CollisionData cd = new CollisionData();
-        cd.collision = true;
-
-        // Figure out where we collided
-        // Did we collide on the left or right?
-        if ((pA.getX() < pB.getX() + cB.getWidth()) && (pA.getX() + cA.getWidth() * 0.1f > pB.getX() + cB.getWidth())) {
-            cd.lr = CollisionData.HorizontalType.Right;
-        } else if ((pA.getX() + cA.getWidth() > pB.getX()) && (pA.getX() + cA.getWidth() < pB.getX() + cB.getWidth() * 0.1f)) {
-            cd.lr = CollisionData.HorizontalType.Left;
-        }
-        // Did we collide on the top or bottom?
-        if ((pA.getY() - cA.getHeight() < pB.getY()) && (pA.getY() - cA.getHeight() > pB.getY() - cB.getHeight() * 0.1f)) {
-            cd.tb = CollisionData.VerticalType.Top;
-        } else if ((pA.getY() > pB.getY() - cB.getWidth()) && (pA.getY() < pB.getY() - cB.getHeight() * 0.9f)) {
-            cd.tb = CollisionData.VerticalType.Bottom;
-        }
-        return cd;
+        // By deduction, there must have been a collision
+        return true;
     }
 
     /**
@@ -76,7 +60,7 @@ public class Collision extends System {
             ColliderComponent colliderA = (ColliderComponent) kv.getValue();
             DurabilityComponent durabilityA = (DurabilityComponent) _affectedComponents.get(1).get(id);
             VelocityComponent velocityA = (VelocityComponent) _affectedComponents.get(2).get(id);
-            SpriteComponent spriteA = (SpriteComponent) _affectedComponents.get(3).get(id);
+//            SpriteComponent spriteA = (SpriteComponent) _affectedComponents.get(3).get(id);
             PositionComponent positionA = (PositionComponent) _affectedComponents.get(4).get(id);
 
             // Iterate over all other entities
@@ -92,8 +76,8 @@ public class Collision extends System {
                 PositionComponent positionB = (PositionComponent) _affectedComponents.get(4).get(oId);
 
                 // If there is a collision, do something...
-                CollisionData collision = checkAABB(colliderA, colliderB, positionA, positionB);
-                if (collision != CollisionData.None) {
+                boolean collision = checkAABB(colliderA, colliderB, positionA, positionB);
+                if (collision) {
 
                     // Calculate momentum by adding velocities [p=mv] (assume similar weight)
                     float momentumX = (velocityA.getX() + velocityB.getX()) / 2;
@@ -109,7 +93,7 @@ public class Collision extends System {
                     velocityA.set(bumpXA, -bumpYA);
                     durabilityA.setShouldReduce(true);
 
-                    // Move Boat B
+                    // Modify Boat B
                     velocityB.set(bumpXB, -bumpYB);
                     durabilityB.setShouldReduce(true);
                 }

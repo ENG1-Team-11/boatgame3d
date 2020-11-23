@@ -95,8 +95,8 @@ public class BoatGame extends Game {
         // Create a sprite batch
         _spriteBatch = new SpriteBatch();
 
-        _entityManager = new EntityManager();
         _componentManager = new ComponentManager();
+        _entityManager = new EntityManager(_componentManager);
         _systemManager = new SystemManager();
 
         _camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

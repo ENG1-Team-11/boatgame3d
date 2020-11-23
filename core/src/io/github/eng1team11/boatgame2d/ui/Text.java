@@ -24,6 +24,10 @@ public class Text extends UIObject {
         _font = font;
     }
 
+    public void setText(String text) {
+        _text = text;
+    }
+
     /**
      * Draw the object
      *

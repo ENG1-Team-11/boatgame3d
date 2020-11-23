@@ -7,7 +7,8 @@ import io.github.eng1team11.boatgame2d.ecs.entity.IEntity;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("rawtypes")   // Suppress warnings about using `Class` directly (Need to find a way to not use `Class`)
+@SuppressWarnings("rawtypes")
+// Suppress warnings about using `Class` directly (Need to find a way to not use `Class`)
 public class ComponentManager {
 
     // 1:1 mapping of class to id, id to class
@@ -106,6 +107,12 @@ public class ComponentManager {
      */
     public void deleteComponentsOfType(int id) {
         _components.remove(id);
+    }
+
+    public void deleteComponentsOfId(int id) {
+        for (Map.Entry<Integer, HashMap<Integer, IComponent>> kv : _components.entrySet()) {
+            kv.getValue().remove(id);
+        }
     }
 
     /**

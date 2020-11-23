@@ -2,7 +2,7 @@ package io.github.eng1team11.boatgame2d.ecs.component;
 
 public class AccelerationComponent extends Component {
 
-    float _acceleration = 1.0f;
+    float _acceleration = 0.2f;
     float _accelerationModifier = 1.0f;
 
     /**
