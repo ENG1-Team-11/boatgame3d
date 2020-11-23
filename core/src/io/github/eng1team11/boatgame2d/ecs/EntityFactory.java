@@ -127,6 +127,8 @@ public class EntityFactory {
     public int createObstacleEntity(float x, float y, int width, int height, Texture texture) {
         int obstacle = createDrawableEntity(x, y, width, height, texture);
         _cm.addComponent(obstacle, new ColliderComponent(obstacle, width, height));
+        _cm.addComponent(obstacle, new DurabilityComponent(obstacle));
+        _cm.addComponent(obstacle, new VelocityComponent(obstacle));
         return obstacle;
     }
 

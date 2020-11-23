@@ -22,6 +22,8 @@ public class TestScreen implements Screen {
     OrthographicCamera _camera;
     Scene _scene;
 
+    double obstacleFrequency;
+
     /**
      * Default ctor for the test screen
      *
@@ -29,6 +31,8 @@ public class TestScreen implements Screen {
      */
     public TestScreen(BoatGame game) {
         _game = game;
+        //This would be the point at which the obstacle frequency would be decided
+        obstacleFrequency = 0.01;
     }
 
     /**
@@ -125,6 +129,16 @@ public class TestScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        if (Math.random() < obstacleFrequency) {
+            EntityFactory.get().createObstacleEntity(
+                    400,
+                    (int)((Math.random()*Gdx.graphics.getHeight())-(Gdx.graphics.getHeight()/2)),
+                    100,
+                    100,
+                    TextureManager.getTexture("badlogic")
+            );
+        }
+
         // Set the clear colour then clear the screen
         Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
