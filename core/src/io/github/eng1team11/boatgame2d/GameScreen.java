@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import io.github.eng1team11.boatgame2d.ecs.EntityFactory;
+import io.github.eng1team11.boatgame2d.ecs.component.CurrencyComponent;
 import io.github.eng1team11.boatgame2d.ui.Scene;
 import io.github.eng1team11.boatgame2d.ui.Text;
 import io.github.eng1team11.boatgame2d.util.FontManager;
@@ -23,7 +24,8 @@ public class GameScreen implements Screen {
 
     float _obstacleFrequency;
     float _raceProgress;
-
+    
+    CurrencyComponent _coins;
     Scene _ui;
 
     ArrayList<Integer> _obstacles;
@@ -90,10 +92,11 @@ public class GameScreen implements Screen {
     			5, 
     			TextureManager.getTexture("placeholder")
     	);
-
-
+    	
         _ui = new Scene();
         _ui.addObject(new Text(new Vector2(-20.0f, 72.0f), "5", FontManager.get().getFont(72)), "text_countdown");
+        //supposed to display currency on screen
+        //_ui.addObject(new Text(new Vector2(Gdx.graphics.getWidth() / 4.0f, -Gdx.graphics.getHeight() / 3.0f), _coins.currencyAsString(), FontManager.get().getFont(22)), "currency");
         _countdownText = (Text) _ui.getObject("text_countdown");
 
         _obstacleFrequency = 0.1f;

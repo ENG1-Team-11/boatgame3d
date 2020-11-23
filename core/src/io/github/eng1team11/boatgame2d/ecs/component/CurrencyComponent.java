@@ -22,6 +22,16 @@ public class CurrencyComponent extends Component {
     public int getCurrency() {
         return _amount;
     }
+    
+    /**
+     * toString for currency
+     * 
+     * @return The amount of currency, as a string
+     */
+    public String currencyAsString() {
+    	String total = "Currency =" + String.valueOf(_amount);
+    	return total;
+    }
 
     /**
      * Setter for the currency
