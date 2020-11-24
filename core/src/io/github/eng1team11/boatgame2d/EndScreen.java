@@ -5,7 +5,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import io.github.eng1team11.boatgame2d.ui.ButtonSprite;
 import io.github.eng1team11.boatgame2d.ui.Image;
 import io.github.eng1team11.boatgame2d.ui.Scene;
@@ -14,25 +13,31 @@ import io.github.eng1team11.boatgame2d.util.FontManager;
 import io.github.eng1team11.boatgame2d.util.TextureManager;
 import io.github.eng1team11.boatgame2d.util.Vector2;
 
-public class MenuScreen implements Screen {
+public class EndScreen implements Screen {
 
     final BoatGame _game;
+    final float _time;
+
+    String _victoryText;
     Scene _menuScene;
 
-    /**
-     * Default ctor for the menu screen
-     *
-     * @param boatGame The boat game this is attached to
-     */
-    public MenuScreen(final BoatGame boatGame) {
-        _game = boatGame;
-    }
+    public EndScreen(BoatGame game, int place, float time) {
+        _game = game;
+        _time = time;
 
-    /**
-     * Called when this screen becomes the current screen for a {@link Game}.
-     */
-    @Override
-    public void show() {
+        switch (place) {
+            case 1:
+                _victoryText = "Well Done!  You've won the race!";
+                break;
+            case 2:
+                _victoryText = "You've placed second!";
+                break;
+            case 3:
+                _victoryText = "You've placed third!";
+                break;
+            default:
+                _victoryText = "You didn't place, but at least you tried";
+        }
 
         _menuScene = new Scene();
         _menuScene.addObject(
@@ -47,33 +52,47 @@ public class MenuScreen implements Screen {
         _menuScene.addObject(
                 new Text(
                         new Vector2(640.0f, 600.0f),
-                        "Boat Game 2D",
+                        _victoryText,
                         FontManager.get().getFont(72)
                 ),
-                "text_Title"
+                "text_victoryMessage"
         );
+
         _menuScene.addObject(
-                new ButtonSprite(
-                        new Vector2(480.0f, 340.0f),
-                        new Vector2(320.0f, 120.0f),
-                        TextureManager.getTexture("button_play"),
-                        TextureManager.getTexture("button_play_hover"),
-                        TextureManager.getTexture("button_play"),
-                        () -> _game.setScreen(new GameScreen(_game, GameScreen.RaceNumber.R1))
+                new Text(
+                        new Vector2(640.0f, 420.0f),
+                        "Your combined time was:",
+                        FontManager.get().getFont(48)
                 ),
-                "button_play"
+                "text_yourTime"
+        );
+        _menuScene.addObject(
+                new Text(
+                        new Vector2(640.0f, 360.0f),
+                        Float.toString(_time),
+                        FontManager.get().getFont(36)
+                ),
+                "text_time"
         );
         _menuScene.addObject(
                 new ButtonSprite(
-                        new Vector2(480.0f, 180.0f),
+                        new Vector2(480.0f, 40.0f),
                         new Vector2(320.0f, 120.0f),
                         TextureManager.getTexture("button_exit"),
                         TextureManager.getTexture("button_exit_hover"),
                         TextureManager.getTexture("button_exit"),
-                        () -> Gdx.app.exit()
+                        () -> _game.setScreen(new MenuScreen(_game))
                 ),
-                "button_exit"
+                "button_menu"
         );
+    }
+
+    /**
+     * Called when this screen becomes the current screen for a {@link Game}.
+     */
+    @Override
+    public void show() {
+
     }
 
     /**
@@ -104,19 +123,13 @@ public class MenuScreen implements Screen {
     }
 
     /**
-     * @param width  The width of the screen
+     * @param width The width of the screen
      * @param height The height of the screen
      * @see ApplicationListener#resize(int, int)
      */
     @Override
     public void resize(int width, int height) {
-        // Scale the camera with the window size - Don't do this, it messes up the UI
-//        _game._camera.viewportWidth = width;
-//        _game._camera.viewportHeight = height;
-        // Set the camera position
-        _game._gameCamera.position.set(_game._gameCamera.viewportWidth / 2f, _game._gameCamera.viewportHeight / 2f, 0);
-        // Update the camera
-        _game._gameCamera.update();
+
     }
 
     /**
@@ -140,8 +153,7 @@ public class MenuScreen implements Screen {
      */
     @Override
     public void hide() {
-        _game._componentManager.clear();
-        _game._entityManager.clear();
+
     }
 
     /**

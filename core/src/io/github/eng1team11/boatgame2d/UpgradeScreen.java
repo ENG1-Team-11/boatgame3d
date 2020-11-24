@@ -5,27 +5,32 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import io.github.eng1team11.boatgame2d.ui.ButtonSprite;
-import io.github.eng1team11.boatgame2d.ui.Image;
 import io.github.eng1team11.boatgame2d.ui.Scene;
-import io.github.eng1team11.boatgame2d.ui.Text;
-import io.github.eng1team11.boatgame2d.util.FontManager;
 import io.github.eng1team11.boatgame2d.util.TextureManager;
 import io.github.eng1team11.boatgame2d.util.Vector2;
 
-public class MenuScreen implements Screen {
+public class UpgradeScreen implements Screen {
 
     final BoatGame _game;
-    Scene _menuScene;
 
-    /**
-     * Default ctor for the menu screen
-     *
-     * @param boatGame The boat game this is attached to
-     */
-    public MenuScreen(final BoatGame boatGame) {
-        _game = boatGame;
+    Scene _menuScene;
+    GameScreen.RaceNumber _nextRace;
+
+    public UpgradeScreen(BoatGame game, GameScreen.RaceNumber previousRace) {
+        _game = game;
+
+        switch (previousRace){
+            case R1:
+                _nextRace = GameScreen.RaceNumber.R2;
+                break;
+            case R2:
+                _nextRace = GameScreen.RaceNumber.R3;
+                break;
+            case R3:
+                _nextRace = GameScreen.RaceNumber.Final;
+                break;
+        }
     }
 
     /**
@@ -33,46 +38,17 @@ public class MenuScreen implements Screen {
      */
     @Override
     public void show() {
-
         _menuScene = new Scene();
         _menuScene.addObject(
-                new Image(
-                        new Vector2(-400.0f, 0.0f),
-                        new Vector2(7223.0f, 1088.0f),
-                        TextureManager.getTexture("background")
-                ),
-                "background",
-                -1
-        );
-        _menuScene.addObject(
-                new Text(
-                        new Vector2(640.0f, 600.0f),
-                        "Boat Game 2D",
-                        FontManager.get().getFont(72)
-                ),
-                "text_Title"
-        );
-        _menuScene.addObject(
                 new ButtonSprite(
-                        new Vector2(480.0f, 340.0f),
-                        new Vector2(320.0f, 120.0f),
+                        new Vector2(1000, 80),
+                        new Vector2(200, 75),
                         TextureManager.getTexture("button_play"),
                         TextureManager.getTexture("button_play_hover"),
                         TextureManager.getTexture("button_play"),
-                        () -> _game.setScreen(new GameScreen(_game, GameScreen.RaceNumber.R1))
+                        ()-> _game.setScreen(new GameScreen(_game, _nextRace))
                 ),
-                "button_play"
-        );
-        _menuScene.addObject(
-                new ButtonSprite(
-                        new Vector2(480.0f, 180.0f),
-                        new Vector2(320.0f, 120.0f),
-                        TextureManager.getTexture("button_exit"),
-                        TextureManager.getTexture("button_exit_hover"),
-                        TextureManager.getTexture("button_exit"),
-                        () -> Gdx.app.exit()
-                ),
-                "button_exit"
+                "button_continue"
         );
     }
 
@@ -104,19 +80,13 @@ public class MenuScreen implements Screen {
     }
 
     /**
-     * @param width  The width of the screen
+     * @param width The width of the screen
      * @param height The height of the screen
      * @see ApplicationListener#resize(int, int)
      */
     @Override
     public void resize(int width, int height) {
-        // Scale the camera with the window size - Don't do this, it messes up the UI
-//        _game._camera.viewportWidth = width;
-//        _game._camera.viewportHeight = height;
-        // Set the camera position
-        _game._gameCamera.position.set(_game._gameCamera.viewportWidth / 2f, _game._gameCamera.viewportHeight / 2f, 0);
-        // Update the camera
-        _game._gameCamera.update();
+
     }
 
     /**
@@ -140,8 +110,7 @@ public class MenuScreen implements Screen {
      */
     @Override
     public void hide() {
-        _game._componentManager.clear();
-        _game._entityManager.clear();
+
     }
 
     /**

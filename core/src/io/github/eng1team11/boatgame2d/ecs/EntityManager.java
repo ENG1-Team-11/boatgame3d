@@ -55,6 +55,7 @@ public class EntityManager {
      */
     public void clear() {
         _entities.clear();
+        _entityCount = 0;
     }
 
 }

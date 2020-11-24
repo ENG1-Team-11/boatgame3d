@@ -1,11 +1,7 @@
 package io.github.eng1team11.boatgame2d;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import io.github.eng1team11.boatgame2d.ecs.EntityFactory;
 import io.github.eng1team11.boatgame2d.ecs.component.CurrencyComponent;
 import io.github.eng1team11.boatgame2d.ecs.component.SpriteComponent;
@@ -37,15 +33,35 @@ public class GameScreen implements Screen {
     Scene _ui;
 
     ArrayList<Integer> _obstacles;
+    RaceState _state;
+
+    RaceNumber _raceNumber;
 
     /**
      * Default ctor for the game screen
      *
      * @param boatGame The BoatGame this screen is attached to
      */
-    public GameScreen(final BoatGame boatGame) {
+    public GameScreen(final BoatGame boatGame, RaceNumber raceNumber) {
         _game = boatGame;
         _obstacles = new ArrayList<>();
+        _state = RaceState.CountIn;
+        _raceNumber = raceNumber;
+
+        // Race number specific parameters
+        switch (raceNumber) {
+            case R1:
+                _obstacleFrequency = 0.01f;
+                break;
+            case R2:
+                _obstacleFrequency = 0.06f;
+                break;
+            case R3:
+                _obstacleFrequency = 0.1f;
+                break;
+            case Final:
+                _obstacleFrequency = 0.25f;
+        }
     }
 
     void SpawnObstacle() {
@@ -104,7 +120,7 @@ public class GameScreen implements Screen {
 
         _ui = new Scene();
         _ui.addObject(
-                new Text(new Vector2(620.0f, 540.0f), "5", FontManager.get().getFont(72)),
+                new Text(new Vector2(640.0f, 540.0f), "5", FontManager.get().getFont(72)),
                 "text_countdown"
         );
         _ui.addObject(
@@ -116,8 +132,7 @@ public class GameScreen implements Screen {
         _countdownText = (Text) _ui.getObject("text_countdown");
         _progressBar = (ProgressBar) _ui.getObject("progress_raceProgress");
 
-        _obstacleFrequency = 0.1f;
-        _startCountdown = 5.0f;
+        _startCountdown = 3.0f;
 
         _playerSprite = (SpriteComponent) _game._componentManager.getComponent(player, SpriteComponent.class);
 
@@ -158,7 +173,67 @@ public class GameScreen implements Screen {
             _game._spriteBatch.end();
             return true;
         }
+        _state = RaceState.Racing;
+        // Hide the countdown text
+        _countdownText.setText("");
         return false;
+    }
+
+    void doRace(float delta) {
+
+
+        // Spawn some obstacles (maybe)
+        if (Math.random() < _obstacleFrequency) {
+            if (Math.random() < _obstacleFrequency) {
+                SpawnObstacle();
+            }
+        }
+
+        // Run input and update functions on all systems
+        _game._systemManager.input(delta);
+        _game._systemManager.update(delta);
+
+        if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+            _playerSprite._position._x = 6701.0f;
+        }
+
+        // Update the camera and use it to set the view projection
+        _game._gameCamera.position.set(_playerSprite._position.getX() + _playerSprite._size._x / 2, _playerSprite._position.getY() + _playerSprite._size._y / 2, 0.0f);
+        _game._gameCamera.update();
+
+        // Update the UI
+        _progressBar.setProgress(_raceProgress);
+
+        _raceProgress = _playerSprite._position._x / 6700.0f;
+
+        if (_raceProgress >= 1.0f) {
+            _state = RaceState.Finished;
+            _ui.addObject(
+                    new Text(new Vector2(640.0f, 540.0f), "Race Finished", FontManager.get().getFont(72)),
+                    "text_finished"
+            );
+            _ui.addObject(
+                    new Text(new Vector2(640.0f, 440.0f), "Press Space to Continue", FontManager.get().getFont(36)),
+                    "text_pressSpace"
+            );
+        }
+    }
+
+    void doFinished(float delta) {
+
+        _game._systemManager.update(delta);
+
+        // Update the camera and use it to set the view projection
+        _game._gameCamera.position.set(_playerSprite._position.getX() + _playerSprite._size._x / 2, _playerSprite._position.getY() + _playerSprite._size._y / 2, 0.0f);
+        _game._gameCamera.update();
+
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+
+            if (_raceNumber == RaceNumber.Final)
+                _game.setScreen(new EndScreen(_game, 1, 0.0f));
+            else
+                _game.setScreen(new UpgradeScreen(_game, _raceNumber));
+        }
     }
 
     /**
@@ -175,30 +250,20 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         // Check if we need to do the countdown timer
-        if (doCountdown(delta)) return;
 
-        // Hide the countdown text
-        _countdownText.setText("");
 
-        // Spawn some obstacles (maybe)
-        if (Math.random() < _obstacleFrequency) {
-            if (Math.random() < _obstacleFrequency) {
-                SpawnObstacle();
-            }
+        switch (_state) {
+            case CountIn:
+                if (doCountdown(delta)) return;
+                break;
+            case Racing:
+                doRace(delta);
+                break;
+            case Finished:
+                doFinished(delta);
+                break;
         }
 
-        // Update the camera and use it to set the view projection
-        _game._gameCamera.position.set(_playerSprite._position.getX() + _playerSprite._size._x / 2, _playerSprite._position.getY() + _playerSprite._size._y / 2, 0.0f);
-        _game._gameCamera.update();
-
-        // Run input and update functions on all systems
-        _game._systemManager.input(delta);
-        _game._systemManager.update(delta);
-
-        _raceProgress = _playerSprite._position._x / 4000.0f;
-
-        // Update the UI
-        _progressBar.setProgress(_raceProgress);
         _ui.update(delta);
 
         //Begin the sprite batch
@@ -244,7 +309,7 @@ public class GameScreen implements Screen {
      */
     @Override
     public void hide() {
-        _game._systemManager.clear();
+        _game._entityManager.clear();
     }
 
     /**
@@ -254,4 +319,8 @@ public class GameScreen implements Screen {
     public void dispose() {
 
     }
+
+    enum RaceState {CountIn, Racing, Finished}
+
+    public enum RaceNumber {R1, R2, R3, Final}
 }
