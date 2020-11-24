@@ -42,9 +42,6 @@ public class Durability extends System {
             DurabilityComponent durability = (DurabilityComponent) comp.getValue();
             VelocityComponent velocity = (VelocityComponent) _affectedComponents.get(1).get(id);
 
-            // If the entity is missing a component, skip it
-            if (velocity == null) continue;
-
             // Decay the damage grace period of the entity
             durability.decayGracePeriod(delta);
 
@@ -54,7 +51,7 @@ public class Durability extends System {
                     durability.addDurability(-1);
                     durability.setGracePeriod(1.0f);
                     durability.setShouldReduce(false);
-                    velocity.setDurModifier(durability.getRemainingDurability());
+                    if (velocity != null) velocity.setDurModifier(durability.getRemainingDurability());
                 }
             }
 
