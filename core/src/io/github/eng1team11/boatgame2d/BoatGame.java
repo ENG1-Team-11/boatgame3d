@@ -112,7 +112,10 @@ public class BoatGame extends Game {
 
         TextureManager.loadTexture("ui/button_play.png", "button_play");
         TextureManager.loadTexture("ui/button_exit.png", "button_exit");
-        TextureManager.loadTexture("badlogic.jpg", "badlogic");
+        TextureManager.loadTexture("ui/button_play_hover.png", "button_play_hover");
+        TextureManager.loadTexture("ui/button_exit_hover.png", "button_exit_hover");
+
+        TextureManager.loadTexture("obstacle.png", "obstacle");
         TextureManager.loadTexture("placeholder.png", "placeholder");
         TextureManager.loadTexture("boat_assets/boat_separate.png", "boat");
 

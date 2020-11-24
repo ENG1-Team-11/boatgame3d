@@ -50,7 +50,7 @@ public class GameScreen implements Screen {
                         (int) ((Math.random() * Gdx.graphics.getHeight()) - (Gdx.graphics.getHeight() / 2)),
                         25,
                         25,
-                        TextureManager.getTexture("badlogic")
+                        TextureManager.getTexture("obstacle")
                 )
         );
     }

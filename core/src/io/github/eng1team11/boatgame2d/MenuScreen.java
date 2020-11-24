@@ -50,6 +50,8 @@ public class MenuScreen implements Screen {
                         new Vector2(-180.0f,  -40.0f),
                         new Vector2(320.0f, 120.0f),
                         TextureManager.getTexture("button_play"),
+                        TextureManager.getTexture("button_play_hover"),
+                        TextureManager.getTexture("button_play"),
                         new Runnable() {
                             @Override
                             public void run() {
@@ -63,6 +65,8 @@ public class MenuScreen implements Screen {
                 new ButtonSprite(
                         new Vector2(-180.0f, -240.0f),
                         new Vector2(320.0f, 120.0f),
+                        TextureManager.getTexture("button_exit"),
+                        TextureManager.getTexture("button_exit_hover"),
                         TextureManager.getTexture("button_exit"),
                         new Runnable() {
                             @Override

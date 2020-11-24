@@ -43,6 +43,6 @@ public class SpriteObject extends UIObject {
     @Override
     public void draw(SpriteBatch spriteBatch) {
         super.draw(spriteBatch);
-        spriteBatch.draw(_texture, _position._x, _position._y);
+        spriteBatch.draw(_texture, _position._x, _position._y, _size._x, _size._y);
     }
 }

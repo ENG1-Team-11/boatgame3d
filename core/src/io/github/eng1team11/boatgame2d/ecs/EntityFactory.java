@@ -72,7 +72,7 @@ public class EntityFactory {
      */
     public int createBoatEntity(float x, float y, int width, int height, Texture texture) {
         int boat = createDrawableEntity(x, y, width, height, texture);
-        _cm.addComponent(boat, new ColliderComponent(boat, width, height));
+        _cm.addComponent(boat, new ColliderComponent(boat, width, height, true));
         _cm.addComponent(boat, new UpgradeComponent(boat));
         _cm.addComponent(boat, new AccelerationComponent(boat));
         _cm.addComponent(boat, new DurabilityComponent(boat, 1000.0f));
@@ -126,7 +126,7 @@ public class EntityFactory {
      */
     public int createObstacleEntity(float x, float y, int width, int height, Texture texture) {
         int obstacle = createDrawableEntity(x, y, width, height, texture);
-        _cm.addComponent(obstacle, new ColliderComponent(obstacle, width, height));
+        _cm.addComponent(obstacle, new ColliderComponent(obstacle, width, height, true));
         _cm.addComponent(obstacle, new DurabilityComponent(obstacle, 0.01f));
         _cm.addComponent(obstacle, new VelocityComponent(obstacle, -10.0f, 0.0f));
         return obstacle;
@@ -134,7 +134,7 @@ public class EntityFactory {
     
     public int createLaneEntity(float x, float y, int width, int height, Texture texture) {
         int obstacle = createDrawableEntity(x, y, width, height, texture);
-        _cm.addComponent(obstacle, new ColliderComponent(obstacle, width, height));
+        _cm.addComponent(obstacle, new ColliderComponent(obstacle, width, height, false));
         _cm.addComponent(obstacle, new DurabilityComponent(obstacle, 100000000f));
         _cm.addComponent(obstacle, new VelocityComponent(obstacle, 0.0f, 0.0f));
         return obstacle;

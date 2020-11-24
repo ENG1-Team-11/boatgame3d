@@ -1,7 +1,6 @@
 package io.github.eng1team11.boatgame2d.ecs.system;
 
 import io.github.eng1team11.boatgame2d.ecs.component.*;
-import io.github.eng1team11.boatgame2d.util.CollisionData;
 
 import java.util.Map;
 
@@ -27,15 +26,15 @@ public class Collision extends System {
      */
     boolean checkAABB(ColliderComponent cA, ColliderComponent cB, PositionComponent pA, PositionComponent pB) {
         // A is clearly above, no collision
-        if (pA.getY() - cA.getHeight() > pB.getY()) {
+        if (pA.getY() >  pB.getY() + cB.getHeight()) {
+            return false;
+        }
+        // A is clearly below, no collision
+        if (pA.getY() + cB.getHeight() < pB.getY()) {
             return false;
         }
         // A is clearly to the left, no collision
         if (pA.getX() + cA.getWidth() < pB.getX()) {
-            return false;
-        }
-        // A is clearly below, no collision
-        if (pA.getY() < pB.getY() - cB.getHeight()) {
             return false;
         }
         // A is clearly to the right, no collision
@@ -58,6 +57,10 @@ public class Collision extends System {
             int id = kv.getKey();
             // Get components of the entity
             ColliderComponent colliderA = (ColliderComponent) kv.getValue();
+
+            // If the entity doesn't collide, skip it
+            if (!colliderA.isActive()) continue;
+
             DurabilityComponent durabilityA = (DurabilityComponent) _affectedComponents.get(1).get(id);
             VelocityComponent velocityA = (VelocityComponent) _affectedComponents.get(2).get(id);
 //            SpriteComponent spriteA = (SpriteComponent) _affectedComponents.get(3).get(id);
@@ -71,6 +74,10 @@ public class Collision extends System {
                 if (id >= oId) continue;
                 // Get the components of the other entity
                 ColliderComponent colliderB = (ColliderComponent) other.getValue();
+
+                // If the entity doesn't collide, skip it
+                if (!colliderB.isActive()) continue;
+
                 DurabilityComponent durabilityB = (DurabilityComponent) _affectedComponents.get(1).get(oId);
                 VelocityComponent velocityB = (VelocityComponent) _affectedComponents.get(2).get(oId);
                 PositionComponent positionB = (PositionComponent) _affectedComponents.get(4).get(oId);
