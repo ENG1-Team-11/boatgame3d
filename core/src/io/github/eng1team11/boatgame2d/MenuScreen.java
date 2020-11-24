@@ -18,6 +18,7 @@ public class MenuScreen implements Screen {
 
     final BoatGame _game;
     Scene _menuScene;
+    float elapsed;
 
     /**
      * Default ctor for the menu screen
@@ -37,9 +38,11 @@ public class MenuScreen implements Screen {
         _menuScene = new Scene();
         _menuScene.addObject(
                 new Image(
-                        new Vector2(-400.0f, 0.0f),
-                        new Vector2(7223.0f, 1088.0f),
-                        TextureManager.getTexture("background")
+                        new Vector2(0.0f, 0.0f),
+                        new Vector2(0.0f, 0.0f),
+                        //new Vector2(-400.0f, 0.0f),
+                        //new Vector2(7223.0f, 1088.0f),
+                        TextureManager.getTexture("menu_background")
                 ),
                 "background",
                 -1
@@ -83,6 +86,7 @@ public class MenuScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        elapsed += Gdx.graphics.getDeltaTime();
         // Set the screen clear colour to black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         // Clear the colour buffer and the depth buffer
@@ -96,6 +100,7 @@ public class MenuScreen implements Screen {
 
         // Start adding things to the game sprite batch
         _game._spriteBatch.begin();
+        _game._spriteBatch.draw(_game.animation.getKeyFrame(elapsed), 20.0f, 20.0f);
         // Draw the UI scene
         _game._spriteBatch.setProjectionMatrix(_game._guiCamera.combined);
         _menuScene.draw(_game._spriteBatch);
