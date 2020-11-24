@@ -131,5 +131,13 @@ public class EntityFactory {
         _cm.addComponent(obstacle, new VelocityComponent(obstacle, -10.0f, 0.0f));
         return obstacle;
     }
+    
+    public int createLaneEntity(float x, float y, int width, int height, Texture texture) {
+        int obstacle = createDrawableEntity(x, y, width, height, texture);
+        _cm.addComponent(obstacle, new ColliderComponent(obstacle, width, height));
+        _cm.addComponent(obstacle, new DurabilityComponent(obstacle, 100000000f));
+        _cm.addComponent(obstacle, new VelocityComponent(obstacle, 0.0f, 0.0f));
+        return obstacle;
+    }
 
 }

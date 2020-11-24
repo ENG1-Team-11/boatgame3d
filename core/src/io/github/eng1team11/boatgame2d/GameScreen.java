@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import io.github.eng1team11.boatgame2d.ecs.EntityFactory;
+import io.github.eng1team11.boatgame2d.ecs.component.CurrencyComponent;
 import io.github.eng1team11.boatgame2d.ecs.component.SpriteComponent;
 import io.github.eng1team11.boatgame2d.ui.Scene;
 import io.github.eng1team11.boatgame2d.ui.Text;
@@ -23,8 +24,9 @@ public class GameScreen implements Screen {
     Text _countdownText;
 
     float _obstacleFrequency;
-
     float _raceProgress;
+
+    CurrencyComponent _coins;
     SpriteComponent _playerSprite;
 
     Scene _ui;
@@ -60,28 +62,44 @@ public class GameScreen implements Screen {
     public void show() {
         int player = EntityFactory.get().createPlayerEntity(
                 -375,
-                Gdx.graphics.getHeight() / 4.0f,
+                Gdx.graphics.getHeight() / 3.0f,
                 334,
-                96,
+                75,
                 TextureManager.getTexture("boat")
         );
         EntityFactory.get().createAIEntity(
                 -375,
-                -75,
+                0,
                 334,
-                96,
+                75,
                 TextureManager.getTexture("boat")
         );
         EntityFactory.get().createAIEntity(
                 -375,
-                -225,
+                Gdx.graphics.getHeight() / -3.0f,
                 334,
-                96,
+                75,
                 TextureManager.getTexture("boat")
         );
+    	EntityFactory.get().createLaneEntity(
+    			Gdx.graphics.getWidth() * -1.0f,
+    			Gdx.graphics.getHeight() / -5.25f,
+    			Gdx.graphics.getWidth() * 2,
+    			5,
+    			TextureManager.getTexture("placeholder")
+    	);
+    	EntityFactory.get().createLaneEntity(
+    			Gdx.graphics.getWidth() * -1.0f,
+    			Gdx.graphics.getHeight() / 5.25f,
+    			Gdx.graphics.getWidth() * 2,
+    			5,
+    			TextureManager.getTexture("placeholder")
+    	);
 
         _ui = new Scene();
         _ui.addObject(new Text(new Vector2(-20.0f, 72.0f), "5", FontManager.get().getFont(72)), "text_countdown");
+        //supposed to display currency on screen
+        //_ui.addObject(new Text(new Vector2(Gdx.graphics.getWidth() / 4.0f, -Gdx.graphics.getHeight() / 3.0f), _coins.currencyAsString(), FontManager.get().getFont(22)), "currency");
         _countdownText = (Text) _ui.getObject("text_countdown");
 
         _obstacleFrequency = 0.1f;
@@ -89,13 +107,13 @@ public class GameScreen implements Screen {
 
         _playerSprite = (SpriteComponent) _game._componentManager.getComponent(player, SpriteComponent.class);
 
+        // Update the systems once so it looks good during the countdown
+        _game._systemManager.update(0.0f);
+
         // Update the camera to centre on the player
         _game._camera.position.set(_playerSprite._position.getX() + _playerSprite._size._x / 2, _playerSprite._position.getY() + _playerSprite._size._y / 2, 0.0f);
         _game._camera.update();
         _game._spriteBatch.setProjectionMatrix(_game._camera.combined);
-
-        // Update the systems once so it looks good during the countdown
-        _game._systemManager.update(0.0f);
     }
 
     /**
@@ -110,6 +128,7 @@ public class GameScreen implements Screen {
             _startCountdown -= delta;
             String time = Integer.toString((int) Math.ceil(_startCountdown));
             _countdownText.setText(time);
+
 
             _game._camera.update();
             _game._spriteBatch.setProjectionMatrix(_game._camera.combined);
