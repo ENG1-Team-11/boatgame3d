@@ -4,7 +4,7 @@ import io.github.eng1team11.boatgame2d.util.Vector2;
 
 public class VelocityComponent extends Vector2Component {
 
-    float _maxVelocity = 50.0f;     // The max velocity
+    float _maxVelocity = 10.0f;     // The max velocity
     float _baseVelocity = 10.0f;    // The base velocity
     float _velocityModifier = 1.0f; // The velocity modifier
     float _durModifier = 1.0f;      // The durability modifier

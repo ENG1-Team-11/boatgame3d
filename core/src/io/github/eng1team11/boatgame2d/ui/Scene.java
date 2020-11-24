@@ -1,10 +1,10 @@
 package io.github.eng1team11.boatgame2d.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Scene {
 
@@ -73,8 +73,8 @@ public class Scene {
      * @param delta The time since the last frame in seconds
      */
     public void update(float delta) {
-        int mouseX = Gdx.graphics.getWidth() / 2 - Gdx.input.getX();
-        int mouseY = Gdx.graphics.getHeight() / 2 - Gdx.input.getY();
+        int mouseX = Gdx.input.getX();
+        int mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
 //        System.out.printf("X: %d;\tY: %d\n", mouseX, mouseY);
         boolean click = Gdx.input.isButtonJustPressed(0);
         for (Map.Entry<String, UIObject> object : _uiObjects.entrySet()) {

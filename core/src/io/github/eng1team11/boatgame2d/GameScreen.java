@@ -5,9 +5,11 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import io.github.eng1team11.boatgame2d.ecs.EntityFactory;
 import io.github.eng1team11.boatgame2d.ecs.component.CurrencyComponent;
 import io.github.eng1team11.boatgame2d.ecs.component.SpriteComponent;
+import io.github.eng1team11.boatgame2d.ui.ProgressBar;
 import io.github.eng1team11.boatgame2d.ui.Scene;
 import io.github.eng1team11.boatgame2d.ui.Text;
 import io.github.eng1team11.boatgame2d.util.FontManager;
@@ -24,10 +26,13 @@ public class GameScreen implements Screen {
     Text _countdownText;
 
     float _obstacleFrequency;
-    float _raceProgress;
+
 
     CurrencyComponent _coins;
     SpriteComponent _playerSprite;
+
+    float _raceProgress;
+    ProgressBar _progressBar;
 
     Scene _ui;
 
@@ -60,22 +65,23 @@ public class GameScreen implements Screen {
      */
     @Override
     public void show() {
+        EntityFactory.get().createDrawableEntity(-800, -600, 9630, 1450, TextureManager.getTexture("background"));
         int player = EntityFactory.get().createPlayerEntity(
-                -375,
+                0,
                 Gdx.graphics.getHeight() / 3.0f,
                 334,
                 75,
                 TextureManager.getTexture("boat")
         );
         EntityFactory.get().createAIEntity(
-                -375,
+                0,
                 0,
                 334,
                 75,
                 TextureManager.getTexture("boat")
         );
         EntityFactory.get().createAIEntity(
-                -375,
+                0,
                 Gdx.graphics.getHeight() / -3.0f,
                 334,
                 75,
@@ -84,23 +90,31 @@ public class GameScreen implements Screen {
         EntityFactory.get().createLaneEntity(
                 Gdx.graphics.getWidth() * -1.0f,
                 Gdx.graphics.getHeight() / -5.25f,
-                Gdx.graphics.getWidth() * 2,
+                Gdx.graphics.getWidth() * 100,
                 5,
                 TextureManager.getTexture("placeholder")
         );
         EntityFactory.get().createLaneEntity(
                 Gdx.graphics.getWidth() * -1.0f,
                 Gdx.graphics.getHeight() / 5.25f,
-                Gdx.graphics.getWidth() * 2,
+                Gdx.graphics.getWidth() * 100,
                 5,
                 TextureManager.getTexture("placeholder")
         );
 
         _ui = new Scene();
-        _ui.addObject(new Text(new Vector2(-20.0f, 72.0f), "5", FontManager.get().getFont(72)), "text_countdown");
+        _ui.addObject(
+                new Text(new Vector2(620.0f, 540.0f), "5", FontManager.get().getFont(72)),
+                "text_countdown"
+        );
+        _ui.addObject(
+                new ProgressBar(new Vector2(440.0f, 640.0f), new Vector2(400.0f, 20.0f), TextureManager.getTexture("progress_outer"), TextureManager.getTexture("progress_inner")),
+                "progress_raceProgress"
+        );
         //supposed to display currency on screen
         //_ui.addObject(new Text(new Vector2(Gdx.graphics.getWidth() / 4.0f, -Gdx.graphics.getHeight() / 3.0f), _coins.currencyAsString(), FontManager.get().getFont(22)), "currency");
         _countdownText = (Text) _ui.getObject("text_countdown");
+        _progressBar = (ProgressBar) _ui.getObject("progress_raceProgress");
 
         _obstacleFrequency = 0.1f;
         _startCountdown = 5.0f;
@@ -111,9 +125,9 @@ public class GameScreen implements Screen {
         _game._systemManager.update(0.0f);
 
         // Update the camera to centre on the player
-        _game._camera.position.set(_playerSprite._position.getX() + _playerSprite._size._x / 2, _playerSprite._position.getY() + _playerSprite._size._y / 2, 0.0f);
-        _game._camera.update();
-        _game._spriteBatch.setProjectionMatrix(_game._camera.combined);
+        _game._gameCamera.position.set(_playerSprite._position.getX() + _playerSprite._size._x / 2, _playerSprite._position.getY() + _playerSprite._size._y / 2, 0.0f);
+        _game._gameCamera.update();
+        _game._spriteBatch.setProjectionMatrix(_game._gameCamera.combined);
     }
 
     /**
@@ -130,14 +144,15 @@ public class GameScreen implements Screen {
             _countdownText.setText(time);
 
 
-            _game._camera.update();
-            _game._spriteBatch.setProjectionMatrix(_game._camera.combined);
+            _game._gameCamera.update();
 
             // Behind the sprite batch
             _game._spriteBatch.begin();
             // Render the in-game objects
+            _game._spriteBatch.setProjectionMatrix(_game._gameCamera.combined);
             _game._systemManager.render(delta);
             // Render the UI
+            _game._spriteBatch.setProjectionMatrix(_game._guiCamera.combined);
             _ui.draw(_game._spriteBatch);
             // End the sprite batch
             _game._spriteBatch.end();
@@ -173,22 +188,26 @@ public class GameScreen implements Screen {
         }
 
         // Update the camera and use it to set the view projection
-        _game._camera.position.set(_playerSprite._position.getX() + _playerSprite._size._x / 2, _playerSprite._position.getY() + _playerSprite._size._y / 2, 0.0f);
-        _game._camera.update();
-        _game._spriteBatch.setProjectionMatrix(_game._camera.combined);
+        _game._gameCamera.position.set(_playerSprite._position.getX() + _playerSprite._size._x / 2, _playerSprite._position.getY() + _playerSprite._size._y / 2, 0.0f);
+        _game._gameCamera.update();
 
         // Run input and update functions on all systems
         _game._systemManager.input(delta);
         _game._systemManager.update(delta);
 
+        _raceProgress = _playerSprite._position._x / 4000.0f;
+
         // Update the UI
+        _progressBar.setProgress(_raceProgress);
         _ui.update(delta);
 
         //Begin the sprite batch
         _game._spriteBatch.begin();
         // Render all systems' entities
+        _game._spriteBatch.setProjectionMatrix(_game._gameCamera.combined);
         _game._systemManager.render(delta);
         // Render the UI
+        _game._spriteBatch.setProjectionMatrix(_game._guiCamera.combined);
         _ui.draw(_game._spriteBatch);
         // End the sprite batch
         _game._spriteBatch.end();

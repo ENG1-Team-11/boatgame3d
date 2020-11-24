@@ -26,9 +26,6 @@ public class MenuScreen implements Screen {
      */
     public MenuScreen(final BoatGame boatGame) {
         _game = boatGame;
-
-        _game._camera = new OrthographicCamera();
-        _game._camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     /**
@@ -40,7 +37,7 @@ public class MenuScreen implements Screen {
         _menuScene = new Scene();
         _menuScene.addObject(
                 new Image(
-                        new Vector2(-400.0f - Gdx.graphics.getWidth() / 2.0f, -915.0f + Gdx.graphics.getHeight() / 2.0f),
+                        new Vector2(-400.0f, 0.0f),
                         new Vector2(7223.0f, 1088.0f),
                         TextureManager.getTexture("background")
                 ),
@@ -49,7 +46,7 @@ public class MenuScreen implements Screen {
         );
         _menuScene.addObject(
                 new Text(
-                        new Vector2(-220.0f, 270.0f),
+                        new Vector2(420.0f, 600.0f),
                         "Boat Game 2D",
                         FontManager.get().getFont(72)
                 ),
@@ -57,7 +54,7 @@ public class MenuScreen implements Screen {
         );
         _menuScene.addObject(
                 new ButtonSprite(
-                        new Vector2(-180.0f, -40.0f),
+                        new Vector2(480.0f, 340.0f),
                         new Vector2(320.0f, 120.0f),
                         TextureManager.getTexture("button_play"),
                         TextureManager.getTexture("button_play_hover"),
@@ -68,7 +65,7 @@ public class MenuScreen implements Screen {
         );
         _menuScene.addObject(
                 new ButtonSprite(
-                        new Vector2(-180.0f, -240.0f),
+                        new Vector2(480.0f, 180.0f),
                         new Vector2(320.0f, 120.0f),
                         TextureManager.getTexture("button_exit"),
                         TextureManager.getTexture("button_exit_hover"),
@@ -95,13 +92,12 @@ public class MenuScreen implements Screen {
         _menuScene.update(delta);
 
         // Update the camera
-        _game._camera.update();
-        // Use the camera's projection matrix to update the batch
-        _game._spriteBatch.setProjectionMatrix(_game._camera.projection);
+        _game._gameCamera.update();
 
         // Start adding things to the game sprite batch
         _game._spriteBatch.begin();
         // Draw the UI scene
+        _game._spriteBatch.setProjectionMatrix(_game._guiCamera.combined);
         _menuScene.draw(_game._spriteBatch);
         // Finish adding things to the sprite batch
         _game._spriteBatch.end();
@@ -118,9 +114,9 @@ public class MenuScreen implements Screen {
 //        _game._camera.viewportWidth = width;
 //        _game._camera.viewportHeight = height;
         // Set the camera position
-        _game._camera.position.set(_game._camera.viewportWidth / 2f, _game._camera.viewportHeight / 2f, 0);
+        _game._gameCamera.position.set(_game._gameCamera.viewportWidth / 2f, _game._gameCamera.viewportHeight / 2f, 0);
         // Update the camera
-        _game._camera.update();
+        _game._gameCamera.update();
     }
 
     /**

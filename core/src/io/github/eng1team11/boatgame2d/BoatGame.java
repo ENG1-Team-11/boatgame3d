@@ -22,7 +22,8 @@ public class BoatGame extends Game {
 
     public SpriteBatch _spriteBatch;
 
-    public OrthographicCamera _camera;
+    public OrthographicCamera _gameCamera;
+    public OrthographicCamera _guiCamera;
 
     /**
      * Register all required components to the ComponentManager
@@ -99,10 +100,15 @@ public class BoatGame extends Game {
         _entityManager = new EntityManager(_componentManager);
         _systemManager = new SystemManager();
 
-        _camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        _camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        _gameCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        _gameCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         // Set the camera position
-        _camera.position.set(_camera.viewportWidth / 2f, _camera.viewportHeight / 2f, 0);
+        _gameCamera.position.set(_gameCamera.viewportWidth / 2f, _gameCamera.viewportHeight / 2f, 0);
+
+        _guiCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        _guiCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        // Set the camera position
+        _guiCamera.position.set(_gameCamera.viewportWidth / 2f, _gameCamera.viewportHeight / 2f, 0);
 
         EntityFactory.get().setComponentManager(_componentManager);
         EntityFactory.get().setEntityManager(_entityManager);
@@ -114,6 +120,8 @@ public class BoatGame extends Game {
         TextureManager.loadTexture("ui/button_exit.png", "button_exit");
         TextureManager.loadTexture("ui/button_play_hover.png", "button_play_hover");
         TextureManager.loadTexture("ui/button_exit_hover.png", "button_exit_hover");
+        TextureManager.loadTexture("ui/progress_outer.png", "progress_outer");
+        TextureManager.loadTexture("ui/progress_inner.png", "progress_inner");
 
         TextureManager.loadTexture("background.png", "background");
         TextureManager.loadTexture("obstacle.png", "obstacle");
