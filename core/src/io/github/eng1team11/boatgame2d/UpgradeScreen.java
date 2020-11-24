@@ -17,6 +17,11 @@ public class UpgradeScreen implements Screen {
     Scene _menuScene;
     GameScreen.RaceNumber _nextRace;
 
+    /**
+     * Default c'tor for an upgrade screen
+     * @param game A reference to the game
+     * @param previousRace Which race just took place (leg 1, 2, 3, final)
+     */
     public UpgradeScreen(BoatGame game, GameScreen.RaceNumber previousRace) {
         _game = game;
 
