@@ -1,0 +1,26 @@
+
+green.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+green1
+  rotate: false
+  xy: 1, 625
+  size: 1005, 310
+  orig: 1005, 310
+  offset: 0, 0
+  index: -1
+green2
+  rotate: false
+  xy: 1, 313
+  size: 1005, 310
+  orig: 1005, 310
+  offset: 0, 0
+  index: -1
+green3
+  rotate: false
+  xy: 1, 1
+  size: 1005, 310
+  orig: 1005, 310
+  offset: 0, 0
+  index: -1
