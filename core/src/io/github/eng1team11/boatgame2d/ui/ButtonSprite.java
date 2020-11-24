@@ -67,6 +67,7 @@ public class ButtonSprite extends SpriteObject {
 
     /**
      * Set the texture to use whilst the mouse is pressing the button
+     *
      * @param pressTexture The texture to use whilst pressing the button
      */
     public void setPressTexture(Texture pressTexture) {
@@ -75,6 +76,7 @@ public class ButtonSprite extends SpriteObject {
 
     /**
      * Set the texture to use whilst the mouse is hovering over the button
+     *
      * @param hoverTexture The texture to use whilst hovering over the button
      */
     public void setHoverTexture(Texture hoverTexture) {

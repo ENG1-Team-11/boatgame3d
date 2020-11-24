@@ -6,10 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import io.github.eng1team11.boatgame2d.ecs.EntityFactory;
-import io.github.eng1team11.boatgame2d.ecs.component.*;
-import io.github.eng1team11.boatgame2d.ecs.system.*;
 import io.github.eng1team11.boatgame2d.ui.ButtonSprite;
 import io.github.eng1team11.boatgame2d.ui.Scene;
 import io.github.eng1team11.boatgame2d.util.TextureManager;
@@ -86,7 +83,7 @@ public class TestScreen implements Screen {
         if (Math.random() < _obstacleFrequency) {
             EntityFactory.get().createObstacleEntity(
                     400,
-                    (int)((Math.random()*Gdx.graphics.getHeight())-(Gdx.graphics.getHeight()/2)),
+                    (int) ((Math.random() * Gdx.graphics.getHeight()) - (Gdx.graphics.getHeight() / 2)),
                     100,
                     100,
                     TextureManager.getTexture("badlogic")

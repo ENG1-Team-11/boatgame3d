@@ -1,8 +1,6 @@
 package io.github.eng1team11.boatgame2d.ecs.component;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.eng1team11.boatgame2d.util.Vector2;
 
@@ -15,10 +13,10 @@ public class SpriteComponent extends Component {
     /**
      * Default ctor for a component
      *
-     * @param id          The ID of the component
-     * @param height      The height of the sprite
-     * @param width       The width of the sprite
-     * @param texture     The texture to use
+     * @param id      The ID of the component
+     * @param height  The height of the sprite
+     * @param width   The width of the sprite
+     * @param texture The texture to use
      */
     public SpriteComponent(int id, Texture texture, int width, int height) {
         super(id);
@@ -29,6 +27,7 @@ public class SpriteComponent extends Component {
 
     /**
      * Set the position of the sprite
+     *
      * @param x The x coordinate
      * @param y The y coordinate
      */

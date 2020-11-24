@@ -92,7 +92,8 @@ public class ComponentManager {
 
     /**
      * Get a component of a specified type, with a specific ID
-     * @param id The ID of the component to get
+     *
+     * @param id   The ID of the component to get
      * @param type The type of the component to get
      * @return The requested IComponent object or null
      */

@@ -16,6 +16,7 @@ public class SystemManager {
 
     /**
      * Make all systems run their input functions
+     *
      * @param delta The time since the last frame
      */
     public void input(float delta) {
@@ -37,6 +38,7 @@ public class SystemManager {
 
     /**
      * Make all systems run their render functions
+     *
      * @param delta The time since the last frame
      */
     public void render(float delta) {

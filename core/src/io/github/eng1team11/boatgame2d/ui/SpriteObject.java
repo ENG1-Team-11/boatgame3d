@@ -1,7 +1,6 @@
 package io.github.eng1team11.boatgame2d.ui;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.eng1team11.boatgame2d.util.Vector2;
 

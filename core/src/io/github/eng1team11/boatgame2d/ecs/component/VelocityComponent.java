@@ -21,9 +21,10 @@ public class VelocityComponent extends Vector2Component {
 
     /**
      * Ctor for velocity allowing specification of components
+     *
      * @param id The ID of the component
-     * @param x The x component of velocity
-     * @param y The y component of velocity
+     * @param x  The x component of velocity
+     * @param y  The y component of velocity
      */
     public VelocityComponent(int id, float x, float y) {
         super(id);

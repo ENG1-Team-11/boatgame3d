@@ -26,7 +26,7 @@ public class Collision extends System {
      */
     boolean checkAABB(ColliderComponent cA, ColliderComponent cB, PositionComponent pA, PositionComponent pB) {
         // A is clearly above, no collision
-        if (pA.getY() >  pB.getY() + cB.getHeight()) {
+        if (pA.getY() > pB.getY() + cB.getHeight()) {
             return false;
         }
         // A is clearly below, no collision
@@ -37,13 +37,9 @@ public class Collision extends System {
         if (pA.getX() + cA.getWidth() < pB.getX()) {
             return false;
         }
-        // A is clearly to the right, no collision
-        if (pA.getX() > pB.getX() + cB.getWidth()) {
-            return false;
-        }
+        // A is clearly to the right, no collision (or false if there was a collision)
+        return !(pA.getX() > pB.getX() + cB.getWidth());
 
-        // By deduction, there must have been a collision
-        return true;
     }
 
     /**
@@ -90,18 +86,12 @@ public class Collision extends System {
                     float momentumX = (velocityA.getX() + velocityB.getX()) / 2;
                     float momentumY = (velocityA.getY() + velocityB.getY()) / 2;
 
-                    // Calculate the transfer of energy
-                    float bumpXA = momentumX * 0.5f;
-                    float bumpXB = momentumX;
-                    float bumpYA = -momentumY * 0.5f;
-                    float bumpYB = -momentumY;
-
                     // Modify Boat A
-                    velocityA.set(bumpXA, -bumpYA);
+                    velocityA.set(momentumX * 0.5f, momentumY * 0.5f);
                     durabilityA.setShouldReduce(true);
 
                     // Modify Boat B
-                    velocityB.set(bumpXB, -bumpYB);
+                    velocityB.set(momentumX, momentumY);
                     durabilityB.setShouldReduce(true);
                 }
             }

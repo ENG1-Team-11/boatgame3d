@@ -6,10 +6,9 @@ import io.github.eng1team11.boatgame2d.ecs.component.*;
 
 public class EntityFactory {
 
+    public static EntityFactory ef = new EntityFactory();   // Static object
     ComponentManager _cm;
     EntityManager _em;
-
-    public static EntityFactory ef = new EntityFactory();   // Static object
 
     /**
      * Private c'tor
@@ -29,6 +28,7 @@ public class EntityFactory {
 
     /**
      * Set the component manager to use
+     *
      * @param cm The current component manager instance
      */
     public void setComponentManager(ComponentManager cm) {
@@ -37,6 +37,7 @@ public class EntityFactory {
 
     /**
      * Set the entity manager to use
+     *
      * @param em The current entity manager instance
      */
     public void setEntityManager(EntityManager em) {
@@ -131,7 +132,7 @@ public class EntityFactory {
         _cm.addComponent(obstacle, new VelocityComponent(obstacle, -10.0f, 0.0f));
         return obstacle;
     }
-    
+
     public int createLaneEntity(float x, float y, int width, int height, Texture texture) {
         int obstacle = createDrawableEntity(x, y, width, height, texture);
         _cm.addComponent(obstacle, new ColliderComponent(obstacle, width, height, false));

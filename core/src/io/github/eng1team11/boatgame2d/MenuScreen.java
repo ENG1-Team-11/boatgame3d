@@ -47,7 +47,7 @@ public class MenuScreen implements Screen {
         );
         _menuScene.addObject(
                 new ButtonSprite(
-                        new Vector2(-180.0f,  -40.0f),
+                        new Vector2(-180.0f, -40.0f),
                         new Vector2(320.0f, 120.0f),
                         TextureManager.getTexture("button_play"),
                         TextureManager.getTexture("button_play_hover"),
@@ -144,8 +144,8 @@ public class MenuScreen implements Screen {
      */
     @Override
     public void hide() {
-            _game._componentManager.clear();
-            _game._entityManager.clear();
+        _game._componentManager.clear();
+        _game._entityManager.clear();
     }
 
     /**

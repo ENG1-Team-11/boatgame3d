@@ -6,17 +6,18 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class FontManager {
 
+    public static FontManager fm = new FontManager();
     FreeTypeFontGenerator _fontGenerator;
     FreeTypeFontGenerator.FreeTypeFontParameter _fontParameter;
-
-    public static FontManager fm = new FontManager();
 
     private FontManager() {
         _fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
         _fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
     }
 
-    public static FontManager get() { return fm; }
+    public static FontManager get() {
+        return fm;
+    }
 
     public BitmapFont getFont(int size) {
         _fontParameter.size = size;

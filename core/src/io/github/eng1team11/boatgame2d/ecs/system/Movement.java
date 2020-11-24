@@ -82,7 +82,7 @@ public class Movement extends System {
             }
 
             // If we're missing any components, skip this object
-            if (velocity == null  || position == null) continue;
+            if (velocity == null || position == null) continue;
 
             // Add velocity to position, accounting for the durability
             position.add(velocity.getXModified() * delta, velocity.getYModified() * delta);
