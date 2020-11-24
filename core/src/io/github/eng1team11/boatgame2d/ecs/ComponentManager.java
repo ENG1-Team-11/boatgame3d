@@ -91,6 +91,17 @@ public class ComponentManager {
     }
 
     /**
+     * Get a component of a specified type, with a specific ID
+     * @param id The ID of the component to get
+     * @param type The type of the component to get
+     * @return The requested IComponent object or null
+     */
+    public IComponent getComponent(int id, Class type) {
+        int cType = _componentTypes.get(type);
+        return _components.get(cType).get(id);
+    }
+
+    /**
      * Delete a component from an entity
      *
      * @param type   The type of component

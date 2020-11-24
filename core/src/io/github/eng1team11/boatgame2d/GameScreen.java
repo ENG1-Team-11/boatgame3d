@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import io.github.eng1team11.boatgame2d.ecs.EntityFactory;
+import io.github.eng1team11.boatgame2d.ecs.component.SpriteComponent;
 import io.github.eng1team11.boatgame2d.ui.Scene;
 import io.github.eng1team11.boatgame2d.ui.Text;
 import io.github.eng1team11.boatgame2d.util.FontManager;
@@ -22,7 +23,9 @@ public class GameScreen implements Screen {
     Text _countdownText;
 
     float _obstacleFrequency;
+
     float _raceProgress;
+    SpriteComponent _playerSprite;
 
     Scene _ui;
 
@@ -41,7 +44,7 @@ public class GameScreen implements Screen {
     void SpawnObstacle() {
         _obstacles.add(
                 EntityFactory.get().createObstacleEntity(
-                        400,
+                        1000 + _playerSprite._position._x,
                         (int) ((Math.random() * Gdx.graphics.getHeight()) - (Gdx.graphics.getHeight() / 2)),
                         25,
                         25,
@@ -55,7 +58,7 @@ public class GameScreen implements Screen {
      */
     @Override
     public void show() {
-        EntityFactory.get().createPlayerEntity(
+        int player = EntityFactory.get().createPlayerEntity(
                 -375,
                 Gdx.graphics.getHeight() / 4.0f,
                 334,
@@ -84,12 +87,20 @@ public class GameScreen implements Screen {
         _obstacleFrequency = 0.1f;
         _startCountdown = 5.0f;
 
+        _playerSprite = (SpriteComponent) _game._componentManager.getComponent(player, SpriteComponent.class);
+
+        // Update the camera to centre on the player
+        _game._camera.position.set(_playerSprite._position.getX() + _playerSprite._size._x / 2, _playerSprite._position.getY() + _playerSprite._size._y / 2, 0.0f);
+        _game._camera.update();
+        _game._spriteBatch.setProjectionMatrix(_game._camera.combined);
+
         // Update the systems once so it looks good during the countdown
         _game._systemManager.update(0.0f);
     }
 
     /**
      * Do the countdown sequence if required
+     *
      * @param delta The time since the last frame
      * @return A boolean representing whether or not hte countdown is still in progress
      */
@@ -99,6 +110,9 @@ public class GameScreen implements Screen {
             _startCountdown -= delta;
             String time = Integer.toString((int) Math.ceil(_startCountdown));
             _countdownText.setText(time);
+
+            _game._camera.update();
+            _game._spriteBatch.setProjectionMatrix(_game._camera.combined);
 
             // Behind the sprite batch
             _game._spriteBatch.begin();
@@ -140,8 +154,9 @@ public class GameScreen implements Screen {
         }
 
         // Update the camera and use it to set the view projection
+        _game._camera.position.set(_playerSprite._position.getX() + _playerSprite._size._x / 2, _playerSprite._position.getY() + _playerSprite._size._y / 2, 0.0f);
         _game._camera.update();
-        _game._spriteBatch.setProjectionMatrix(_game._camera.projection);
+        _game._spriteBatch.setProjectionMatrix(_game._camera.combined);
 
         // Run input and update functions on all systems
         _game._systemManager.input(delta);
