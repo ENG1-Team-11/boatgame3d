@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import io.github.eng1team11.boatgame2d.ui.ButtonSprite;
+import io.github.eng1team11.boatgame2d.ui.Image;
 import io.github.eng1team11.boatgame2d.ui.Scene;
 import io.github.eng1team11.boatgame2d.ui.Text;
 import io.github.eng1team11.boatgame2d.util.FontManager;
@@ -38,6 +39,15 @@ public class MenuScreen implements Screen {
 
         _menuScene = new Scene();
         _menuScene.addObject(
+                new Image(
+                        new Vector2(-400.0f - Gdx.graphics.getWidth() / 2.0f, -915.0f + Gdx.graphics.getHeight() / 2.0f),
+                        new Vector2(7223.0f, 1088.0f),
+                        TextureManager.getTexture("background")
+                ),
+                "background",
+                -1
+        );
+        _menuScene.addObject(
                 new Text(
                         new Vector2(-220.0f, 270.0f),
                         "Boat Game 2D",
@@ -52,12 +62,7 @@ public class MenuScreen implements Screen {
                         TextureManager.getTexture("button_play"),
                         TextureManager.getTexture("button_play_hover"),
                         TextureManager.getTexture("button_play"),
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                _game.setScreen(new GameScreen(_game));
-                            }
-                        }
+                        () -> _game.setScreen(new GameScreen(_game))
                 ),
                 "button_play"
         );
@@ -68,12 +73,7 @@ public class MenuScreen implements Screen {
                         TextureManager.getTexture("button_exit"),
                         TextureManager.getTexture("button_exit_hover"),
                         TextureManager.getTexture("button_exit"),
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                Gdx.app.exit();
-                            }
-                        }
+                        () -> Gdx.app.exit()
                 ),
                 "button_exit"
         );
