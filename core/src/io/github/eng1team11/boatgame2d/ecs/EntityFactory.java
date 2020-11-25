@@ -69,12 +69,15 @@ public class EntityFactory {
      * @param width   The width of the object
      * @param height  The height of the object
      * @param texture The texture to give the object
+     * @param sta     The stamina of the boat
+     * @param vel     The velocity of the boat
+     * @param dur     The durability of the boat
      * @return The ID of the new entity
      */
-    public int createBoatEntity(float x, float y, int width, int height, Texture texture) {
+    public int createBoatEntity(float x, float y, int width, int height, Texture texture, float sta, float vel, float dur) {
         int boat = createDrawableEntity(x, y, width, height, texture);
         _cm.addComponent(boat, new ColliderComponent(boat, width, height, true));
-        _cm.addComponent(boat, new UpgradeComponent(boat));
+        _cm.addComponent(boat, new UpgradeComponent(boat, sta, dur, vel));
         _cm.addComponent(boat, new AccelerationComponent(boat));
         _cm.addComponent(boat, new DurabilityComponent(boat, 1000.0f));
         _cm.addComponent(boat, new StaminaComponent(boat));
@@ -93,7 +96,27 @@ public class EntityFactory {
      * @return The ID of the new entity
      */
     public int createPlayerEntity(float x, float y, int width, int height, Texture texture) {
-        int player = createBoatEntity(x, y, width, height, texture);
+        int player = createBoatEntity(x, y, width, height, texture, 1.0f, 1.0f, 1.0f);
+        _cm.addComponent(player, new PlayerInputComponent(player));
+        _cm.addComponent(player, new CurrencyComponent(player));
+        return player;
+    }
+
+    /**
+     * Create a new player boat entity, specifying its modifiers
+     *
+     * @param x       The x position of the object
+     * @param y       The y position of the object
+     * @param width   The width of the object
+     * @param height  The height of the object
+     * @param texture The texture to give the object
+     * @param sta     The stamina of the boat
+     * @param vel     The velocity of the boat
+     * @param dur     The durability of the boat
+     * @return The ID of the new entity
+     */
+    public int createPlayerEntity(float x, float y, int width, int height, Texture texture, float sta, float vel, float dur) {
+        int player = createBoatEntity(x, y, width, height, texture, sta, vel, dur);
         _cm.addComponent(player, new PlayerInputComponent(player));
         _cm.addComponent(player, new CurrencyComponent(player));
         return player;
@@ -110,7 +133,26 @@ public class EntityFactory {
      * @return The ID of the new entity
      */
     public int createAIEntity(float x, float y, int width, int height, Texture texture) {
-        int ai = createBoatEntity(x, y, width, height, texture);
+        int ai = createBoatEntity(x, y, width, height, texture, 1.0f, 1.0f, 1.0f);
+        _cm.addComponent(ai, new AIComponent(ai));
+        return ai;
+    }
+
+    /**
+     * Create a new AI boat entity, specifying its modifiers
+     *
+     * @param x       The x position of the object
+     * @param y       The y position of the object
+     * @param width   The width of the object
+     * @param height  The height of the object
+     * @param texture The texture to give the object
+     * @param sta     The stamina of the boat
+     * @param vel     The velocity of the boat
+     * @param dur     The durability of the boat
+     * @return The ID of the new entity
+     */
+    public int createAIEntity(float x, float y, int width, int height, Texture texture, float sta, float vel, float dur) {
+        int ai = createBoatEntity(x, y, width, height, texture, sta, vel, dur);
         _cm.addComponent(ai, new AIComponent(ai));
         return ai;
     }

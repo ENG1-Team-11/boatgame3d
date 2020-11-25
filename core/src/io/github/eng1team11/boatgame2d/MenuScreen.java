@@ -5,7 +5,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import io.github.eng1team11.boatgame2d.ui.ButtonSprite;
 import io.github.eng1team11.boatgame2d.ui.Image;
 import io.github.eng1team11.boatgame2d.ui.Scene;
@@ -51,6 +50,22 @@ public class MenuScreen implements Screen {
                         FontManager.get().getFont(72)
                 ),
                 "text_Title"
+        );
+        _menuScene.addObject(
+                new Text(
+                        new Vector2(640.0f, 64.0f),
+                        "Press WASD or use the arrow keys to dodge obstacles and stay in lane",
+                        FontManager.get().getFont(24)
+                ),
+                "text_tutorial"
+        );
+        _menuScene.addObject(
+                new Text(
+                        new Vector2(640.0f, 32.0f),
+                        "Win the race by beating the 2 other boats",
+                        FontManager.get().getFont(24)
+                ),
+                "text_tutorial2"
         );
         _menuScene.addObject(
                 new ButtonSprite(

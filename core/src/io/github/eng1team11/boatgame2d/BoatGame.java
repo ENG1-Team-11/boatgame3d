@@ -3,6 +3,7 @@ package io.github.eng1team11.boatgame2d;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.eng1team11.boatgame2d.ecs.ComponentManager;
@@ -24,6 +25,8 @@ public class BoatGame extends Game {
 
     public OrthographicCamera _gameCamera;
     public OrthographicCamera _guiCamera;
+
+    public Screen _menuScreen;
 
     /**
      * Register all required components to the ComponentManager
@@ -128,8 +131,10 @@ public class BoatGame extends Game {
         TextureManager.loadTexture("placeholder.png", "placeholder");
         TextureManager.loadTexture("boat_assets/boat_separate.png", "boat");
 
+        _menuScreen = new MenuScreen(this);
+
         // When the game instance is created, go to the main menu screen
-        this.setScreen(new MenuScreen(this));
+        this.setScreen(_menuScreen);
 
     }
 

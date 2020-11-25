@@ -19,13 +19,14 @@ public class UpgradeScreen implements Screen {
 
     /**
      * Default c'tor for an upgrade screen
-     * @param game A reference to the game
+     *
+     * @param game         A reference to the game
      * @param previousRace Which race just took place (leg 1, 2, 3, final)
      */
     public UpgradeScreen(BoatGame game, GameScreen.RaceNumber previousRace) {
         _game = game;
 
-        switch (previousRace){
+        switch (previousRace) {
             case R1:
                 _nextRace = GameScreen.RaceNumber.R2;
                 break;
@@ -51,7 +52,7 @@ public class UpgradeScreen implements Screen {
                         TextureManager.getTexture("button_play"),
                         TextureManager.getTexture("button_play_hover"),
                         TextureManager.getTexture("button_play"),
-                        ()-> _game.setScreen(new GameScreen(_game, _nextRace))
+                        () -> _game.setScreen(new GameScreen(_game, _nextRace))
                 ),
                 "button_continue"
         );
@@ -85,7 +86,7 @@ public class UpgradeScreen implements Screen {
     }
 
     /**
-     * @param width The width of the screen
+     * @param width  The width of the screen
      * @param height The height of the screen
      * @see ApplicationListener#resize(int, int)
      */

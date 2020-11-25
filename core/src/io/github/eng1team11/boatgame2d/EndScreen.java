@@ -81,7 +81,7 @@ public class EndScreen implements Screen {
                         TextureManager.getTexture("button_exit"),
                         TextureManager.getTexture("button_exit_hover"),
                         TextureManager.getTexture("button_exit"),
-                        () -> _game.setScreen(new MenuScreen(_game))
+                        () -> _game.setScreen(_game._menuScreen)
                 ),
                 "button_menu"
         );
@@ -123,7 +123,7 @@ public class EndScreen implements Screen {
     }
 
     /**
-     * @param width The width of the screen
+     * @param width  The width of the screen
      * @param height The height of the screen
      * @see ApplicationListener#resize(int, int)
      */

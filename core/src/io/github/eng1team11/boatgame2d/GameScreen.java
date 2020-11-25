@@ -22,7 +22,7 @@ public class GameScreen implements Screen {
     Text _countdownText;
 
     float _obstacleFrequency;
-
+    float _aiStrength;
 
     CurrencyComponent _coins;
     SpriteComponent _playerSprite;
@@ -40,7 +40,8 @@ public class GameScreen implements Screen {
     /**
      * Default ctor for the game screen
      *
-     * @param boatGame The BoatGame this screen is attached to
+     * @param boatGame   The BoatGame this screen is attached to
+     * @param raceNumber Which leg of the race we're currently on
      */
     public GameScreen(final BoatGame boatGame, RaceNumber raceNumber) {
         _game = boatGame;
@@ -51,16 +52,20 @@ public class GameScreen implements Screen {
         // Race number specific parameters
         switch (raceNumber) {
             case R1:
-                _obstacleFrequency = 0.01f;
+                _obstacleFrequency = 0.03f;
+                _aiStrength = 0.1f;
                 break;
             case R2:
                 _obstacleFrequency = 0.06f;
+                _aiStrength = 0.2f;
                 break;
             case R3:
                 _obstacleFrequency = 0.1f;
+                _aiStrength = 0.4f;
                 break;
             case Final:
                 _obstacleFrequency = 0.25f;
+                _aiStrength = 0.6f;
         }
     }
 
@@ -94,14 +99,20 @@ public class GameScreen implements Screen {
                 0,
                 334,
                 75,
-                TextureManager.getTexture("boat")
+                TextureManager.getTexture("boat"),
+                (float) Math.random() * _aiStrength + 0.8f,
+                (float) Math.random() * _aiStrength + 0.8f,
+                (float) Math.random() * _aiStrength + 0.8f
         );
         EntityFactory.get().createAIEntity(
                 0,
                 Gdx.graphics.getHeight() / -3.0f,
                 334,
                 75,
-                TextureManager.getTexture("boat")
+                TextureManager.getTexture("boat"),
+                (float) Math.random() * _aiStrength + 0.8f,
+                (float) Math.random() * _aiStrength + 0.8f,
+                (float) Math.random() * _aiStrength + 0.8f
         );
         EntityFactory.get().createLaneEntity(
                 Gdx.graphics.getWidth() * -1.0f,

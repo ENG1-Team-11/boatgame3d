@@ -1,7 +1,6 @@
 package io.github.eng1team11.boatgame2d.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.*;
@@ -36,7 +35,7 @@ public class Scene {
      *
      * @param object     The object to add to the scene
      * @param identifier The identifier of the UI object
-     * @param zIndex The layer to draw the object on
+     * @param zIndex     The layer to draw the object on
      */
     public void addObject(UIObject object, String identifier, int zIndex) {
         if (_uiObjects.containsKey(identifier)) return;
@@ -46,6 +45,7 @@ public class Scene {
 
     /**
      * Add an object to the specified layer
+     *
      * @param object The object to add
      * @param zIndex The layer to add it to
      */
