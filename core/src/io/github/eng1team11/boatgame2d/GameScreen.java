@@ -1,6 +1,7 @@
 package io.github.eng1team11.boatgame2d;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.audio.*;
 import com.badlogic.gdx.graphics.GL20;
 import io.github.eng1team11.boatgame2d.ecs.EntityFactory;
 import io.github.eng1team11.boatgame2d.ecs.component.CurrencyComponent;
@@ -36,6 +37,8 @@ public class GameScreen implements Screen {
     RaceState _state;
 
     RaceNumber _raceNumber;
+    
+    Music game_music;
 
     /**
      * Default ctor for the game screen
@@ -81,6 +84,9 @@ public class GameScreen implements Screen {
      */
     @Override
     public void show() {
+    	game_music = Gdx.audio.newMusic(Gdx.files.internal("game_music.mp3"));
+    	game_music.play();
+    	game_music.setLooping(true);
         EntityFactory.get().createDrawableEntity(-800, -600, 9630, 1450, TextureManager.getTexture("background"));
         int player = EntityFactory.get().createPlayerEntity(
                 0,
@@ -220,6 +226,9 @@ public class GameScreen implements Screen {
     }
 
     void doFinished(float delta) {
+    	
+    	game_music.stop();
+    	game_music.dispose();
 
         _game._systemManager.update(delta);
 
