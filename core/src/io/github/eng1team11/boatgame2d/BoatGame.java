@@ -131,6 +131,15 @@ public class BoatGame extends Game {
         TextureManager.loadTexture("ui/progress_outer.png", "progress_outer");
         TextureManager.loadTexture("ui/progress_inner.png", "progress_inner");
 
+        TextureManager.loadTexture("ui/button_acceleration_hover.png", "button_acceleration_hover");
+        TextureManager.loadTexture("ui/button_acceleration.png", "button_acceleration");
+        TextureManager.loadTexture("ui/button_health_hover.png", "button_health_hover");
+        TextureManager.loadTexture("ui/button_health.png", "button_health");
+        TextureManager.loadTexture("ui/button_speed_hover.png", "button_speed_hover");
+        TextureManager.loadTexture("ui/button_speed.png", "button_speed");
+        TextureManager.loadTexture("ui/button_stamina_hover.png", "button_stamina_hover");
+        TextureManager.loadTexture("ui/button_stamina.png", "button_stamina");
+
         TextureManager.loadTexture("background.png", "background");
         TextureManager.loadTexture("menu_background.gif", "menu_background");
         TextureManager.loadTexture("obstacle.png", "obstacle");
