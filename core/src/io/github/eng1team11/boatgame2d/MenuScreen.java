@@ -115,7 +115,7 @@ public class MenuScreen implements Screen {
 
         // Start adding things to the game sprite batch
         _game._spriteBatch.begin();
-        _game._spriteBatch.draw(_game.animation.getKeyFrame(elapsed), 20.0f, 20.0f);
+        _game._spriteBatch.draw(_game._animation.getKeyFrame(elapsed), 0.0f, 0.0f);
         // Draw the UI scene
         _game._spriteBatch.setProjectionMatrix(_game._guiCamera.combined);
         _menuScene.draw(_game._spriteBatch);

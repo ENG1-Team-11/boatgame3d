@@ -29,7 +29,7 @@ public class BoatGame extends Game {
     public OrthographicCamera _gameCamera;
     public OrthographicCamera _guiCamera;
 
-    public Animation<TextureRegion> animation;
+    public Animation<TextureRegion> _animation;
 
     public Screen _menuScreen;
 
@@ -133,10 +133,11 @@ public class BoatGame extends Game {
 
         TextureManager.loadTexture("background.png", "background");
         TextureManager.loadTexture("menu_background.gif", "menu_background");
-        animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("menu_background.gif").read());
         TextureManager.loadTexture("obstacle.png", "obstacle");
         TextureManager.loadTexture("placeholder.png", "placeholder");
         TextureManager.loadTexture("boat_assets/boat_separate.png", "boat");
+
+        _animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("menu_background.gif").read());
 
         _menuScreen = new MenuScreen(this);
 
