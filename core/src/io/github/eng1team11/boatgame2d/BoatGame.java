@@ -5,7 +5,10 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import io.github.eng1team11.boatgame2d.ecs.ComponentManager;
 import io.github.eng1team11.boatgame2d.ecs.EntityFactory;
 import io.github.eng1team11.boatgame2d.ecs.EntityManager;
@@ -25,6 +28,8 @@ public class BoatGame extends Game {
 
     public OrthographicCamera _gameCamera;
     public OrthographicCamera _guiCamera;
+
+    public Animation<TextureRegion> animation;
 
     public Screen _menuScreen;
 
@@ -127,6 +132,8 @@ public class BoatGame extends Game {
         TextureManager.loadTexture("ui/progress_inner.png", "progress_inner");
 
         TextureManager.loadTexture("background.png", "background");
+        TextureManager.loadTexture("menu_background.gif", "menu_background");
+        animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("menu_background.gif").read());
         TextureManager.loadTexture("obstacle.png", "obstacle");
         TextureManager.loadTexture("placeholder.png", "placeholder");
         TextureManager.loadTexture("boat_assets/boat_separate.png", "boat");
