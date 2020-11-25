@@ -1,5 +1,8 @@
 package io.github.eng1team11.boatgame2d.ecs.system;
 
+import io.github.eng1team11.boatgame2d.ecs.component.AIComponent;
+import io.github.eng1team11.boatgame2d.ecs.component.IComponent;
+
 public class AIControl extends System {
 
     /**
@@ -19,7 +22,10 @@ public class AIControl extends System {
      */
     @Override
     public void update(float delta) {
-
+        for (IComponent comp : _affectedComponents.get(0).values()) {
+            AIComponent ai = (AIComponent) comp;
+            ai.setRight(true);
+        }
     }
 
     /**

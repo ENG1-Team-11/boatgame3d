@@ -9,8 +9,9 @@ public class Image extends SpriteObject {
      *
      * @param position The position of the UI element (top-left corner)
      * @param size     The size of the UI element
+     * @param texture  The texture that the image should use
      */
-    Image(Vector2 position, Vector2 size, Texture texture) {
+    public Image(Vector2 position, Vector2 size, Texture texture) {
         super(position, size, texture);
     }
 

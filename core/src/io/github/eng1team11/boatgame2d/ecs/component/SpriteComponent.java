@@ -1,40 +1,43 @@
 package io.github.eng1team11.boatgame2d.ecs.component;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import io.github.eng1team11.boatgame2d.util.Vector2;
 
 public class SpriteComponent extends Component {
 
-    // More or less just a wrapper for the GDX sprite
-    public Sprite _base = new Sprite();
+    public Texture _base;
+    public Vector2 _size;
+    public Vector2 _position;
 
     /**
      * Default ctor for a component
      *
-     * @param id          The ID of the component
-     * @param height      The height of the sprite
-     * @param width       The width of the sprite
-     * @param texturePath The path of the texture to load
+     * @param id      The ID of the component
+     * @param height  The height of the sprite
+     * @param width   The width of the sprite
+     * @param texture The texture to use
      */
-    public SpriteComponent(int id, String texturePath, int width, int height) {
+    public SpriteComponent(int id, Texture texture, int width, int height) {
         super(id);
-        Texture t = new Texture(Gdx.files.internal(texturePath));
-        _base.setTexture(t);
-        _base.setSize(width, height);
+        _base = texture;
+        _size = new Vector2(width, height);
+        _position = new Vector2();
     }
 
     /**
-     * Ctor for sprite component
+     * Set the position of the sprite
      *
-     * @param id The ID of the component
-     * @param tx The texture to assign to the sprite
-     * @param width The width of the sprite
-     * @param height The height of the sprite
+     * @param x The x coordinate
+     * @param y The y coordinate
      */
-    public SpriteComponent(int id, Texture tx, int width, int height) {
-        super(id);
-        _base.setTexture(tx);
-        _base.setSize(width, height);
+    public void setPosition(float x, float y) {
+        _position._x = x;
+        _position._y = y;
     }
+
+    public void draw(SpriteBatch spriteBatch) {
+        spriteBatch.draw(_base, _position._x, _position._y, _size._x, _size._y);
+    }
+
 }

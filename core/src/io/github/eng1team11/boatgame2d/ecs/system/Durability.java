@@ -1,12 +1,20 @@
 package io.github.eng1team11.boatgame2d.ecs.system;
 
+import io.github.eng1team11.boatgame2d.ecs.EntityManager;
 import io.github.eng1team11.boatgame2d.ecs.component.DurabilityComponent;
 import io.github.eng1team11.boatgame2d.ecs.component.IComponent;
 import io.github.eng1team11.boatgame2d.ecs.component.VelocityComponent;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Durability extends System {
+
+    EntityManager _em;
+
+    public Durability(EntityManager em) {
+        _em = em;
+    }
 
     /**
      * Called during the input phase of the game engine loop
@@ -25,6 +33,7 @@ public class Durability extends System {
      */
     @Override
     public void update(float delta) {
+        ArrayList<Integer> entitiesToDelete = new ArrayList<>();
         super.update(delta);
         // Iterate over all entities
         for (Map.Entry<Integer, IComponent> comp : _affectedComponents.get(0).entrySet()) {
@@ -32,9 +41,6 @@ public class Durability extends System {
             // Get the components of the entity
             DurabilityComponent durability = (DurabilityComponent) comp.getValue();
             VelocityComponent velocity = (VelocityComponent) _affectedComponents.get(1).get(id);
-
-            // If the entity is missing a component, skip it
-            if (velocity == null) continue;
 
             // Decay the damage grace period of the entity
             durability.decayGracePeriod(delta);
@@ -45,9 +51,16 @@ public class Durability extends System {
                     durability.addDurability(-1);
                     durability.setGracePeriod(1.0f);
                     durability.setShouldReduce(false);
-                    velocity.setDurModifier(durability.getRemainingDurability());
+                    if (velocity != null) velocity.setDurModifier(durability.getRemainingDurability());
                 }
             }
+
+            if (durability.getDurability() <= 0.0f) {
+                entitiesToDelete.add(id);
+            }
+        }
+        for (Integer i : entitiesToDelete) {
+            _em.deleteEntity(i);
         }
     }
 

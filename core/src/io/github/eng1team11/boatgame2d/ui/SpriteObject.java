@@ -1,14 +1,13 @@
 package io.github.eng1team11.boatgame2d.ui;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.eng1team11.boatgame2d.util.Vector2;
 
 public class SpriteObject extends UIObject {
 
     Vector2 _size;
-    Sprite _sprite;
+    Texture _texture;
 
     /**
      * Default c'tor for a Sprite Object
@@ -20,10 +19,7 @@ public class SpriteObject extends UIObject {
     SpriteObject(Vector2 position, Vector2 size, Texture texture) {
         super(position);
         _size = size;
-        _sprite = new Sprite();
-        _sprite.setTexture(texture);
-        _sprite.setPosition(position._x, position._y);
-        _sprite.setSize(size._x, size._y);
+        _texture = texture;
     }
 
     /**
@@ -36,7 +32,6 @@ public class SpriteObject extends UIObject {
     @Override
     public void update(int mouseX, int mouseY, boolean click) {
         super.update(mouseX, mouseY, click);
-        _sprite.setPosition(_position._x, _position._y);
     }
 
     /**
@@ -47,6 +42,6 @@ public class SpriteObject extends UIObject {
     @Override
     public void draw(SpriteBatch spriteBatch) {
         super.draw(spriteBatch);
-        _sprite.draw(spriteBatch);
+        spriteBatch.draw(_texture, _position._x, _position._y, _size._x, _size._y);
     }
 }

@@ -60,28 +60,29 @@ public class Movement extends System {
                 controller = (ControllerComponent) _affectedComponents.get(4).get(id);
             }
 
+            if (controller != null) {
+                // Add velocity to the entity based on what input it's given
+                if (controller.getLeft()) {
+                    velocity.add(-acceleration.getAccelerationModified(), 0.0f);
+                }
+                if (controller.getRight()) {
+                    velocity.add(acceleration.getAccelerationModified(), 0.0f);
+                }
+                if (controller.getForwards()) {
+                    velocity.add(0.0f, acceleration.getAccelerationModified());
+                }
+                if (controller.getBackwards()) {
+                    velocity.add(0.0f, -acceleration.getAccelerationModified());
+                }
+                // If we're not moving, apply drag
+                if (!(controller.getLeft() | controller.getRight())) {
+                    velocity.setX(Lerp(velocity.getX(), 0.0f, _drag));
+                    velocity.setY(Lerp(velocity.getY(), 0.0f, _drag));
+                }
+            }
+
             // If we're missing any components, skip this object
-            if (velocity == null || controller == null || acceleration == null || position == null) continue;
-
-            // Add velocity to the entity based on what input it's given
-            if (controller.getLeft()) {
-                velocity.add(-acceleration.getAccelerationModified(), 0.0f);
-            }
-            if (controller.getRight()) {
-                velocity.add(acceleration.getAccelerationModified(), 0.0f);
-            }
-            if (controller.getForwards()) {
-                velocity.add(0.0f, acceleration.getAccelerationModified());
-            }
-            if (controller.getBackwards()) {
-                velocity.add(0.0f, -acceleration.getAccelerationModified());
-            }
-
-            // If we're not moving, apply drag
-            if (!(controller.getLeft() | controller.getRight())) {
-                velocity.setX(Lerp(velocity.getX(), 0.0f, _drag));
-                velocity.setY(Lerp(velocity.getY(), 0.0f, _drag));
-            }
+            if (velocity == null || position == null) continue;
 
             // Add velocity to position, accounting for the durability
             position.add(velocity.getXModified() * delta, velocity.getYModified() * delta);

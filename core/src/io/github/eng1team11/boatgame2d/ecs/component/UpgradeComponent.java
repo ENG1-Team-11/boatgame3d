@@ -15,6 +15,21 @@ public class UpgradeComponent extends Component {
     }
 
     /**
+     * Ctor that allows specification of modifiers
+     *
+     * @param id  The ID of the component
+     * @param sta The stamina modifier
+     * @param dur The durability modifier
+     * @param vel The velocity modifier
+     */
+    public UpgradeComponent(int id, float sta, float dur, float vel) {
+        super(id);
+        _staMod = sta;
+        _durMod = dur;
+        _velMod = vel;
+    }
+
+    /**
      * Get the stamina modifier
      *
      * @return The value of the stamina modifier as a float

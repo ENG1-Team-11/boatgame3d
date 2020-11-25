@@ -4,12 +4,9 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import io.github.eng1team11.boatgame2d.ecs.EntityFactory;
-import io.github.eng1team11.boatgame2d.ecs.component.*;
-import io.github.eng1team11.boatgame2d.ecs.system.*;
 import io.github.eng1team11.boatgame2d.ui.ButtonSprite;
 import io.github.eng1team11.boatgame2d.ui.Scene;
 import io.github.eng1team11.boatgame2d.util.TextureManager;
@@ -22,6 +19,8 @@ public class TestScreen implements Screen {
     OrthographicCamera _camera;
     Scene _scene;
 
+    float _obstacleFrequency;
+
     /**
      * Default ctor for the test screen
      *
@@ -29,50 +28,8 @@ public class TestScreen implements Screen {
      */
     public TestScreen(BoatGame game) {
         _game = game;
-    }
-
-    /**
-     * Create all systems required for this game screen
-     */
-    void createSystems() {
-        int aiControl = _game._systemManager.addSystem(new AIControl());
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(AIComponent.class), aiControl);
-
-        int playerControl = _game._systemManager.addSystem(new PlayerControl());
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(PlayerInputComponent.class), playerControl);
-
-        int stamina = _game._systemManager.addSystem(new Stamina());
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(StaminaComponent.class), stamina);
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(VelocityComponent.class), stamina);
-
-        int upgrade = _game._systemManager.addSystem(new Upgrade());
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(UpgradeComponent.class), upgrade);
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(StaminaComponent.class), upgrade);
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(DurabilityComponent.class), upgrade);
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(VelocityComponent.class), upgrade);
-
-        int collision = _game._systemManager.addSystem(new Collision());
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(ColliderComponent.class), collision);
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(DurabilityComponent.class), collision);
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(VelocityComponent.class), collision);
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(SpriteComponent.class), collision);
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(PositionComponent.class), collision);
-
-        int durability = _game._systemManager.addSystem(new Durability());
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(DurabilityComponent.class), durability);
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(VelocityComponent.class), durability);
-
-        int movement = _game._systemManager.addSystem(new Movement());
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(PositionComponent.class), movement);
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(VelocityComponent.class), movement);
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(AccelerationComponent.class), movement);
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(PlayerInputComponent.class), movement);
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(AIComponent.class), movement);
-
-        int render = _game._systemManager.addSystem(new Render(_game._spriteBatch));
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(PositionComponent.class), render);
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(SpriteComponent.class), render);
-        _game._systemManager.registerComponentsToSystem(_game._componentManager.getComponentsOfType(TypeComponent.class), render);
+        //This would be the point at which the obstacle frequency would be decided
+        _obstacleFrequency = 0.001f;
     }
 
     /**
@@ -80,8 +37,6 @@ public class TestScreen implements Screen {
      */
     @Override
     public void show() {
-
-        createSystems();
         TextureManager.loadTexture("placeholder.png", "placeholder");
         TextureManager.loadTexture("badlogic.jpg", "badlogic");
         _scene = new Scene();
@@ -125,9 +80,19 @@ public class TestScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        if (Math.random() < _obstacleFrequency) {
+            EntityFactory.get().createObstacleEntity(
+                    400,
+                    (int) ((Math.random() * Gdx.graphics.getHeight()) - (Gdx.graphics.getHeight() / 2)),
+                    100,
+                    100,
+                    TextureManager.getTexture("badlogic")
+            );
+        }
+
         // Set the clear colour then clear the screen
         Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Update the camera
         _camera.update();

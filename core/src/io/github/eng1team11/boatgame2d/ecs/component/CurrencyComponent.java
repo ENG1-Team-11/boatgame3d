@@ -33,6 +33,15 @@ public class CurrencyComponent extends Component {
     }
 
     /**
+     * toString for currency
+     *
+     * @return The amount of currency, as a string
+     */
+    public String currencyAsString() {
+        return "Currency = " + _amount;
+    }
+
+    /**
      * Checks if user has enough currency to purchase upgrade
      *
      * @param price The amount of currency to check against

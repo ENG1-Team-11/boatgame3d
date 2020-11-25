@@ -13,19 +13,78 @@ import io.github.eng1team11.boatgame2d.util.FontManager;
 import io.github.eng1team11.boatgame2d.util.TextureManager;
 import io.github.eng1team11.boatgame2d.util.Vector2;
 
-public class MenuScreen implements Screen {
+public class EndScreen implements Screen {
 
     final BoatGame _game;
-    Scene _menuScene;
-    float elapsed;
+    final float _time;
 
-    /**
-     * Default ctor for the menu screen
-     *
-     * @param boatGame The boat game this is attached to
-     */
-    public MenuScreen(final BoatGame boatGame) {
-        _game = boatGame;
+    String _victoryText;
+    Scene _menuScene;
+
+    public EndScreen(BoatGame game, int place, float time) {
+        _game = game;
+        _time = time;
+
+        switch (place) {
+            case 1:
+                _victoryText = "Well Done!  You've won the race!";
+                break;
+            case 2:
+                _victoryText = "You've placed second!";
+                break;
+            case 3:
+                _victoryText = "You've placed third!";
+                break;
+            default:
+                _victoryText = "You didn't place, but at least you tried";
+        }
+
+        _menuScene = new Scene();
+        _menuScene.addObject(
+                new Image(
+                        new Vector2(-400.0f, 0.0f),
+                        new Vector2(7223.0f, 1088.0f),
+                        TextureManager.getTexture("background")
+                ),
+                "background",
+                -1
+        );
+        _menuScene.addObject(
+                new Text(
+                        new Vector2(640.0f, 600.0f),
+                        _victoryText,
+                        FontManager.get().getFont(72)
+                ),
+                "text_victoryMessage"
+        );
+
+        _menuScene.addObject(
+                new Text(
+                        new Vector2(640.0f, 420.0f),
+                        "Your combined time was:",
+                        FontManager.get().getFont(48)
+                ),
+                "text_yourTime"
+        );
+        _menuScene.addObject(
+                new Text(
+                        new Vector2(640.0f, 360.0f),
+                        Float.toString(_time),
+                        FontManager.get().getFont(36)
+                ),
+                "text_time"
+        );
+        _menuScene.addObject(
+                new ButtonSprite(
+                        new Vector2(480.0f, 40.0f),
+                        new Vector2(320.0f, 120.0f),
+                        TextureManager.getTexture("button_exit"),
+                        TextureManager.getTexture("button_exit_hover"),
+                        TextureManager.getTexture("button_exit"),
+                        () -> _game.setScreen(_game._menuScreen)
+                ),
+                "button_menu"
+        );
     }
 
     /**
@@ -34,64 +93,6 @@ public class MenuScreen implements Screen {
     @Override
     public void show() {
 
-        _menuScene = new Scene();
-        _menuScene.addObject(
-                new Image(
-                        new Vector2(0.0f, 0.0f),
-                        new Vector2(0.0f, 0.0f),
-                        //new Vector2(-400.0f, 0.0f),
-                        //new Vector2(7223.0f, 1088.0f),
-                        TextureManager.getTexture("menu_background")
-                ),
-                "background",
-                -1
-        );
-        _menuScene.addObject(
-                new Text(
-                        new Vector2(640.0f, 600.0f),
-                        "Boat Game 2D",
-                        FontManager.get().getFont(72)
-                ),
-                "text_Title"
-        );
-        _menuScene.addObject(
-                new Text(
-                        new Vector2(640.0f, 64.0f),
-                        "Press WASD or use the arrow keys to dodge obstacles and stay in lane",
-                        FontManager.get().getFont(24)
-                ),
-                "text_tutorial"
-        );
-        _menuScene.addObject(
-                new Text(
-                        new Vector2(640.0f, 32.0f),
-                        "Win the race by beating the 2 other boats",
-                        FontManager.get().getFont(24)
-                ),
-                "text_tutorial2"
-        );
-        _menuScene.addObject(
-                new ButtonSprite(
-                        new Vector2(480.0f, 340.0f),
-                        new Vector2(320.0f, 120.0f),
-                        TextureManager.getTexture("button_play"),
-                        TextureManager.getTexture("button_play_hover"),
-                        TextureManager.getTexture("button_play"),
-                        () -> _game.setScreen(new GameScreen(_game, GameScreen.RaceNumber.R1))
-                ),
-                "button_play"
-        );
-        _menuScene.addObject(
-                new ButtonSprite(
-                        new Vector2(480.0f, 180.0f),
-                        new Vector2(320.0f, 120.0f),
-                        TextureManager.getTexture("button_exit"),
-                        TextureManager.getTexture("button_exit_hover"),
-                        TextureManager.getTexture("button_exit"),
-                        () -> Gdx.app.exit()
-                ),
-                "button_exit"
-        );
     }
 
     /**
@@ -101,7 +102,6 @@ public class MenuScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        elapsed += Gdx.graphics.getDeltaTime();
         // Set the screen clear colour to black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         // Clear the colour buffer and the depth buffer
@@ -115,7 +115,6 @@ public class MenuScreen implements Screen {
 
         // Start adding things to the game sprite batch
         _game._spriteBatch.begin();
-        _game._spriteBatch.draw(_game._animation.getKeyFrame(elapsed), 0.0f, 0.0f);
         // Draw the UI scene
         _game._spriteBatch.setProjectionMatrix(_game._guiCamera.combined);
         _menuScene.draw(_game._spriteBatch);
@@ -130,13 +129,7 @@ public class MenuScreen implements Screen {
      */
     @Override
     public void resize(int width, int height) {
-        // Scale the camera with the window size - Don't do this, it messes up the UI
-//        _game._camera.viewportWidth = width;
-//        _game._camera.viewportHeight = height;
-        // Set the camera position
-        _game._gameCamera.position.set(_game._gameCamera.viewportWidth / 2f, _game._gameCamera.viewportHeight / 2f, 0);
-        // Update the camera
-        _game._gameCamera.update();
+
     }
 
     /**
@@ -160,8 +153,7 @@ public class MenuScreen implements Screen {
      */
     @Override
     public void hide() {
-        _game._componentManager.clear();
-        _game._entityManager.clear();
+
     }
 
     /**

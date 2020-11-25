@@ -5,8 +5,10 @@ import io.github.eng1team11.boatgame2d.ecs.component.IComponent;
 import io.github.eng1team11.boatgame2d.ecs.entity.IEntity;
 
 import java.util.HashMap;
+import java.util.Map;
 
-@SuppressWarnings("rawtypes")   // Suppress warnings about using `Class` directly (Need to find a way to not use `Class`)
+@SuppressWarnings("rawtypes")
+// Suppress warnings about using `Class` directly (Need to find a way to not use `Class`)
 public class ComponentManager {
 
     // 1:1 mapping of class to id, id to class
@@ -89,6 +91,18 @@ public class ComponentManager {
     }
 
     /**
+     * Get a component of a specified type, with a specific ID
+     *
+     * @param id   The ID of the component to get
+     * @param type The type of the component to get
+     * @return The requested IComponent object or null
+     */
+    public IComponent getComponent(int id, Class type) {
+        int cType = _componentTypes.get(type);
+        return _components.get(cType).get(id);
+    }
+
+    /**
      * Delete a component from an entity
      *
      * @param type   The type of component
@@ -105,6 +119,12 @@ public class ComponentManager {
      */
     public void deleteComponentsOfType(int id) {
         _components.remove(id);
+    }
+
+    public void deleteComponentsOfId(int id) {
+        for (Map.Entry<Integer, HashMap<Integer, IComponent>> kv : _components.entrySet()) {
+            kv.getValue().remove(id);
+        }
     }
 
     /**
@@ -127,6 +147,15 @@ public class ComponentManager {
     public HashMap<Integer, IComponent> getComponentsOfType(Class type) {
         int id = _componentTypes.get(type);
         return _components.get(id);
+    }
+
+    /**
+     * Delete all existing components
+     */
+    public void clear() {
+        for (Map.Entry<Integer, HashMap<Integer, IComponent>> x : _components.entrySet()) {
+            x.getValue().clear();
+        }
     }
 
 }

@@ -16,11 +16,13 @@ public class DurabilityComponent extends Component {
     /**
      * Default ctor for a component
      *
-     * @param id The ID of the component
+     * @param id  The ID of the component
+     * @param dur The base durability of the object
      */
-    public DurabilityComponent(int id) {
+    public DurabilityComponent(int id, float dur) {
         super(id);
-        setDurabilityToMax();
+        setMaxDurability(dur);
+        setDurability(dur);
     }
 
     /**
